@@ -32,9 +32,9 @@ public class Cocktail {
     @Column(name = "publication_date")
     private Date publicationDate;
 
-    @Basic
-    @Column(name = "image_name")
-    private String imageName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
+    private Image imageName;
 
     @Basic
     @Column(name = "cocktail_recipe")

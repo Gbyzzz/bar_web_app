@@ -15,33 +15,43 @@ public class User {
     @Column(name = "user_id")
     private long userId;
 
+    @Basic
     @Column(name = "username")
     private String username;
 
+    @Basic
     @Column(name = "password")
     private String password;
 
+    @Basic
     @Column(name = "name")
     private String name;
 
+    @Basic
     @Column(name = "surname")
     private String surname;
 
+    @Basic
     @Column(name = "phone")
     private String phone;
 
+    @Basic
     @Column(name = "email")
     private String email;
 
-    @Column(name = "user_pic_name")
-    private String userPicName;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
+    private Image userPicName;
 
+    @Basic
     @Column(name = "role")
     private Role role;
 
+    @Basic
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Basic
     @Column(name = "reg_date")
     private Date regDate;
 
