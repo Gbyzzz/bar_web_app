@@ -1,4 +1,4 @@
--- Database: bardb
+-- Database: bar_db
 
 DROP DATABASE IF EXISTS bar_db;
 
@@ -11,9 +11,22 @@ CREATE DATABASE bar_db
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
+DROP TABLE IF EXISTS images;
+
+CREATE TABLE images
+(
+    image_id bigserial PRIMARY KEY,
+    name varchar(45) NOT NULL,
+    filename varchar(45) NOT NULL,
+    content_type varchar(45) NOT NULL,
+    size bigint NOT NULL,
+    bytes bytea NOT NULL
+);
+
 DROP TABLE IF EXISTS users;
 
 CREATE TYPE user_role AS ENUM ('ADMIN', 'BARTENDER', 'USER');
+
 
 CREATE TABLE users
 (
@@ -24,26 +37,26 @@ CREATE TABLE users
     surname varchar(20) DEFAULT NULL,
     phone varchar(15) UNIQUE DEFAULT NULL,
     email varchar(256) UNIQUE NOT NULL,
-    user_pic_name varchar(45) DEFAULT NULL,
+    user_pic_name bigint REFERENCES images (image_id),
     role user_role NOT NULL DEFAULT 'USER',
     is_active boolean NOT NULL,
     reg_date timestamp NOT NULL
 );
 
-INSERT INTO users VALUES (1,'Admin','4d54497a','Tom','Smith','7876867845','admin@bar.com','admin.jpg','ADMIN',true,'2002-03-23'),
-                         (2,'Admin1','4d54497a','John','Cole','0689984689','admin1@bar.com','admin1.jpg','ADMIN',true,'2002-03-23'),
-                         (3,'LuckyBartender','4d54497a','Sam','Green',null,'samgreen@bar.com','luckybartender.jpg','BARTENDER',true,'2002-03-23'),
-                         (4,'Jspm','4d54497a',null,null,null,'alcoholfan2010@gmail.com','jspm.jpg','USER',true,'2002-03-23'),
-                         (5,'JDaniels','4d54497a','John',null,null,'jdaniels1985@yahoo.com','jdaniels.jpg','BARTENDER',true,'2002-03-23'),
-                         (6,'Gmaster','4d54497a','Gabe',null,null,'gmaster@gmail.com','gmaster.jpg','USER',false,'2002-03-23'),
-                         (7,'SweetAndSour','4d54497a','Julia',null,null,'juli95@gmail.com','sweetandsour.jpg','USER',true,'2002-03-23'),
-                         (8,'DNegroni','4d54497a','Dan',null,null,'dnegroni@gmail.com','dnegroni.jpg','BARTENDER',false,'2002-03-23'),
-                         (9,'WhiskeySour','4d54497a','Will','Anderson',null,'wa1984@gmail.com','whiskeysour.jpg','USER',true,'2002-03-23'),
-                         (10,'RayWJ','4d54497a','Ray',null,null,'raywj@gmail.com','raywj.jpg','USER',true,'2002-03-23'),
-                         (11,'TipsyBartender','4d54497a','John',null,null,'tipsybartender@gmail.com','tipsybartender.jpg','BARTENDER',true,'2002-03-23');
+INSERT INTO users VALUES (1,'Admin','4d54497a','Tom','Smith','7876867845','admin@bar.com',null,'ADMIN',true,'2002-03-23'),
+                         (2,'Admin1','4d54497a','John','Cole','0689984689','admin1@bar.com',null,'ADMIN',true,'2002-03-23'),
+                         (3,'LuckyBartender','4d54497a','Sam','Green',null,'samgreen@bar.com',null,'BARTENDER',true,'2002-03-23'),
+                         (4,'Jspm','4d54497a',null,null,null,'alcoholfan2010@gmail.com',null,'USER',true,'2002-03-23'),
+                         (5,'JDaniels','4d54497a','John',null,null,'jdaniels1985@yahoo.com',null,'BARTENDER',true,'2002-03-23'),
+                         (6,'Gmaster','4d54497a','Gabe',null,null,'gmaster@gmail.com',null,'USER',false,'2002-03-23'),
+                         (7,'SweetAndSour','4d54497a','Julia',null,null,'juli95@gmail.com',null,'USER',true,'2002-03-23'),
+                         (8,'DNegroni','4d54497a','Dan',null,null,'dnegroni@gmail.com',null,'BARTENDER',false,'2002-03-23'),
+                         (9,'WhiskeySour','4d54497a','Will','Anderson',null,'wa1984@gmail.com',null,'USER',true,'2002-03-23'),
+                         (10,'RayWJ','4d54497a','Ray',null,null,'raywj@gmail.com',null,'USER',true,'2002-03-23'),
+                         (11,'TipsyBartender','4d54497a','John',null,null,'tipsybartender@gmail.com',null,'BARTENDER',true,'2002-03-23');
 SELECT setval('users_user_id_seq', (SELECT MAX(user_id) from "users"));
 
-DROP TABLE IF EXISTS cocktail;
+DROP TABLE IF EXISTS cocktails;
 
 CREATE TABLE cocktails
 (
@@ -52,9 +65,9 @@ CREATE TABLE cocktails
     cocktail_author bigint NOT NULL REFERENCES users (user_id),
     cocktail_rating real NOT NULL DEFAULT '0',
     publication_date timestamp NOT NULL,
-    image_name varchar(45) NOT NULL,
+    image_name bigint REFERENCES  images (image_id),
     cocktail_recipe text NOT NULL,
-    approx_alcohol_percentage integer NOT NULL DEFAULT '0'
+    approx_alcohol_percentage real NOT NULL DEFAULT '0'
 );
 
 
@@ -106,23 +119,25 @@ INSERT INTO ingredients VALUES (1,'Angostura bitter',45, 'drop(s)'),
 SELECT setval('ingredients_ingredient_id_seq', (SELECT MAX(ingredient_id) from "ingredients"));
 
 
-DROP TABLE IF EXISTS recipe;
+DROP TABLE IF EXISTS recipes;
 
 CREATE TABLE recipes
 (
+    recipe_id bigserial PRIMARY KEY,
     cocktail_id bigint NOT NULL REFERENCES cocktails (cocktail_id) ON DELETE CASCADE,
     ingredient_id bigint NOT NULL REFERENCES ingredients (ingredient_id),
     quantity_of_ingredient smallint,
-    PRIMARY KEY (cocktail_id, ingredient_id)
+    UNIQUE (cocktail_id, ingredient_id)
 
 );
 
-DROP TABLE IF EXISTS vote;
+DROP TABLE IF EXISTS votes;
 
 CREATE TABLE votes
 (
+    vote_id bigserial PRIMARY KEY,
     user_id bigint NOT NULL REFERENCES users (user_id),
     cocktail_id bigint NOT NULL REFERENCES cocktails (cocktail_id) ON DELETE CASCADE,
     vote_value smallint NOT NULL,
-    PRIMARY KEY (user_id, cocktail_id)
+    UNIQUE (user_id, cocktail_id)
 );
