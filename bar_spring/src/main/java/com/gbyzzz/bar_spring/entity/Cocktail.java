@@ -1,7 +1,6 @@
 package com.gbyzzz.bar_spring.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.Columns;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -21,7 +20,7 @@ public class Cocktail {
     private String cocktailName;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cocktail_author", referencedColumnName = "user_id")
+    @JoinColumn(name = "cocktail_author")
     private User cocktailAuthor;
 
     @Basic
@@ -33,7 +32,7 @@ public class Cocktail {
     private Date publicationDate;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "image")
     private Image imageName;
 
     @Basic

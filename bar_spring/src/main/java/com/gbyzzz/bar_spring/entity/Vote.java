@@ -16,9 +16,11 @@ public class Vote {
     private Long voteId;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User userId;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cocktail_id")
     private Cocktail cocktailId;
 
     @Basic

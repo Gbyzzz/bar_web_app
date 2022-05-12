@@ -37,23 +37,23 @@ CREATE TABLE users
     surname varchar(20) DEFAULT NULL,
     phone varchar(15) UNIQUE DEFAULT NULL,
     email varchar(256) UNIQUE NOT NULL,
-    user_pic_name bigint REFERENCES images (image_id),
+    user_pic bigint REFERENCES images (image_id),
     role user_role NOT NULL DEFAULT 'USER',
-    is_active boolean NOT NULL,
+    enabled boolean NOT NULL DEFAULT 'false',
     reg_date timestamp NOT NULL
 );
 
-INSERT INTO users VALUES (1,'Admin','4d54497a','Tom','Smith','7876867845','admin@bar.com',null,'ADMIN',true,'2002-03-23'),
-                         (2,'Admin1','4d54497a','John','Cole','0689984689','admin1@bar.com',null,'ADMIN',true,'2002-03-23'),
-                         (3,'LuckyBartender','4d54497a','Sam','Green',null,'samgreen@bar.com',null,'BARTENDER',true,'2002-03-23'),
-                         (4,'Jspm','4d54497a',null,null,null,'alcoholfan2010@gmail.com',null,'USER',true,'2002-03-23'),
-                         (5,'JDaniels','4d54497a','John',null,null,'jdaniels1985@yahoo.com',null,'BARTENDER',true,'2002-03-23'),
-                         (6,'Gmaster','4d54497a','Gabe',null,null,'gmaster@gmail.com',null,'USER',false,'2002-03-23'),
-                         (7,'SweetAndSour','4d54497a','Julia',null,null,'juli95@gmail.com',null,'USER',true,'2002-03-23'),
-                         (8,'DNegroni','4d54497a','Dan',null,null,'dnegroni@gmail.com',null,'BARTENDER',false,'2002-03-23'),
-                         (9,'WhiskeySour','4d54497a','Will','Anderson',null,'wa1984@gmail.com',null,'USER',true,'2002-03-23'),
-                         (10,'RayWJ','4d54497a','Ray',null,null,'raywj@gmail.com',null,'USER',true,'2002-03-23'),
-                         (11,'TipsyBartender','4d54497a','John',null,null,'tipsybartender@gmail.com',null,'BARTENDER',true,'2002-03-23');
+INSERT INTO users VALUES (1,'Admin','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','Tom','Smith','7876867845','admin@bar.com',null,'ADMIN',true,'2002-03-23'),
+                         (2,'Admin1','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','John','Cole','0689984689','admin1@bar.com',null,'ADMIN',true,'2002-03-23'),
+                         (3,'LuckyBartender','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','Sam','Green',null,'samgreen@bar.com',null,'BARTENDER',true,'2002-03-23'),
+                         (4,'Jspm','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC',null,null,null,'alcoholfan2010@gmail.com',null,'USER',true,'2002-03-23'),
+                         (5,'JDaniels','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','John',null,null,'jdaniels1985@yahoo.com',null,'BARTENDER',true,'2002-03-23'),
+                         (6,'Gmaster','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','Gabe',null,null,'gmaster@gmail.com',null,'USER',false,'2002-03-23'),
+                         (7,'SweetAndSour','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','Julia',null,null,'juli95@gmail.com',null,'USER',true,'2002-03-23'),
+                         (8,'DNegroni','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','Dan',null,null,'dnegroni@gmail.com',null,'BARTENDER',false,'2002-03-23'),
+                         (9,'WhiskeySour','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','Will','Anderson',null,'wa1984@gmail.com',null,'USER',true,'2002-03-23'),
+                         (10,'RayWJ','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','Ray',null,null,'raywj@gmail.com',null,'USER',true,'2002-03-23'),
+                         (11,'TipsyBartender','{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC','John',null,null,'tipsybartender@gmail.com',null,'BARTENDER',true,'2002-03-23');
 SELECT setval('users_user_id_seq', (SELECT MAX(user_id) from "users"));
 
 DROP TABLE IF EXISTS cocktails;
@@ -65,11 +65,19 @@ CREATE TABLE cocktails
     cocktail_author bigint NOT NULL REFERENCES users (user_id),
     cocktail_rating real NOT NULL DEFAULT '0',
     publication_date timestamp NOT NULL,
-    image_name bigint REFERENCES  images (image_id),
+    image bigint REFERENCES  images (image_id),
     cocktail_recipe text NOT NULL,
     approx_alcohol_percentage real NOT NULL DEFAULT '0'
 );
 
+INSERT INTO cocktails VALUES (1,'Old Fashioned',3,0,'2022-05-11',null,'В стакан олд фэшн кладём кусочек сахара, капаем на него Ангостуру и воду.
+При помощи мадлера измельчаем сахар, превращая в некое подобие сиропа на дне бокала.
+Наполняем стакан льдом и добавляем половину бурбона.
+Тщательно перемешиваем с помощью барной ложки, охлаждая бокал и обводняя смесь.
+Добавляем ещё льда и наливаем оставшуюся половину бурбона.
+Снова перемешиваем.
+Сбрызгиваем цедрой апельсина.
+Подаём без украшения.',33);
 
 DROP TABLE IF EXISTS ingredients;
 

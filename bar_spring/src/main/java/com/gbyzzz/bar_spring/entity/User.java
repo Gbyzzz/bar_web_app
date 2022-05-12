@@ -1,6 +1,10 @@
 package com.gbyzzz.bar_spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.gson.annotations.Expose;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -40,11 +44,12 @@ public class User {
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "user_pic")
     private Image userPicName;
 
     @Basic
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Basic
@@ -55,9 +60,10 @@ public class User {
     @Column(name = "reg_date")
     private Date regDate;
 
+    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "cocktail_author")
-    List<Cocktail> userCocktails;
+    private List<Cocktail> userCocktails;
 
     public enum Role {
         ADMIN, BARTENDER, USER

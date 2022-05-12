@@ -15,9 +15,11 @@ public class Recipe {
     private Long recipeId;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
     @Basic
