@@ -1,7 +1,8 @@
-package com.gbyzzz.bar_spring.service;
+package com.gbyzzz.bar_spring.service.impl;
 
 import com.gbyzzz.bar_spring.entity.User;
 import com.gbyzzz.bar_spring.repository.UserRepository;
+import com.gbyzzz.bar_spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
  * @author Anton Pinchuk
  */
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;

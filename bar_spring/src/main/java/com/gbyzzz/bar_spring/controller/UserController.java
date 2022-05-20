@@ -3,11 +3,7 @@ package com.gbyzzz.bar_spring.controller;
 import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.entity.User;
 import com.gbyzzz.bar_spring.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,16 +12,22 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/all")
     public List<User> getAllUsers(){
+        System.out.println("all users");
         return userService.findAll();
     }
+
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id) throws Exception {

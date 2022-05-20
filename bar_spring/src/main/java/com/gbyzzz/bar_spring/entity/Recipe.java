@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Recipe {
     @Column(name = "recipe_id")
     private Long recipeId;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
@@ -24,5 +26,5 @@ public class Recipe {
 
     @Basic
     @Column(name = "quantity_of_ingredient")
-    private int quantity;
+    private Integer quantity;
 }

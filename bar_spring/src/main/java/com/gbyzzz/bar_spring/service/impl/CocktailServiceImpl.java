@@ -1,8 +1,8 @@
-package com.gbyzzz.bar_spring.service;
+package com.gbyzzz.bar_spring.service.impl;
 
 import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.repository.CocktailRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gbyzzz.bar_spring.service.CocktailService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +14,12 @@ import java.util.Optional;
 @Service
 public class CocktailServiceImpl implements CocktailService {
 
-    @Autowired
+
     private CocktailRepository cocktailRepository;
+
+    public CocktailServiceImpl(CocktailRepository cocktailRepository) {
+        this.cocktailRepository = cocktailRepository;
+    }
 
     @Override
     public List<Cocktail> findAll() {

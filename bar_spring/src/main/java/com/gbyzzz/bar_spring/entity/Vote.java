@@ -3,7 +3,6 @@ package com.gbyzzz.bar_spring.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlSchemaTypes;
 
 @Entity
 @Table(name = "votes")
@@ -17,11 +16,11 @@ public class Vote {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cocktail_id")
-    private Cocktail cocktailId;
+    private Cocktail cocktail;
 
     @Basic
     @Column(name = "vote_value")

@@ -1,9 +1,11 @@
 package com.gbyzzz.bar_spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "cocktails", schema = "public", catalog = "bar_db")
@@ -33,7 +35,7 @@ public class Cocktail {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image")
-    private Image imageName;
+    private Image cocktailImage;
 
     @Basic
     @Column(name = "cocktail_recipe")
@@ -42,5 +44,9 @@ public class Cocktail {
     @Basic
     @Column(name = "approx_alcohol_percentage")
     private int approxAlcoholPercentage;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cocktail")
+    private List<Recipe> recipes;
+
 
 }
