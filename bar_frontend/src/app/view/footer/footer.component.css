@@ -1,0 +1,30 @@
+a {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent; }
+
+footer {
+  padding: 7em 0; }
+
+.footer-07 {
+  background: #121212; }
+.footer-07 a {
+  color: white; }
+.footer-07 p {
+  color: rgba(255, 255, 255, 0.3); }
+.footer-07 .footer-heading {
+  font-size: 30px;
+  color: #fff;
+  font-weight: 700;}
+.footer-07 .footer-heading .logo {
+  color: #fff; }
+.footer-07 .menu {
+  margin-bottom: 30px; }
+.footer-07 .menu a {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px; }
+.footer-07 .ftco-footer-social li a {
+  background: transparent;
+  border: 1px solid white; }

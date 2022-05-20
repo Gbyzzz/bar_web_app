@@ -1,0 +1,81 @@
+<!--<c:if test="${not empty message}">-->
+<!--  <div class="alert alert-danger alert-dismissible">-->
+<!--    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>-->
+<!--    <strong>Error!</strong>-->
+<!--    <c:out value="${message}"/>-->
+<!--  </div>-->
+<!--</c:if>-->
+
+<div class="container mt-5 mb-5">
+  <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="${pageContext.request.contextPath}/img/1.jpg" alt="Los Angeles" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+          <h3>Los Angeles</h3>
+          <p>We had such a great time in LA!</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="${pageContext.request.contextPath}/img/2.jpg" alt="Chicago" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+          <h3>Chicago</h3>
+          <p>Thank you, Chicago!</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="${pageContext.request.contextPath}/img/3.jpg" alt="New York" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+          <h3>New York</h3>
+          <p>We love the Big Apple!</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="${pageContext.request.contextPath}/img/4.jpg" alt="New York" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+          <h3>New York</h3>
+          <p>We love the Big Apple!</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="${pageContext.request.contextPath}/img/5.jpg" alt="New York" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+          <h3>New York</h3>
+          <p>We love the Big Apple!</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+</div>
+<div class="container-fluid">
+  <!--  <h2><fmt:message key="locale.new_cocktails"/>:</h2>-->
+</div>
+
+<!--<div class="d-flex flex-wrap mb-4 ml-2" *ngFor="let cocktail of cocktails">{{cocktail.cocktailName}}-->
+
+<!--  <div class="flex-lg-grow-0 m-3">-->
+<!--    <div class="post">-->
+<!--      <div class="bg-image hover-zoom container-img">-->
+<!--        <a class="post-img" href="/controller?command=to_cocktail_page&cocktail_id=${cocktail.getCocktailId()}">-->
+<!--          &lt;!&ndash;            <img href="/controller?command=to_cocktail_page&cocktail_id=${cocktail.getCocktailId()}" src="${pageContext.request.contextPath}/upload/${cocktail.getImageName()}" width="420"/>&ndash;&gt;-->
+<!--          {{cocktail.cocktailImage}}-->
+<!--          <div class="text-block">-->
+<!--            <h4><a style="color:white" href="/controller?command=to_cocktail_page&cocktail_id=${cocktail.getCocktailId()}">-->
+<!--              &lt;!&ndash;                <c:out value="${cocktail.getCocktailName()}"/>&ndash;&gt;-->
+<!--              {{cocktail.cocktailName}}-->
+<!--            </a></h4>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+  <!--  </c:forEach>-->
+<!--</div>-->

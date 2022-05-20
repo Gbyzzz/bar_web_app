@@ -1,0 +1,89 @@
+<div class="offcanvas offcanvas-end" id="signin">
+  <div class="offcanvas-header">
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+
+<!--    <c:import url="signin.jsp"/>-->
+
+  </div>
+</div>
+<div class="container">
+  <a href="/controller?command=to_main" class="logo">
+    <img src="assets/icon.jpg" width="60" class="mx-auto d-block" alt="logo"/>
+  </a>
+</div>
+<!--<c:if test="${not empty user}">-->
+<!--  <form method="post" action="controller">-->
+<!--    <div class="row">-->
+<!--&lt;!&ndash;      <li><fmt:message key="locale.hi"/>,&ndash;&gt;-->
+<!--        <button type="submit" class="btn btn-link btn-sm" name="command" value="to_user_page"><c:out value= "${user.getUsername()}"></c:out></button>-->
+
+<!--        <button type="submit" class="btn btn-link float-right btn-sm mr-5" name="command" value="to_my_cocktails"><fmt:message key="locale.my_cocktails"/></button>-->
+<!--        <button type="submit" class="btn btn-link float-right btn-sm" name="command" value="to_add_cocktail"><fmt:message key="locale.add_cocktail"/></button>-->
+
+<!--    </div>-->
+<!--  </form>-->
+<!--</c:if>-->
+<nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <form action="/controller" method="post">
+      <input type="hidden" name="command" value="to_main" />
+      <a href="#" class="navbar-brand" onclick="this.parentNode.submit()">BAR.com</a>
+    </form>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <form action="/controller" method="post">
+            <input type="hidden" name="command" value="to_cocktails" />
+            <a href="#" class="nav-link" onclick="this.parentNode.submit()">Cocktails</a>
+          </form>
+        </li>
+        <li class="nav-item">
+          <form action="/controller" method="post">
+            <input type="hidden" name="command" value="to_about" />
+            <a href="#" class="nav-link" onclick="this.parentNode.submit()">about</a>
+          </form>
+        </li>
+        <li class="nav-item">
+          <form action="/controller" method="post">
+            <input type="hidden" name="command" value="to_contact" />
+            <a href="#" class="nav-link" onclick="this.parentNode.submit()">contact</a>
+          </form>
+        </li>
+      </ul>
+      <form action="/controller" method="post">
+        <div class="dropdown">
+          <button type="button" class="btn btn-dark me-3 dropdown-toggle" data-bs-toggle="dropdown">
+            lang
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <button class="dropdown-item" type="submit" name="language"
+                    value="en_US">English</button>
+            <button class="dropdown-item" type="submit" name="language"
+                    value="ru_RU">Русский</button>
+            <input type="hidden" name="command" value="set_locale">
+          </ul>
+        </div>
+      </form>
+<!--      <c:if test="${empty user}">-->
+<!--        <form>-->
+<!--          <button class="btn btn-dark me-3" type="button" data-bs-target="#signin" data-bs-toggle="offcanvas" >-->
+<!--            <fmt:message key="locale.signin"/>-->
+<!--          </button>-->
+<!--        </form>-->
+<!--      </c:if>-->
+<!--      <c:if test="${not empty user}">-->
+<!--        <form action="/controller">-->
+<!--          <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
+<!--            <fmt:message key="locale.signout"/>-->
+<!--          </button>-->
+<!--        </form>-->
+<!--      </c:if>-->
+
+    </div>
+  </div>
+</nav>

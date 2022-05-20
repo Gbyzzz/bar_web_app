@@ -1,0 +1,21 @@
+<!--  <div class="alert alert-danger">-->
+<!--    <strong>Error!</strong> ${message}.-->
+<!--  </div>-->
+
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Users">
+    <ng-template matTabContent>
+      <app-users></app-users>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Cocktails">
+    <ng-template matTabContent>
+    <app-cocktails></app-cocktails>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Ingredients">
+    <ng-template matTabContent>
+      <app-ingredients-admin></app-ingredients-admin>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

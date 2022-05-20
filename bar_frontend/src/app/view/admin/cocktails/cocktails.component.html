@@ -1,0 +1,62 @@
+<table mat-table [dataSource]="cocktailDataSource" class="table">
+  <thead class="table-dark">
+
+  <ng-container matColumnDef="cocktailId">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.cocktailId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cocktailImage">
+    <th mat-header-cell *matHeaderCellDef>Photo</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.cocktailImage}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cocktailName">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.cocktailName}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cocktailAuthor">
+    <th mat-header-cell *matHeaderCellDef>Author</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.cocktailAuthor.username}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cocktailRating">
+    <th mat-header-cell *matHeaderCellDef>Rating</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.cocktailRating}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="publicationDate">
+    <th mat-header-cell *matHeaderCellDef>Publication Date</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.publicationDate}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cocktailRecipe">
+    <th mat-header-cell *matHeaderCellDef>Recipe</th>
+    <td width="40%" mat-cell *matCellDef="let cocktail">{{cocktail.cocktailRecipe}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="ingredients">
+    <th mat-header-cell *matHeaderCellDef>Ingredients</th>
+    <td mat-cell *matCellDef="let cocktail">
+      <div *ngFor="let ingredientRecipe of cocktail.ingredientRecipe">
+        {{ingredientRecipe.ingredient.ingredientName}} - {{ingredientRecipe.quantity}} {{ingredientRecipe.ingredient.unitOfMeasurement}}
+      </div>
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="approxAlcoholPercentage">
+    <th mat-header-cell *matHeaderCellDef>Alcohol</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.approxAlcoholPercentage}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef>Edit/Delete</th>
+    <td mat-cell *matCellDef="let cocktail">{{cocktail.approxAlcoholPercentage}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="cocktailDisplayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: cocktailDisplayedColumns;"></tr>
+
+  </thead>
+</table>
