@@ -20,6 +20,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {INGREDIENT_URL_TOKEN} from "./service/impl/IngredientServiceImpl";
 import { IngredientsAdminComponent } from './view/admin/ingredients-admin/ingredients-admin.component';
 import {MatIconModule} from "@angular/material/icon";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {MatIconModule} from "@angular/material/icon";
     MatPaginatorModule,
     BrowserAnimationsModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    MatCheckboxModule
   ],
   providers: [
 

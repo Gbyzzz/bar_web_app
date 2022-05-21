@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Cocktail} from "./model/Cocktail";
 import {CocktailServiceImpl} from "./service/impl/CocktailServiceImpl";
+import {User} from "./model/User";
+import {UserServiceImpl} from "./service/impl/UserServiceImpl";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,8 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  constructor() {
+  constructor(private userService: UserServiceImpl) {
 
   }
+
 }
