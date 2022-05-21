@@ -3,7 +3,6 @@ package com.gbyzzz.bar_spring.service.impl;
 import com.gbyzzz.bar_spring.entity.User;
 import com.gbyzzz.bar_spring.repository.UserRepository;
 import com.gbyzzz.bar_spring.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +14,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<User> findAll() {
@@ -33,5 +35,10 @@ public class UserServiceImpl implements UserService {
             throw new Exception("No user with id " + id + " found");
         }
         return user;
+    }
+
+    @Override
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 }

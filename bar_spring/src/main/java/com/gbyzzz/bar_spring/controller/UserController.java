@@ -38,4 +38,10 @@ public class UserController {
     public List<Cocktail> getUserCocktailsById(@PathVariable int id) throws Exception {
         return userService.getUserById(id).getUserCocktails();
     }
+
+    @PutMapping("/update")
+    public User updateUser(@RequestBody User user) {
+        System.out.println("update User");
+        return userService.updateUser(user);
+    }
 }
