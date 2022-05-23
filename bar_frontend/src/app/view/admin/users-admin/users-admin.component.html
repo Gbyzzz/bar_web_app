@@ -1,0 +1,55 @@
+<div class="container-fluid">
+
+  <table matSort (matSortChange)="sortData($event)" class="table table-bordered">
+    <thead class="table-dark">
+    <tr>
+      <th mat-sort-header="userId">ID</th>
+      <th mat-header="userPic">UserPic</th>
+      <th mat-sort-header="username">Username</th>
+      <th mat-sort-header="name">Name</th>
+      <th mat-sort-header="surname">Surname</th>
+      <th mat-sort="phone">Phone</th>
+      <th mat-sort="email">Email</th>
+      <th mat-sort-header="role">Role</th>
+      <th mat-sort-header="enabled">Enabled</th>
+      <th mat-sort-header="regDate">Registration Date</th>
+      <th mat-sort="edit">Edit</th>
+
+    </tr>
+    </thead>
+
+    <tr *ngFor="let user of sortedData">
+      <td class="border-1">{{user.userId}}</td>
+      <td class="border-1">{{user.userPic}}</td>
+      <td class="border-1">{{user.username}}</td>
+      <td class="border-1">{{user.name}}</td>
+      <td class="border-1">{{user.surname}}</td>
+      <td class="border-1">{{user.phone}}</td>
+      <td class="border-1">{{user.email}}</td>
+      <td class="border-1">{{user.role}}</td>
+      <td class="border-1">
+        <mat-checkbox color="primary"
+                      [disabled]="true"
+                      (click)="$event.stopPropagation()"
+
+                      (change)="$event ? toggleEnabled(user) : null"
+
+                      [checked]="user.enabled"
+        >
+
+        </mat-checkbox>
+      </td>
+      <td class="border-1">{{user.regDate}}</td>
+      <td class="border-1">
+        <button type="button" class="btn" (click)="openEditDialog(user)"
+                >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+        </button>
+
+      </td>
+    </tr>
+  </table>
+</div>

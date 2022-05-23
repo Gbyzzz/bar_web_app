@@ -1,0 +1,110 @@
+<mat-dialog-content>
+  <p mat-dialog-title>{{ingredient.ingredientName}}</p>
+
+  <mat-form-field appearance="outline" class="m-1">
+
+    <mat-label>IngredientID</mat-label>
+    <input #inputTitle
+           matInput
+           [(ngModel)]="ingredient.ingredientId"
+           [disabled]="true">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="m-1">
+
+    <mat-label>Ingredient name</mat-label>
+    <input #inputTitle
+           matInput
+           required
+           [(ngModel)]="newIngredientName"
+
+           (keydown.enter)="confirm()">
+
+    <button class="btn"
+            *ngIf="newIngredientName && newIngredientName.trim().length > 0"
+
+            mat-button matSuffix
+
+            (click)="newIngredientName= ''">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill"
+           viewBox="0 0 16 16">
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+      </svg>
+    </button>
+
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="m-1">
+
+    <mat-label>Alcohol</mat-label>
+    <input #inputTitle
+           matInput
+
+           [(ngModel)]="newIngredientAlcohol"
+
+           (keydown.enter)="confirm()"> <!-- по нажатию на enter можем сразу сохранить задачу -->
+
+    <button class="btn"
+            *ngIf="newIngredientAlcohol && newIngredientAlcohol > 0"
+
+            mat-button matSuffix
+
+            (click)="newIngredientAlcohol= 0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill"
+           viewBox="0 0 16 16">
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+      </svg>
+    </button>
+
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="m-1">
+
+    <mat-label>Unit of Measurement</mat-label>
+    <!-- если задача завершена - контрол не будет доступен -->
+    <input #inputTitle
+           matInput
+
+           [(ngModel)]="newUnitOfMeasurement"
+
+           (keydown.enter)="confirm()"> <!-- по нажатию на enter можем сразу сохранить задачу -->
+
+    <button class="btn"
+            *ngIf="newUnitOfMeasurement && newUnitOfMeasurement.trim().length > 0"
+
+            mat-button matSuffix
+
+            (click)="newUnitOfMeasurement= ''">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill"
+           viewBox="0 0 16 16">
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+      </svg>
+    </button>
+
+  </mat-form-field>
+
+</mat-dialog-content>
+
+
+<!--  кнопки возможных действий-->
+<mat-dialog-actions>
+
+
+  <div class="col-md-5 col-12">
+
+    <button type="button" class="btn btn-outline-dark"
+            [disabled] = "newUnitOfMeasurement.trim().length === 0 || newIngredientName.trim().length === 0"
+      mat-raised-button color="primary"
+      (click)="confirm()">
+      Сохранить
+    </button>
+
+
+    <!--    <button mat-raised-button (click)="cancel()">Отмена</button>-->
+
+  </div>
+
+</mat-dialog-actions>

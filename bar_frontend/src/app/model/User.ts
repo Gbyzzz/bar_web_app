@@ -1,6 +1,15 @@
 import {Image} from "./Image";
 
+export enum Role{
+  ADMIN = "ADMIN",
+  BARTENDER = "BARTENDER",
+  USER = "USER",
+}
+
 export class User{
+
+  static Role = Role;
+
   userId: number;
   username: string;
   name?: string;
@@ -8,11 +17,13 @@ export class User{
   phone?: string;
   email: string;
   userPic?: Image;
-  role: string;
+  role: Role;
   enabled: boolean;
   regDate: Date;
 
-  constructor(userId: number, username: string, email: string, role: string, enabled: boolean, regDate: Date,
+
+
+  constructor(userId: number, username: string, email: string, role: Role, enabled: boolean, regDate: Date,
               name?: string, surname?: string, phone?: string, userPic?: Image) {
     this.userId = userId;
     this.username = username;
@@ -26,3 +37,4 @@ export class User{
     this.regDate = regDate;
   }
 }
+
