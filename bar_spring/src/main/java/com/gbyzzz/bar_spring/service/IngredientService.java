@@ -10,4 +10,6 @@ import java.util.List;
 public interface IngredientService {
 
     List<Ingredient> findAll();
+
+    Ingredient update(Ingredient ingredient);
 }

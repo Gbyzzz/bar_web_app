@@ -2,10 +2,7 @@ package com.gbyzzz.bar_spring.controller;
 
 import com.gbyzzz.bar_spring.entity.Ingredient;
 import com.gbyzzz.bar_spring.service.IngredientService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +24,12 @@ public class IngredientController {
     List<Ingredient> getIngredients(){
         System.out.println("all ingredients");
         return ingredientService.findAll();
+    }
+
+    @PutMapping("/update")
+    Ingredient updateIngredient(@RequestBody Ingredient ingredient){
+        System.out.println("all ingredients");
+        return ingredientService.update(ingredient);
     }
 
 //    @GetMapping("/search")
