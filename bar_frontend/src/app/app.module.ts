@@ -18,18 +18,20 @@ import {UsersAdminComponent} from './view/admin/users-admin/users-admin.componen
 import {CocktailsAdminComponent} from './view/admin/cocktails-admin/cocktails-admin.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {INGREDIENT_URL_TOKEN} from "./service/impl/IngredientServiceImpl";
-import { IngredientsAdminComponent } from './view/admin/ingredients-admin/ingredients-admin.component';
+import {IngredientsAdminComponent} from './view/admin/ingredients-admin/ingredients-admin.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import { EditUserDialogComponent } from './view/dialog/edit-user-dialog/edit-user-dialog.component';
+import {EditUserDialogComponent} from './view/dialog/edit-user-dialog/edit-user-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { EditIngredientDialogComponent } from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
-import { EditCocktailDialogComponent } from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
+import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
+import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
+import {AddCocktailComponent} from './view/add-cocktail/add-cocktail.component';
+import {AddIngredientDialogComponent} from './view/dialog/add-ingredient-dialog/add-ingredient-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { EditCocktailDialogComponent } from './view/dialog/edit-cocktail-dialog/
     IngredientsAdminComponent,
     EditUserDialogComponent,
     EditIngredientDialogComponent,
-    EditCocktailDialogComponent
+    EditCocktailDialogComponent,
+    AddCocktailComponent,
+    AddIngredientDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,8 @@ import { EditCocktailDialogComponent } from './view/dialog/edit-cocktail-dialog/
     MatFormFieldModule,
     MatOptionModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [
 

@@ -88,7 +88,12 @@
       <td class="border-1">{{cocktail.cocktailRating}}</td>
       <td class="border-1">{{cocktail.publicationDate}}</td>
       <td class="border-1">{{cocktail.cocktailRecipe}}</td>
-      <td class="border-1">{{cocktail.approxAlcoholPercentage}}</td>
+      <td class="border-1">
+        <div *ngFor="let recipe of cocktail.recipes">
+        {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{recipe.ingredient.unitOfMeasurement}}
+          <br>
+        </div>
+      </td>
       <td class="border-1">{{cocktail.approxAlcoholPercentage}}</td>
 
       <td class="border-1">

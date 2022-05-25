@@ -11,12 +11,12 @@ export class Cocktail{
   cocktailImage: Image;
   cocktailRecipe: string;
   approxAlcoholPercentage: number;
-  ingredientRecipe: Recipe[];
+  recipes: Recipe[];
 
 
   constructor(cocktailId: number, cocktailName: string, cocktailAuthor: User, cocktailRating: number,
               publicationDate: Date, cocktailImage: Image, cocktailRecipe: string,
-              approxAlcoholPercentage: number, ingredientRecipe: Recipe[]) {
+              approxAlcoholPercentage: number, recipes: Recipe[]) {
     this.cocktailId = cocktailId;
     this.cocktailName = cocktailName;
     this.cocktailAuthor = cocktailAuthor;
@@ -25,6 +25,6 @@ export class Cocktail{
     this.cocktailImage = cocktailImage;
     this.cocktailRecipe = cocktailRecipe;
     this.approxAlcoholPercentage = approxAlcoholPercentage;
-    this.ingredientRecipe = ingredientRecipe;
+    this.recipes = recipes;
   }
 }
