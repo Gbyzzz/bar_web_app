@@ -22,9 +22,6 @@
             name="file"
             class="form-control"
             (change)="onFileChange($event)">
-          <!--    <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">-->
-          <!--      <div *ngIf="f.file.errors.required">File is required.</div>-->
-          <!--    </div>-->
         </div>
 
       </div>
@@ -46,18 +43,18 @@
           <div class="text-center font-weight-bold"><h3>Add ingredients:</h3></div>
 
           <div id="row">
-            <div class="input-group m-3">
-              <div class="input-group m-3">
-                <select class="btn-light mr-0" [ngModel]="selectedIngredient"
-                        (ngModelChange)="onSelectChange($event)" formControlName="ingredientsRecipe">>
+            <div class="input-group m-3" formArrayName="ingredientsRecipe">
+              <div class="input-group m-3" *ngFor="let ingredientsRecipe of ingredientsRecipe().controls; let i = index" [formGroupName]="i">
+                <select class="btn-light mr-0" [ngModel]="selectedIngredient[i]"
+                        (ngModelChange)="onSelectChange($event, i)" formControlName="ingredientSelect">>
                   <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">
                     {{ingredient.ingredientName}}
                   </option>
                 </select>
-                <input type="text" name="quantity" class="form-control m-input">
-                <input type="text" class="form-control m-input" style="width:5px" [value]="selectedUnit" disabled>
+                <input type="text" name="quantity" class="form-control m-input" formControlName="quantity">
+                <input type="text" class="form-control m-input" style="width:5px" [value]="selectedUnit[i]" disabled>
                 <div class="input-group-prepend">
-                  <button class="btn btn-danger" id="DeleteRow" type="button">
+                  <button class="btn btn-danger" id="DeleteRow" (click)="removeIngredientsRecipe(i)" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                       <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                     </svg>
@@ -68,10 +65,9 @@
           </div>
 
 
-
           <div id="newinput"></div>
           <button id="rowAdder" type="button"
-                  class="btn btn-outline-dark">
+                  class="btn btn-outline-dark" (click)="addIngredientsRecipe()">
             ADD
           </button>
           <br>
@@ -100,4 +96,16 @@
       </p>
     </div>
   </form>
-</div>
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<form [formGroup]="cocktailForm">-->
+<!--  <input formControlName="cocktailName">-->
+<!--  <input formControlName="cocktailImageFile">-->
+<!--  <input formControlName="cocktailRecipe">-->
+<!--  <div formArrayName="ingredientsRecipe" *ngFor="let ingredientsRecipe of ingredientsRecipe().controls; let i=index" [formGroupName]="i">-->
+<!--    <select formControlName="ingredientSelect" >-->
+<!--      <option *ngFor="let ingredient of ingredients"></option>-->
+<!--    </select>-->
+<!--    <input formControlName="quantity">-->
+<!--    <button (click)="removeIngredientsRecipe(i)"></button>-->
+<!--  </div>-->
+<!--</form>-->

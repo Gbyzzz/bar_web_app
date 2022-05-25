@@ -12,29 +12,9 @@ import {IngredientServiceImpl} from "../../service/impl/IngredientServiceImpl";
 export class AddCocktailComponent implements OnInit {
 
   imageSrc: string;
-  selectedIngredient: Ingredient;
-  selectedUnit: string;
-  cocktailForm = new FormGroup({
-    cocktailName: new FormControl('', [Validators.required]),
-    cocktailImageFile: new FormControl('', [Validators.required]),
-    cocktailRecipe: new FormControl('', [Validators.required]),
-    ingredientsRecipe: new FormControl('', [Validators.required]),
-      // this.fb.array([]),
-  });
-
-  // ingredientsRecipe(): FormArray {
-  //   return this.cocktailForm.get("ingredientsRecipe") as FormArray
-  // }
-  //
-  // newIngredientsRecipe(): FormGroup {
-  //   return this.fb.group({
-  //     quantity: '',
-  //   })
-  // }
-  //
-  // addIngredientsRecipe() {
-  //   this.ingredientsRecipe().push(this.newIngredientsRecipe());
-  // }
+  selectedIngredient: Ingredient[] = [];
+  selectedUnit: string[] = [];
+  cocktailForm: FormGroup;
 
   ingredients: Ingredient[];
 
@@ -42,16 +22,45 @@ export class AddCocktailComponent implements OnInit {
               private ingredientService: IngredientServiceImpl,
               private fb: FormBuilder) {
 
+    this.cocktailForm = this.fb.group({
+      cocktailName: '',
+      cocktailImageFile: '',
+      cocktailRecipe: '',
+      ingredientsRecipe: this.fb.array([]),
+    });
+
     ingredientService.findAll().subscribe(ingredients =>{
       this.ingredients = ingredients;
-      this.selectedIngredient = ingredients[0];
-      this.selectedUnit = this.selectedIngredient.unitOfMeasurement;
+      this.selectedIngredient.splice(0, 0, this.ingredients[0]);
+      this.selectedUnit.splice(0, 0, this.selectedIngredient[0].unitOfMeasurement);
     });
   }
 
-  onSelectChange(event){
-    this.selectedIngredient = event;
-    this.selectedUnit = this.selectedIngredient.unitOfMeasurement;
+  ingredientsRecipe(): FormArray {
+    return this.cocktailForm.get("ingredientsRecipe") as FormArray
+  }
+
+  newIngredientsRecipe(): FormGroup {
+    return this.fb.group({
+      ingredientSelect: '',
+      quantity: '',
+    })
+  }
+
+  addIngredientsRecipe() {
+
+    this.ingredientsRecipe().push(this.newIngredientsRecipe());
+  }
+
+  removeIngredientsRecipe(i:number) {
+    this.ingredientsRecipe().removeAt(i);
+  }
+
+  onSelectChange(event, i){
+    console.log(event);    console.log(i);
+
+    this.selectedIngredient.splice(i, i, event);
+    this.selectedUnit.splice(i, i, this.selectedIngredient[i].unitOfMeasurement);
   }
 
   onFileChange(event) {
