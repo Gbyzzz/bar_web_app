@@ -28,8 +28,15 @@ public class IngredientController {
 
     @PutMapping("/update")
     Ingredient updateIngredient(@RequestBody Ingredient ingredient){
-        System.out.println("all ingredients");
-        return ingredientService.update(ingredient);
+        System.out.println("update ingredient");
+        return ingredientService.addOrUpdate(ingredient);
+    }
+
+    @PostMapping("/add")
+    Ingredient addIngredient(@RequestBody Ingredient ingredient){
+        System.out.println("add ingredient");
+//        ingredient.setIngredientId(null);
+        return ingredientService.addOrUpdate(ingredient);
     }
 
 //    @GetMapping("/search")

@@ -1,6 +1,5 @@
 package com.gbyzzz.bar_spring.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,9 +12,9 @@ import java.util.List;
 public class Cocktail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cocktail_id")
-    private long cocktailId;
+    private Long cocktailId;
 
     @Basic
     @Column(name = "cocktail_name")
