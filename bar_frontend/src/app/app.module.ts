@@ -30,8 +30,6 @@ import {EditUserDialogComponent} from './view/dialog/edit-user-dialog/edit-user-
 import {MatDialogModule} from "@angular/material/dialog";
 import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
-import {AddCocktailComponent} from './view/add-cocktail/add-cocktail.component';
-import {AddIngredientDialogComponent} from './view/dialog/add-ingredient-dialog/add-ingredient-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +43,7 @@ import {AddIngredientDialogComponent} from './view/dialog/add-ingredient-dialog/
     IngredientsAdminComponent,
     EditUserDialogComponent,
     EditIngredientDialogComponent,
-    EditCocktailDialogComponent,
-    AddCocktailComponent,
-    AddIngredientDialogComponent
+    EditCocktailDialogComponent
   ],
   imports: [
     BrowserModule,
