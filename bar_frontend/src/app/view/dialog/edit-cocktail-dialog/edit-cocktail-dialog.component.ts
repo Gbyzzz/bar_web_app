@@ -19,6 +19,7 @@ import {Recipe} from "../../../model/Recipe";
 export class EditCocktailDialogComponent implements OnInit {
 
   imageSrc: string;
+  addIndex: number = 0;
   selectedIngredient: Ingredient[] = [];
   selectedUnit: string[] = [];
   selectedQuantity: number[] = [];
@@ -62,8 +63,15 @@ export class EditCocktailDialogComponent implements OnInit {
         this.selectedIngredient.splice(this.selectedIngredient.length, 0, recipe.ingredient);
         this.selectedUnit.splice(this.selectedUnit.length, 0, recipe.ingredient.unitOfMeasurement);
         this.selectedQuantity.splice(this.selectedQuantity.length, 0, recipe.quantity);
+        this.ingredientsRecipe().insert(this.addIndex, this.newIngredientsRecipe());
+        this.addIndex++;
       });
     }
+
+    console.log(this.newRecipe);
+    console.log(this.selectedIngredient);
+    console.log(this.selectedUnit);
+    console.log(this.selectedQuantity);
   }
 
   ingredientsRecipe(): FormArray {
@@ -87,7 +95,13 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
   removeIngredientsRecipe(i:number) {
+    this.selectedIngredient.splice(i,1);
+    this.selectedUnit.splice(i,1);
+    this.selectedQuantity.splice(i,1);
     this.ingredientsRecipe().removeAt(i);
+    console.log(this.selectedIngredient);
+    console.log(this.selectedUnit);
+    console.log(this.selectedQuantity);
   }
 
   onSelectChange(event, i){
