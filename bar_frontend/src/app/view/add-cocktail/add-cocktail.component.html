@@ -45,9 +45,9 @@
           <div id="row">
             <div class="input-group m-3" formArrayName="ingredientsRecipe">
               <div class="input-group m-3" *ngFor="let ingredientsRecipe of ingredientsRecipe().controls; let i = index" [formGroupName]="i">
-                <select class="btn-light mr-0" [ngModel]="selectedIngredient[i]"
-                        (ngModelChange)="onSelectChange($event, i)" formControlName="ingredientSelect">>
-                  <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">
+                <select class="btn-light mr-0" [(ngModel)]="selectedIngredient[i]"
+                        (ngModelChange)="onSelectChange($event, i)" formControlName="ingredientSelect">
+                  <option *ngFor="let ingredient of ingredients; let j = index" [ngValue]="ingredient">
                     {{ingredient.ingredientName}}
                   </option>
                 </select>
@@ -72,7 +72,7 @@
           </button>
           <br>
           <h5>Haven't found required ingredient?</h5>
-          <button type="button" class="btn btn-dark">
+          <button type="button" class="btn btn-dark" (click)="openAddDialog()">
             Add New Ingredient
           </button>
         </div>

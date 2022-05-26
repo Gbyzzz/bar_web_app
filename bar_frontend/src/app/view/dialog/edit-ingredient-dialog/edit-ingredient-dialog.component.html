@@ -1,7 +1,7 @@
 <mat-dialog-content>
-  <p mat-dialog-title>{{ingredient.ingredientName}}</p>
+  <p mat-dialog-title>Add/Edit ingredient {{ingredient.ingredientName}}</p>
 
-  <mat-form-field appearance="outline" class="m-1">
+  <mat-form-field appearance="outline" class="m-1" *ngIf="ingredient.ingredientId">
 
     <mat-label>IngredientID</mat-label>
     <input #inputTitle
