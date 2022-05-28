@@ -11,6 +11,7 @@ import {Cocktail} from "../../../model/Cocktail";
 import {Image} from "../../../model/Image";
 import {Recipe} from "../../../model/Recipe";
 import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
+import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
 
 @Component({
   selector: 'app-add-cocktail',
@@ -41,7 +42,8 @@ export class EditCocktailDialogComponent implements OnInit {
               private fb: FormBuilder,
               private dialogRef: MatDialogRef<EditIngredientDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: [Cocktail],
-              private imageService: ImageServiceImpl) {
+              private imageService: ImageServiceImpl,
+              private cocktailService: CocktailServiceImpl) {
 
     dialogRef.updateSize('100%', '100%');
 
@@ -69,11 +71,6 @@ export class EditCocktailDialogComponent implements OnInit {
         this.addIndex++;
       });
     }
-
-    console.log(this.newRecipe);
-    console.log(this.selectedIngredient);
-    console.log(this.selectedUnit);
-    console.log(this.selectedQuantity);
   }
 
   ingredientsRecipe(): FormArray {
@@ -91,7 +88,6 @@ export class EditCocktailDialogComponent implements OnInit {
     this.selectedIngredient.splice(this.selectedIngredient.length, 0, this.ingredients[0]);
     this.selectedUnit.splice(this.selectedUnit.length, 0, this.ingredients[0].unitOfMeasurement);
     this.selectedQuantity.splice(this.selectedQuantity.length, 0, 0);
-    console.log(this.selectedIngredient);
     this.cdr.detectChanges();
     this.ingredientsRecipe().push(this.newIngredientsRecipe());
   }
@@ -101,9 +97,6 @@ export class EditCocktailDialogComponent implements OnInit {
     this.selectedUnit.splice(i, 1);
     this.selectedQuantity.splice(i, 1);
     this.ingredientsRecipe().removeAt(i);
-    console.log(this.selectedIngredient);
-    console.log(this.selectedUnit);
-    console.log(this.selectedQuantity);
   }
 
   onSelectChange(event, i) {
@@ -164,12 +157,12 @@ export class EditCocktailDialogComponent implements OnInit {
     formData.append('file', this.cocktailForm.get('image').value);
     this.imageService.uploadImage(formData).subscribe(id => {
       this.newCocktailImage.imageId = id;
+      this.targetCocktail.cocktailName = this.newCocktailName;
+      this.targetCocktail.cocktailRecipe = this.newCocktailRecipe;
+      this.targetCocktail.cocktailImage = this.newCocktailImage;
+      this.targetCocktail.recipes = this.newRecipe;
+      this.cocktailService.add(this.targetCocktail);
     });
-
-    // this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
-    //   (res) => console.log(res),
-    //   (err) => console.log(err)
-    // );
   }
 
   ngOnInit(): void {
