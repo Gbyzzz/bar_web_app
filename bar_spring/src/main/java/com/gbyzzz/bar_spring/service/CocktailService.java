@@ -11,4 +11,6 @@ public interface CocktailService {
     List<Cocktail> findAll();
 
     Cocktail findById(long id) throws Exception;
+
+    Cocktail addOrUpdate(Cocktail cocktail);
 }

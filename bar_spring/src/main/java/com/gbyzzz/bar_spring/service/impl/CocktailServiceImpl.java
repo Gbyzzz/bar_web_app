@@ -38,4 +38,9 @@ public class CocktailServiceImpl implements CocktailService {
         return cocktail;
     }
 
+    @Override
+    public Cocktail addOrUpdate(Cocktail cocktail) {
+        return cocktailRepository.save(cocktail);
+    }
+
 }

@@ -3,7 +3,6 @@ package com.gbyzzz.bar_spring.controller;
 import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.service.CocktailService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -32,9 +31,14 @@ public class CocktailController {
         return cocktailService.findById(id);
     }
 
-    @GetMapping("/{id}/cocktailAuthor")
-    public RedirectView getCocktailsAuthor(@PathVariable long id) throws Exception {
-        Long authorId = cocktailService.findById(id).getCocktailAuthor().getUserId();
-        return new RedirectView("/users/" + authorId);
-    }
+//    @GetMapping("/{id}/cocktailAuthor")
+//    public RedirectView getCocktailsAuthor(@PathVariable long id) throws Exception {
+//        Long authorId = cocktailService.findById(id).getCocktailAuthor().getUserId();
+//        return new RedirectView("/users/" + authorId);
+//    }
+
+    @PostMapping("/add")
+    public Cocktail addCocktail(@RequestBody Cocktail cocktail) {
+    return cocktailService.addOrUpdate(cocktail);
+}
 }
