@@ -10,6 +10,7 @@ import * as punycode from "punycode";
 import {Cocktail} from "../../../model/Cocktail";
 import {Image} from "../../../model/Image";
 import {Recipe} from "../../../model/Recipe";
+import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
 
 @Component({
   selector: 'app-add-cocktail',
@@ -39,7 +40,8 @@ export class EditCocktailDialogComponent implements OnInit {
               private ingredientService: IngredientServiceImpl,
               private fb: FormBuilder,
               private dialogRef: MatDialogRef<EditIngredientDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: [Cocktail]) {
+              @Inject(MAT_DIALOG_DATA) private data: [Cocktail],
+              private imageService: ImageServiceImpl) {
 
     dialogRef.updateSize('100%', '100%');
 
@@ -50,7 +52,7 @@ export class EditCocktailDialogComponent implements OnInit {
       ingredientsRecipe: this.fb.array([]),
     });
 
-    ingredientService.findAll().subscribe(ingredients =>{
+    ingredientService.findAll().subscribe(ingredients => {
       this.ingredients = ingredients;
     });
     this.targetCocktail = data[0];
@@ -58,7 +60,7 @@ export class EditCocktailDialogComponent implements OnInit {
     this.newCocktailImage = this.targetCocktail.cocktailImage;
     this.newCocktailRecipe = this.targetCocktail.cocktailRecipe;
     this.newRecipe = this.targetCocktail.recipes;
-    if(this.newRecipe.length > 0){
+    if (this.newRecipe.length > 0) {
       this.newRecipe.forEach(recipe => {
         this.selectedIngredient.splice(this.selectedIngredient.length, 0, recipe.ingredient);
         this.selectedUnit.splice(this.selectedUnit.length, 0, recipe.ingredient.unitOfMeasurement);
@@ -87,25 +89,26 @@ export class EditCocktailDialogComponent implements OnInit {
 
   addIngredientsRecipe() {
     this.selectedIngredient.splice(this.selectedIngredient.length, 0, this.ingredients[0]);
-    this.selectedUnit.splice(this.selectedUnit.length,0, this.ingredients[0].unitOfMeasurement);
+    this.selectedUnit.splice(this.selectedUnit.length, 0, this.ingredients[0].unitOfMeasurement);
     this.selectedQuantity.splice(this.selectedQuantity.length, 0, 0);
     console.log(this.selectedIngredient);
     this.cdr.detectChanges();
     this.ingredientsRecipe().push(this.newIngredientsRecipe());
   }
 
-  removeIngredientsRecipe(i:number) {
-    this.selectedIngredient.splice(i,1);
-    this.selectedUnit.splice(i,1);
-    this.selectedQuantity.splice(i,1);
+  removeIngredientsRecipe(i: number) {
+    this.selectedIngredient.splice(i, 1);
+    this.selectedUnit.splice(i, 1);
+    this.selectedQuantity.splice(i, 1);
     this.ingredientsRecipe().removeAt(i);
     console.log(this.selectedIngredient);
     console.log(this.selectedUnit);
     console.log(this.selectedQuantity);
   }
 
-  onSelectChange(event, i){
-    console.log(event);    console.log(i);
+  onSelectChange(event, i) {
+    console.log(event);
+    console.log(i);
     this.selectedIngredient[i] = event;
     this.selectedUnit[i] = this.selectedIngredient[i].unitOfMeasurement;
     console.log(this.selectedUnit);
@@ -114,7 +117,7 @@ export class EditCocktailDialogComponent implements OnInit {
   onFileChange(event) {
     const reader = new FileReader();
 
-    if(event.target.files && event.target.files.length) {
+    if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
 
@@ -125,14 +128,15 @@ export class EditCocktailDialogComponent implements OnInit {
       };
     }
   }
-  addIngredient(ingredient: Ingredient){
-    this.ingredientService.add(ingredient).subscribe(ingredient =>{
+
+  addIngredient(ingredient: Ingredient) {
+    this.ingredientService.add(ingredient).subscribe(ingredient => {
       this.ingredients.splice(this.ingredients.length, 0, ingredient);
     });
   }
 
   openAddDialog(): void {
-    this.newIngredient = new Ingredient('',0,'');
+    this.newIngredient = new Ingredient('', 0, '');
 
     const dialogRef = this.dialog.open(EditIngredientDialogComponent, {
       data: [this.newIngredient],
@@ -148,14 +152,24 @@ export class EditCocktailDialogComponent implements OnInit {
       if (result.action === DialogAction.SAVE) {
         console.log(this.newIngredient);
         this.addIngredient(this.newIngredient);
-        // this.ingredientService.findAll().subscribe(ingredients => {
-        //   this.ingredients = ingredients;
-        //   console.log(ingredients);
-        // });
+
         console.log(this.ingredients);
         return;
       }
     });
+  }
+
+  onSubmit() {
+    const formData = new FormData();
+    formData.append('file', this.cocktailForm.get('image').value);
+    this.imageService.uploadImage(formData).subscribe(id => {
+      this.newCocktailImage.imageId = id;
+    });
+
+    // this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
+    //   (res) => console.log(res),
+    //   (err) => console.log(err)
+    // );
   }
 
   ngOnInit(): void {

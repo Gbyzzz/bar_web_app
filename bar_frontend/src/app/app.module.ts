@@ -30,6 +30,7 @@ import {EditUserDialogComponent} from './view/dialog/edit-user-dialog/edit-user-
 import {MatDialogModule} from "@angular/material/dialog";
 import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
+import {IMAGE_URL_TOKEN} from "./service/impl/ImageServiceImpl";
 
 @NgModule({
   declarations: [
@@ -79,6 +80,11 @@ import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/ed
     {
       provide: INGREDIENT_URL_TOKEN,
       useValue: 'http://localhost:8080/ingredient'
+    },
+
+    {
+      provide: IMAGE_URL_TOKEN,
+      useValue: 'http://localhost:8080/image'
     },
 
   ],
