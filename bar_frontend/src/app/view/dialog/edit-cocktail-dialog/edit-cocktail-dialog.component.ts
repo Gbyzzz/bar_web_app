@@ -1,12 +1,11 @@
 import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Ingredient} from "../../../model/Ingredient";
 import {IngredientServiceImpl} from "../../../service/impl/IngredientServiceImpl";
 import {EditIngredientDialogComponent} from "../edit-ingredient-dialog/edit-ingredient-dialog.component";
 import {DialogAction} from "../DialogResult";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import * as punycode from "punycode";
 import {Cocktail} from "../../../model/Cocktail";
 import {Image} from "../../../model/Image";
 import {Recipe} from "../../../model/Recipe";
@@ -117,7 +116,6 @@ export class EditCocktailDialogComponent implements OnInit {
       reader.onload = () => {
 
         this.imageSrc = reader.result as string;
-
       };
     }
   }
@@ -153,8 +151,10 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log("submit")
     const formData = new FormData();
-    formData.append('file', this.cocktailForm.get('image').value);
+    formData.append('file', this.cocktailForm.get('cocktailImageFile').value);
+    console.log(this.cocktailForm.get('cocktailImageFile').value.filename);
     this.imageService.uploadImage(formData).subscribe(id => {
       this.newCocktailImage.imageId = id;
       this.targetCocktail.cocktailName = this.newCocktailName;
@@ -162,6 +162,9 @@ export class EditCocktailDialogComponent implements OnInit {
       this.targetCocktail.cocktailImage = this.newCocktailImage;
       this.targetCocktail.recipes = this.newRecipe;
       this.cocktailService.add(this.targetCocktail);
+      for(let i = 0; i < this.selectedIngredient.length; i++){
+        this.newRecipe.splice(i, 0, new Recipe(null,this.targetCocktail,this.selectedIngredient[i], this.selectedQuantity[i]));
+      }
     });
   }
 
