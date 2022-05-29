@@ -22,4 +22,9 @@ export class ImageServiceImpl implements ImageService{
     return this.HttpClient.post<any>(this.url + '/upload', formData);
   }
 
+  getImage(id: number): string {
+    return this.url + "/" + id;
+  }
+
+
 }

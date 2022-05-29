@@ -6,7 +6,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './view/header/header.component';
 import {FooterComponent} from './view/footer/footer.component';
 import {COCKTAIL_URL_TOKEN} from "./service/impl/CocktailServiceImpl";
@@ -31,6 +31,15 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
 import {IMAGE_URL_TOKEN} from "./service/impl/ImageServiceImpl";
+import { CocktailComponent } from './view/main/cocktail/cocktail.component';
+import { CocktailsComponent } from './view/main/cocktails/cocktails.component';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -44,7 +53,9 @@ import {IMAGE_URL_TOKEN} from "./service/impl/ImageServiceImpl";
     IngredientsAdminComponent,
     EditUserDialogComponent,
     EditIngredientDialogComponent,
-    EditCocktailDialogComponent
+    EditCocktailDialogComponent,
+    CocktailComponent,
+    CocktailsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +74,9 @@ import {IMAGE_URL_TOKEN} from "./service/impl/ImageServiceImpl";
     MatOptionModule,
     MatSelectModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
+    NgxStarRatingModule
   ],
   providers: [
 

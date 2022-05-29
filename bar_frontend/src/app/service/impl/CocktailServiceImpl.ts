@@ -27,7 +27,7 @@ export class CocktailServiceImpl implements CocktailService{
   }
 
   findById(id: number): Observable<Cocktail> {
-    return this.HttpClient.get<Cocktail>(this.url+'/id/' + id);
+    return this.HttpClient.get<Cocktail>(this.url+'/' + id);
   }
 
   findAll(): Observable<Cocktail[]> {
