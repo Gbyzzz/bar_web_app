@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/image")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ImageController {
 
     private ImageService imageService;

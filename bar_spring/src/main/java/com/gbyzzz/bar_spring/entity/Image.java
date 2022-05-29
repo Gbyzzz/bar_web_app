@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -36,8 +37,8 @@ public class Image {
     @Column(name = "size")
     private Long size;
 
-    @Basic
-    @Column(name = "bytes")
     @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name = "bytes")
     private byte[] bytes;
 }

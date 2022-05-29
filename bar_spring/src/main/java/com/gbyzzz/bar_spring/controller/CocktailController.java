@@ -28,14 +28,9 @@ public class CocktailController {
 
     @GetMapping("/{id}")
     public Cocktail getCocktail(@PathVariable long id) throws Exception {
+        System.out.println("get Cocktail");
         return cocktailService.findById(id);
     }
-
-//    @GetMapping("/{id}/cocktailAuthor")
-//    public RedirectView getCocktailsAuthor(@PathVariable long id) throws Exception {
-//        Long authorId = cocktailService.findById(id).getCocktailAuthor().getUserId();
-//        return new RedirectView("/users/" + authorId);
-//    }
 
     @PostMapping("/add")
     public Cocktail addCocktail(@RequestBody Cocktail cocktail) {
