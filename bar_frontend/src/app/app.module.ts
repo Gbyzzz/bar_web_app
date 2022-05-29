@@ -33,7 +33,6 @@ import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/ed
 import {IMAGE_URL_TOKEN} from "./service/impl/ImageServiceImpl";
 import { CocktailComponent } from './view/main/cocktail/cocktail.component';
 import { CocktailsComponent } from './view/main/cocktails/cocktails.component';
-import { NgxStarRatingModule } from 'ngx-star-rating';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -75,8 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSelectModule,
     MatDialogModule,
     ReactiveFormsModule,
-    TranslateModule,
-    NgxStarRatingModule
+    TranslateModule
   ],
   providers: [
 

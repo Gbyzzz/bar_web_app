@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Cocktail} from "./model/Cocktail";
-import {CocktailServiceImpl} from "./service/impl/CocktailServiceImpl";
-import {User} from "./model/User";
 import {UserServiceImpl} from "./service/impl/UserServiceImpl";
 import {TranslateService} from "@ngx-translate/core";
 
@@ -18,11 +15,11 @@ export class AppComponent implements OnInit{
   }
 
   constructor(private userService: UserServiceImpl) {
-    this.translate.addLangs(['en', 'ru']);
-    this.translate.setDefaultLang('en');
-
-    const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
+    // this.translate.addLangs(['en', 'ru']);
+    // this.translate.setDefaultLang('en');
+    //
+    // const browserLang = this.translate.getBrowserLang();
+    // this.translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
   }
 
 }

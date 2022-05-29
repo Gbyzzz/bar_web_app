@@ -7,7 +7,7 @@ import {Cocktail} from "../../../model/Cocktail";
 import {EditCocktailDialogComponent} from "../../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
 
 @Component({
-  selector: 'app-cocktails',
+  selector: 'app-cocktails-admin',
   templateUrl: './cocktails-admin.component.html',
   styleUrls: ['./cocktails-admin.component.css']
 })

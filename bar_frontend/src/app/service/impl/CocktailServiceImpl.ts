@@ -3,6 +3,7 @@ import {CocktailService} from "../CocktailService";
 import {Cocktail} from "../../model/Cocktail";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {Pagination} from "../../model/pagination/Pagination";
 
 export const COCKTAIL_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -32,6 +33,10 @@ export class CocktailServiceImpl implements CocktailService{
 
   findAll(): Observable<Cocktail[]> {
     return this.HttpClient.get<Cocktail[]>(this.url+'/all');
+  }
+
+  findAllWithPages(pagination: Pagination){
+    return this.HttpClient.post<any>(this.url+'/all_pages', pagination);
   }
 
   update(cocktail: Cocktail): Observable<Cocktail> {

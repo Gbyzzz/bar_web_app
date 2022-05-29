@@ -13,7 +13,7 @@ import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
 import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
 
 @Component({
-  selector: 'app-add-cocktail',
+  selector: 'app-edit-cocktail-dialog',
   templateUrl: './edit-cocktail-dialog.component.html',
   styleUrls: ['./edit-cocktail-dialog.component.css']
 })

@@ -1,49 +1,21 @@
-<!--<p>cocktails works!</p>-->
-<!--<div class="text-center font-weight-bold"><h1><fmt:message key="locale.cocktails"/></h1></div>-->
-<!--<div class="d-flex flex-wrap">-->
-<!--  <c:forEach items="${cocktails}" var="cocktail">-->
+<div class="text-center font-weight-bold"><h1>Cocktails</h1></div>
+<div class="d-flex flex-wrap" *ngFor="let cocktail of cocktails; let i=index">
+     <div class="flex-lg-grow-0 m-3">
+      <div class="post">
+        <div class="bg-image hover-zoom">
+          <a class="post-img">
+            <img [src]="cocktail.cocktailImage" width="420"/>
+            <div class="text-block">
+              <h4><a style="color:white">
+                {{cocktail.cocktailName}}
+              </a></h4>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
 
-
-<!--    <div class="flex-lg-grow-0 m-3">-->
-<!--      <div class="post">-->
-<!--        <div class="bg-image hover-zoom">-->
-<!--          <a class="post-img"-->
-<!--             href="/controller?command=to_cocktail_page&cocktail_id=${cocktail.getCocktailId()}">-->
-<!--            <img href="/controller?command=to_cocktail_page&cocktail_id=${cocktail.getCocktailId()}"-->
-<!--                 src="${pageContext.request.contextPath}/upload/${cocktail.getImageName()}" width="420"/>-->
-<!--            <div class="text-block">-->
-<!--              <h4><a style="color:white"-->
-<!--                     href="/controller?command=to_cocktail_page&cocktail_id=${cocktail.getCocktailId()}"><c:out-->
-<!--                value="${cocktail.getCocktailName()}"/></a></h4>-->
-<!--            </div>-->
-<!--          </a>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </c:forEach>-->
-<!--</div>-->
-
-<!--<div class="container mt-3 mb-3">-->
-<!--  <c:if test="${not empty totalPages || totalPages == 1}">-->
-<!--    <ul class="pagination justify-content-center">-->
-<!--      <c:if test="${page > 1}">-->
-<!--        <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
-<!--      </c:if>-->
-<!--      <c:if test="${page-1 > 0}">-->
-<!--        <li class="page-item"><a class="page-link"-->
-<!--                                 href="/controller?command=to_cocktails&page=${page-1}">${page-1}</a></li>-->
-<!--      </c:if>-->
-<!--      <li class="page-item disabled"><a class="page-link">${cocktailsPage}</a></li>-->
-<!--      <c:if test="${page+1 <= totalPages}">-->
-<!--        <li class="page-item"><a class="page-link"-->
-<!--                                 href="/controller?command=to_cocktails&page=${page+1}">${page+1}</a></li>-->
-<!--      </c:if>-->
-<!--      <c:if test="${totalPages == 1}">-->
-<!--        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>-->
-<!--      </c:if>-->
-<!--      <c:if test="${totalPages > 1}">-->
-<!--        <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
-<!--      </c:if>-->
-<!--    </ul>-->
-<!--  </c:if>-->
-<!--</div>-->
+<mat-paginator (page)="pageChanged($event)" [pageIndex]="pagination.pageNumber"
+               [pageSize]="pagination.pageSize" [length]="totalCocktailsFounded"
+               [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>

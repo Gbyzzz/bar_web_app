@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {DialogAction, DialogResult} from "../../dialog/DialogResult";
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-users-admin',
   templateUrl: './users-admin.component.html',
   styleUrls: ['./users-admin.component.css']
 })
