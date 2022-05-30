@@ -3,6 +3,10 @@ import {PageEvent} from "@angular/material/paginator";
 import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
 import {Pagination} from "../../../model/pagination/Pagination";
 import {Cocktail} from "../../../model/Cocktail";
+import {ImageService} from "../../../service/ImageService";
+import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
+import {Image} from "../../../model/Image";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-cocktails',
@@ -11,21 +15,25 @@ import {Cocktail} from "../../../model/Cocktail";
 })
 export class CocktailsComponent implements OnInit {
 
-  readonly defaultPageSize = 5;
+  readonly defaultPageSize = 6;
   readonly defaultPageNumber = 0;
 
   cocktails: Cocktail[];
   pagination: Pagination;
   totalCocktailsFounded: number;
+  target_cocktail: RouterLink;
 
-  constructor(private cocktailService: CocktailServiceImpl) {
+  constructor(private cocktailService: CocktailServiceImpl,
+              private imageService: ImageServiceImpl) {
+
+    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber);
+    console.log(this.pagination);
 
     this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
-      this.cocktails = cocktails;
-      this.pagination.pageNumber = this.defaultPageNumber;
-      this.pagination.pageSize = this.defaultPageSize;
+      this.cocktails = cocktails.content;
+      console.log(cocktails);
       this.totalCocktailsFounded = cocktails.length;
-    })
+    });
   }
 
   ngOnInit(): void {

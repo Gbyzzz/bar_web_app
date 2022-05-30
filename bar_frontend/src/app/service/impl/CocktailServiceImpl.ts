@@ -35,7 +35,7 @@ export class CocktailServiceImpl implements CocktailService{
     return this.HttpClient.get<Cocktail[]>(this.url+'/all');
   }
 
-  findAllWithPages(pagination: Pagination){
+  findAllWithPages(pagination: Pagination): Observable<any>{
     return this.HttpClient.post<any>(this.url+'/all_pages', pagination);
   }
 

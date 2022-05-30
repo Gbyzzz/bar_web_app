@@ -4,9 +4,10 @@
       <div class="post">
         <div class="bg-image hover-zoom">
           <a class="post-img">
-            <img [src]="cocktail.cocktailImage" width="420"/>
+            <img [src]="this.imageService.getImage(this.cocktails[i].cocktailImage.imageId)" width="420"/>
             <div class="text-block">
-              <h4><a style="color:white">
+              <h4><a type="submit" style="color:white"
+                     [routerLink] = "target_cocktail" [state] = ”{targetCocktailId: cocktail.cocktailId}” >
                 {{cocktail.cocktailName}}
               </a></h4>
             </div>
@@ -16,6 +17,6 @@
     </div>
 </div>
 
-<mat-paginator (page)="pageChanged($event)" [pageIndex]="pagination.pageNumber"
+<mat-paginator *ngIf="totalCocktailsFounded > 6" (page)="pageChanged($event)" [pageIndex]="pagination.pageNumber"
                [pageSize]="pagination.pageSize" [length]="totalCocktailsFounded"
-               [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+               [pageSizeOptions]="[6, 12, 24]" showFirstLastButtons></mat-paginator>

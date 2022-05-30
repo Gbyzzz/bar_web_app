@@ -1,0 +1,26 @@
+.bg-image{position:relative;overflow:hidden;background-repeat:no-repeat;background-size:cover;background-position:50%}
+.hover-zoom img,
+.hover-zoom video{-webkit-transition:all .3s linear;transition:all .3s linear}
+.hover-zoom:hover img,
+.hover-zoom:hover video{-webkit-transform:scale(1.1);transform:scale(1.1)}
+/* Container holding the image and the text */
+.container-img {
+  position: relative;
+  font-family: Arial;
+}
+
+/* Bottom right text */
+.text-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+h4w{
+  font-size: 30px;
+  color: rgba(255,255,255,0.7);
+
+}
