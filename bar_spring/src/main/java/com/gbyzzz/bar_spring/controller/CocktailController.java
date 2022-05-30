@@ -44,6 +44,5 @@ public class CocktailController {
     public ResponseEntity<Page<Cocktail>> getAllWithPages(@RequestBody Pagination pagination) {
         Page result = cocktailService.findAllWithPages(pagination);
         return ResponseEntity.ok(result);
-
     }
 }
