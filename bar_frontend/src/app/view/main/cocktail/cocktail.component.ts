@@ -3,6 +3,8 @@ import {Cocktail} from "../../../model/Cocktail";
 import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
 import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {NavigationStart, Router} from "@angular/router";
+import {filter} from "rxjs";
 
 export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -17,14 +19,17 @@ export class CocktailComponent implements OnInit {
   cocktail: Cocktail;
   imageSrc: string;
   ratingForm: FormGroup;
+  cocktailId: number
 
   constructor(private cocktailService: CocktailServiceImpl,
               private imageService: ImageServiceImpl,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private router: Router) {
     this.ratingForm = this.fb.group({
       rating: ['', Validators.required],
     });
-    this.cocktailService.findById(1).subscribe(cocktail =>{
+    this.cocktailId = Number(this.router.url.split('/')[this.router.url.split('/').length-1]);
+    this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
      this.cocktail = cocktail;
      this.imageSrc = this.imageService.getImage(this.cocktail.cocktailImage.imageId);
      console.log(this.cocktail);

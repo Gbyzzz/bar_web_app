@@ -2,10 +2,30 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {CocktailComponent} from "./view/main/cocktail/cocktail.component";
 import {CocktailsComponent} from "./view/main/cocktails/cocktails.component";
+import {MainComponent} from "./view/main/main.component";
+import {AboutComponent} from "./view/main/about/about.component";
+import {ContactComponent} from "./view/main/contact/contact.component";
 
 const routes: Routes = [
-  {path: 'target_cocktail', component: CocktailComponent},
-  {path: 'cocktails', component: CocktailsComponent}]
+  {path: '', component: MainComponent},
+  {path: 'cocktails', component: CocktailsComponent},
+  {path: 'cocktails/cocktail/:id', component: CocktailComponent},
+  {path: 'about', component: AboutComponent},
+  {path: 'contact', component: ContactComponent},
+
+
+
+  // {
+  //   path: '',
+  //   component: MainComponent,
+  //   children: [
+  //     {path: 'cocktails', component: CocktailsComponent, children:[
+  //         {path: 'cocktails/cocktail', component: CocktailComponent},
+  //       ]},
+  //     {path: 'cocktail', component: CocktailComponent},
+  //   ]
+  // },
+];
 
 
 @NgModule({

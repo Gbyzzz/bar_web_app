@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Cocktail} from "../../model/Cocktail";
 import {CocktailServiceImpl} from "../../service/impl/CocktailServiceImpl";
+import {ImageServiceImpl} from "../../service/impl/ImageServiceImpl";
 
 @Component({
   selector: 'app-main',
@@ -13,7 +14,8 @@ export class MainComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  constructor(private cocktailService: CocktailServiceImpl) {
+  constructor(private cocktailService: CocktailServiceImpl,
+              private imageService: ImageServiceImpl) {
     this.cocktailService.findAll().subscribe(cocktails => {
       this.cocktails = cocktails;
       console.log(cocktails);

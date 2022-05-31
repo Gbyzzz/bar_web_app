@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="container">
-  <a href="/controller?command=to_main" class="logo">
+  <a [routerLink] = "['']" class="logo">
     <img src="assets/icon.jpg" width="60" class="mx-auto d-block" alt="logo"/>
   </a>
 </div>
@@ -27,35 +27,26 @@
 <!--</c:if>-->
 <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
   <div class="container-fluid">
-    <form action="/controller" method="post">
       <input type="hidden" name="command" value="to_main" />
-      <a href="#" class="navbar-brand" onclick="this.parentNode.submit()">BAR.com</a>
-    </form>
+      <a [routerLink] = "['']" class="navbar-brand">BAR.com</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <form action="/controller" method="post">
             <input type="hidden" name="command" value="to_cocktails" />
-            <a href="#" class="nav-link" onclick="this.parentNode.submit()">Cocktails</a>
-          </form>
+            <a class="nav-link" [routerLink]="['/cocktails']">Cocktails</a>
         </li>
         <li class="nav-item">
-          <form action="/controller" method="post">
             <input type="hidden" name="command" value="to_about" />
-            <a href="#" class="nav-link" onclick="this.parentNode.submit()">about</a>
-          </form>
+            <a href="#" class="nav-link" [routerLink]="['/about']">About</a>
         </li>
         <li class="nav-item">
-          <form action="/controller" method="post">
             <input type="hidden" name="command" value="to_contact" />
-            <a href="#" class="nav-link" onclick="this.parentNode.submit()">contact</a>
-          </form>
+            <a href="#" class="nav-link" [routerLink]="['/contact']">Contact</a>
         </li>
       </ul>
-      <form action="/controller" method="post">
         <div class="dropdown">
           <button type="button" class="btn btn-dark me-3 dropdown-toggle" data-bs-toggle="dropdown">
             lang
@@ -68,8 +59,7 @@
             <input type="hidden" name="command" value="set_locale">
           </ul>
         </div>
-      </form>
-<!--      <c:if test="${empty user}">-->
+      <!--      <c:if test="${empty user}">-->
 <!--        <form>-->
 <!--          <button class="btn btn-dark me-3" type="button" data-bs-target="#signin" data-bs-toggle="offcanvas" >-->
 <!--            <fmt:message key="locale.signin"/>-->

@@ -35,6 +35,8 @@ import { CocktailComponent } from './view/main/cocktail/cocktail.component';
 import { CocktailsComponent } from './view/main/cocktails/cocktails.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AboutComponent } from './view/main/about/about.component';
+import { ContactComponent } from './view/main/contact/contact.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -54,7 +56,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditIngredientDialogComponent,
     EditCocktailDialogComponent,
     CocktailComponent,
-    CocktailsComponent
+    CocktailsComponent,
+    AboutComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
