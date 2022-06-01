@@ -37,6 +37,9 @@
         </div>
         <div class="col-sm-4">
           <img class="mx-auto d-block img-fluid" [src]="imageSrc" *ngIf="imageSrc" style="height: 250px; width:400px">
+          <img class="mx-auto d-block img-fluid" *ngIf="!imageSrc && targetCocktail.cocktailImage"
+               [src]="this.imageService.getImage(targetCocktail.cocktailImage.imageId)"  style="height: 250px; width:400px">
+
         </div>
       </div>
       <div style="width:40%;">

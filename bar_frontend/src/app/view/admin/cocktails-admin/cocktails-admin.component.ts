@@ -5,6 +5,7 @@ import {Sort} from "@angular/material/sort";
 import {DialogAction} from "../../dialog/DialogResult";
 import {Cocktail} from "../../../model/Cocktail";
 import {EditCocktailDialogComponent} from "../../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
+import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
 
 @Component({
   selector: 'app-cocktails-admin',
@@ -16,7 +17,8 @@ export class CocktailsAdminComponent implements OnInit {
   cocktails: Cocktail[];
   sortedData: Cocktail[];
   constructor(private dialog: MatDialog,
-              private cocktailService: CocktailServiceImpl) {
+              private cocktailService: CocktailServiceImpl,
+              private imageService: ImageServiceImpl) {
     this.cocktailService.findAll().subscribe(cocktails => {
       this.sortedData = cocktails;
       this.cocktails = cocktails;
@@ -25,6 +27,7 @@ export class CocktailsAdminComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   updateCocktail(cocktail: Cocktail){
     this.cocktailService.update(cocktail).subscribe();
   }

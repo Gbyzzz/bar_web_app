@@ -14,9 +14,9 @@ export class Cocktail{
   recipes: Recipe[];
 
 
-  constructor(cocktailId: number, cocktailName: string, cocktailAuthor: User, cocktailRating: number,
-              publicationDate: Date, cocktailImage: Image, cocktailRecipe: string,
-              approxAlcoholPercentage: number, recipes: Recipe[]) {
+  constructor(cocktailId?: number, cocktailName?: string, cocktailAuthor?: User, cocktailRating?: number,
+              publicationDate?: Date, cocktailImage?: Image, cocktailRecipe?: string,
+              approxAlcoholPercentage?: number, recipes?: Recipe[]) {
     this.cocktailId = cocktailId;
     this.cocktailName = cocktailName;
     this.cocktailAuthor = cocktailAuthor;

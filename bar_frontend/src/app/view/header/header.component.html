@@ -4,12 +4,12 @@
   </div>
   <div class="offcanvas-body">
 
-<!--    <c:import url="signin.jsp"/>-->
+    <!--    <c:import url="signin.jsp"/>-->
 
   </div>
 </div>
 <div class="container">
-  <a [routerLink] = "['']" class="logo">
+  <a [routerLink]="['']" class="logo">
     <img src="assets/icon.jpg" width="60" class="mx-auto d-block" alt="logo"/>
   </a>
 </div>
@@ -25,54 +25,62 @@
 <!--    </div>-->
 <!--  </form>-->
 <!--</c:if>-->
-<nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top" *transloco="let t">
   <div class="container-fluid">
-      <input type="hidden" name="command" value="to_main" />
-      <a [routerLink] = "['']" class="navbar-brand">BAR.com</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+    <input type="hidden" name="command" value="to_main"/>
+    <a [routerLink]="['']" class="navbar-brand">BAR.com</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-            <input type="hidden" name="command" value="to_cocktails" />
-            <a class="nav-link" [routerLink]="['/cocktails']">Cocktails</a>
+          <input type="hidden" name="command" value="to_cocktails"/>
+          <a class="nav-link" [routerLink]="['/cocktails']">{{t('cocktails')}}</a>
         </li>
         <li class="nav-item">
-            <input type="hidden" name="command" value="to_about" />
-            <a href="#" class="nav-link" [routerLink]="['/about']">About</a>
+          <input type="hidden" name="command" value="to_about"/>
+          <a href="#" class="nav-link" [routerLink]="['/about']">{{t('about')}}</a>
         </li>
         <li class="nav-item">
-            <input type="hidden" name="command" value="to_contact" />
-            <a href="#" class="nav-link" [routerLink]="['/contact']">Contact</a>
+          <input type="hidden" name="command" value="to_contact"/>
+          <a href="#" class="nav-link" [routerLink]="['/contact']">{{t('contact')}}</a>
         </li>
       </ul>
-        <div class="dropdown">
-          <button type="button" class="btn btn-dark me-3 dropdown-toggle" data-bs-toggle="dropdown">
-            lang
+      <button type="button" class="btn btn-dark rm-3" [routerLink]="['/admin']">
+        {{t('admin')}}
+      </button>
+      <button type="button" class="btn btn-dark rm-3" (click)="openAddDialog()">
+        {{t('add cocktail')}}
+      </button>
+      <div class="dropdown">
+        <button type="button" class="btn btn-dark me-3 dropdown-toggle" data-bs-toggle="dropdown">
+          {{siteLanguage}}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <button class="dropdown-item" type="submit" name="language"
+                  value="en_US" (click)="changeSiteLanguage('en')">English
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button class="dropdown-item" type="submit" name="language"
-                    value="en_US">English</button>
-            <button class="dropdown-item" type="submit" name="language"
-                    value="ru_RU">Русский</button>
-            <input type="hidden" name="command" value="set_locale">
-          </ul>
-        </div>
+          <button class="dropdown-item" type="submit" name="language"
+                  value="ru_RU" (click)="changeSiteLanguage('ru')">Русский
+          </button>
+          <input type="hidden" name="command" value="set_locale">
+        </ul>
+      </div>
       <!--      <c:if test="${empty user}">-->
-<!--        <form>-->
-<!--          <button class="btn btn-dark me-3" type="button" data-bs-target="#signin" data-bs-toggle="offcanvas" >-->
-<!--            <fmt:message key="locale.signin"/>-->
-<!--          </button>-->
-<!--        </form>-->
-<!--      </c:if>-->
-<!--      <c:if test="${not empty user}">-->
-<!--        <form action="/controller">-->
-<!--          <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
-<!--            <fmt:message key="locale.signout"/>-->
-<!--          </button>-->
-<!--        </form>-->
-<!--      </c:if>-->
+      <!--        <form>-->
+      <!--          <button class="btn btn-dark me-3" type="button" data-bs-target="#signin" data-bs-toggle="offcanvas" >-->
+      <!--            <fmt:message key="locale.signin"/>-->
+      <!--          </button>-->
+      <!--        </form>-->
+      <!--      </c:if>-->
+      <!--      <c:if test="${not empty user}">-->
+      <!--        <form action="/controller">-->
+      <!--          <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
+      <!--            <fmt:message key="locale.signout"/>-->
+      <!--          </button>-->
+      <!--        </form>-->
+      <!--      </c:if>-->
 
     </div>
   </div>

@@ -1,52 +1,54 @@
-<div class="text-center font-weight-bold"><h1>{{cocktail.cocktailName}}</h1></div>
+<div *transloco="let t">
+  <div class="text-center font-weight-bold"><h1>{{cocktail.cocktailName}}</h1></div>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-6">
-      <h3>Ingredients:</h3>
+  <div class="container mt-5" >
+    <div class="row">
+      <div class="col-6">
+        <h3>{{t('ingredients')}}</h3>
         <li *ngFor="let recipe of cocktail.recipes">
-          {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{recipe.ingredient.unitOfMeasurement}}
+          {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{t(recipe.ingredient.unitOfMeasurement)}}
         </li>
-      Approx. alcohol - {{cocktail.approxAlcoholPercentage}}%
-      <br>
-      <br>
-      <h3>Recipe:</h3>
-      {{cocktail.cocktailRecipe}}
-    </div>
-    <div class="col-6">
-      <img [src]="imageSrc" class="mx-auto d-block" alt="logo" />
+        {{t('Approx. alcohol')}}{{cocktail.approxAlcoholPercentage}}%
+        <br>
+        <br>
+        <h3>{{t('recipe')}}</h3>
+        {{cocktail.cocktailRecipe}}
+      </div>
+      <div class="col-6">
+        <img [src]="imageSrc" class="mx-auto d-block" alt="logo"/>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="p-5 bg-white text-black-50">
-  Author - {{cocktail.cocktailAuthor.username}}
-  <br>
-  Publication date: {{cocktail.publicationDate}}
+  <div class="p-5 bg-white text-black-50">
+    {{t('author')}}{{cocktail.cocktailAuthor.username}}
+    <br>
+    {{t('publication date')}} {{cocktail.publicationDate}}
+  </div>
+  <div class="container ml-5 mr-5">
+  </div>
+  <form action="/controller" method="post">
+    <div class="text-center">
+      <h3>Rate</h3>
+    </div>
+    <div class="rating text-center">
+      <input hidden name="command" value="rate_cocktail">
+      <input type="submit" name="rating" value="5" id="5" class="ml-1">
+      <label for="5">☆</label>
+      <input type="submit" name="rating" value="4" id="4">
+      <label for="4">☆</label>
+      <input type="submit" name="rating" value="3" id="3">
+      <label for="3">☆</label>
+      <input type="submit" name="rating" value="2" id="2">
+      <label for="2">☆</label>
+      <input type="submit" name="rating" value="1" id="1">
+      <label for="1">☆</label>
+    </div>
+    <div class="text-center mb-5">
+      Rating - {{cocktail.cocktailRating}} (Votes : )
+    </div>
+  </form>
 </div>
-<div class="container ml-5 mr-5">
-</div>
-<form action="/controller" method="post">
-  <div class="text-center">
-    <h3>Rate</h3>
-  </div>
-  <div class="rating text-center">
-    <input hidden name="command" value="rate_cocktail">
-    <input type="submit" name="rating" value="5" id="5" class="ml-1">
-    <label for="5">☆</label>
-    <input type="submit" name="rating" value="4" id="4">
-    <label for="4">☆</label>
-    <input type="submit" name="rating" value="3" id="3">
-    <label for="3">☆</label>
-    <input type="submit" name="rating" value="2" id="2">
-    <label for="2">☆</label>
-    <input type="submit" name="rating" value="1" id="1">
-    <label for="1">☆</label>
-  </div>
-  <div class="text-center mb-5">
-    Rating - {{cocktail.cocktailRating}} (Votes : )
-  </div>
-</form>
 
 <!--<form [formGroup]="ratingForm">-->
 <!--  <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>-->

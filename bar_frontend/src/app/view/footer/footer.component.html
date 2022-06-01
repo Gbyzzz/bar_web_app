@@ -1,13 +1,13 @@
 <footer class="footer-07">
   <div class="container">
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center" *transloco="let t">
       <h2 class="footer-heading">
         <a [routerLink]="['']" class="logo">BAR.com</a></h2>
       <p class="menu">
-        <a [routerLink]="['']">Home</a>
-        <a [routerLink]="['/cocktails']">Cocktails</a>
-        <a [routerLink]="['/about']">About</a>
-        <a [routerLink]="['/contact']">Contact</a>
+        <a [routerLink]="['']">{{t('home')}}</a>
+        <a [routerLink]="['/cocktails']">{{t('cocktails')}}</a>
+        <a [routerLink]="['/about']">{{t('about')}}</a>
+        <a [routerLink]="['/contact']">{{t('contact')}}</a>
       </p>
     </div>
   </div>

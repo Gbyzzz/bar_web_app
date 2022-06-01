@@ -19,7 +19,7 @@
 
     <tr *ngFor="let cocktail of sortedData">
       <td class="border-1">{{cocktail.cocktailId}}</td>
-      <td class="border-1">{{cocktail.cocktailImage}}</td>
+      <td class="border-1"><img [src]="this.imageService.getImage(cocktail.cocktailImage.imageId)" width="150px"></td>
       <td class="border-1">{{cocktail.cocktailName}}</td>
       <td class="border-1">{{cocktail.cocktailAuthor.username}}</td>
       <td class="border-1">{{cocktail.cocktailRating}}</td>

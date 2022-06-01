@@ -55,8 +55,8 @@
     </button>
   </div>
 </div>
-<div class="container-fluid">
-    <h2>New Cocktails:</h2>
+<div class="container-fluid" *transloco="let t">
+    <h2>{{t('new cocktails')}}</h2>
 </div>
 
 <div class="d-flex flex-wrap mb-4 ml-2" *ngFor="let cocktail of cocktails; ">

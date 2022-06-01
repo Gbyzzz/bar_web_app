@@ -5,6 +5,7 @@ import {CocktailsComponent} from "./view/main/cocktails/cocktails.component";
 import {MainComponent} from "./view/main/main.component";
 import {AboutComponent} from "./view/main/about/about.component";
 import {ContactComponent} from "./view/main/contact/contact.component";
+import {AdminComponent} from "./view/admin/admin.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'cocktails/cocktail/:id', component: CocktailComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
+  {path: 'admin', component: AdminComponent}
 
 
 

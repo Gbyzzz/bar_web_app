@@ -99,11 +99,8 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
   onSelectChange(event, i) {
-    console.log(event);
-    console.log(i);
     this.selectedIngredient[i] = event;
     this.selectedUnit[i] = this.selectedIngredient[i].unitOfMeasurement;
-    console.log(this.selectedUnit);
   }
 
   onFileChange(event) {
@@ -116,7 +113,10 @@ export class EditCocktailDialogComponent implements OnInit {
       reader.onload = () => {
 
         this.imageSrc = reader.result as string;
+        console.log(this.imageSrc);
       };
+      this.cocktailForm.get('cocktailImageFile').setValue(file);
+
     }
   }
 
@@ -154,17 +154,17 @@ export class EditCocktailDialogComponent implements OnInit {
     console.log("submit")
     const formData = new FormData();
     formData.append('file', this.cocktailForm.get('cocktailImageFile').value);
-    console.log(this.cocktailForm.get('cocktailImageFile').value.filename);
     this.imageService.uploadImage(formData).subscribe(id => {
-      this.newCocktailImage.imageId = id;
+      console.log(id);
+      this.newCocktailImage = new Image(id);
       this.targetCocktail.cocktailName = this.newCocktailName;
       this.targetCocktail.cocktailRecipe = this.newCocktailRecipe;
       this.targetCocktail.cocktailImage = this.newCocktailImage;
       this.targetCocktail.recipes = this.newRecipe;
-      this.cocktailService.add(this.targetCocktail);
       for(let i = 0; i < this.selectedIngredient.length; i++){
         this.newRecipe.splice(i, 0, new Recipe(null,this.targetCocktail,this.selectedIngredient[i], this.selectedQuantity[i]));
       }
+
     });
   }
 

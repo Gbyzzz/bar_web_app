@@ -37,6 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AboutComponent } from './view/main/about/about.component';
 import { ContactComponent } from './view/main/contact/contact.component';
+import { TranslocoRootModule } from './transloco-root.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -78,7 +79,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSelectModule,
     MatDialogModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    TranslocoRootModule
   ],
   providers: [
 
