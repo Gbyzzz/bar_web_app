@@ -4,7 +4,38 @@
   </div>
   <div class="offcanvas-body">
 
-    <!--    <c:import url="signin.jsp"/>-->
+    <div *transloco="let t">
+      <form action="controller" method="post">
+        {{t('username')}}:
+        <p>
+          <input class="form-control me-2" type="email" name="email" [placeholder]="t('email')" size="10">
+        </p>
+        {{t('password')}}:
+        <p>
+          <input class="form-control me-2" type="password" name="pwd" [placeholder]="t('password')"/>
+        </p>
+        <div>
+          <p class="text-center">
+            <button class="btn btn-outline-dark me-2" name="command" value="sign_in" type="submit">
+              {{t('sign in')}}
+            </button>
+            <button class="btn btn-outline-dark" name="command" value="forgot" type="submit">
+              {{t('forgot password')}}
+            </button>
+          </p>
+        </div>
+      </form>
+      <form action="/controller" method="post">
+        <p class="text-center">
+          {{t('not registered')}}
+        </p>
+        <p class="text-center">
+          <button type="submit" class="btn btn-link btn-sm" [routerLink]="['/register']" data-bs-dismiss="offcanvas">
+            {{t('sign up here')}}
+          </button>
+        </p>
+      </form>
+    </div>
 
   </div>
 </div>
@@ -47,10 +78,10 @@
           <a href="#" class="nav-link" [routerLink]="['/contact']">{{t('contact')}}</a>
         </li>
       </ul>
-      <button type="button" class="btn btn-dark rm-3" [routerLink]="['/admin']">
+      <button type="button" class="btn btn-dark me-3" [routerLink]="['/admin']">
         {{t('admin')}}
       </button>
-      <button type="button" class="btn btn-dark rm-3" (click)="openAddDialog()">
+      <button type="button" class="btn btn-dark me-3" (click)="openAddDialog()">
         {{t('add cocktail')}}
       </button>
       <div class="dropdown">
@@ -67,20 +98,16 @@
           <input type="hidden" name="command" value="set_locale">
         </ul>
       </div>
-      <!--      <c:if test="${empty user}">-->
-      <!--        <form>-->
-      <!--          <button class="btn btn-dark me-3" type="button" data-bs-target="#signin" data-bs-toggle="offcanvas" >-->
-      <!--            <fmt:message key="locale.signin"/>-->
-      <!--          </button>-->
-      <!--        </form>-->
-      <!--      </c:if>-->
-      <!--      <c:if test="${not empty user}">-->
-      <!--        <form action="/controller">-->
-      <!--          <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
-      <!--            <fmt:message key="locale.signout"/>-->
-      <!--          </button>-->
-      <!--        </form>-->
-      <!--      </c:if>-->
+                <button class="btn btn-dark me-3" type="button" data-bs-target="#signin" data-bs-toggle="offcanvas" >
+                  {{t('sign in')}}
+                </button>
+<!--            <c:if test="${not empty user}">-->
+<!--              <form action="/controller">-->
+<!--                <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
+<!--                  <fmt:message key="locale.signout"/>-->
+<!--                </button>-->
+<!--              </form>-->
+<!--            </c:if>-->
 
     </div>
   </div>

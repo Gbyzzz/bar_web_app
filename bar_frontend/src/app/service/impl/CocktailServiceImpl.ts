@@ -40,6 +40,6 @@ export class CocktailServiceImpl implements CocktailService{
   }
 
   update(cocktail: Cocktail): Observable<Cocktail> {
-    return this.HttpClient.put<Cocktail>(this.url+'/update/', cocktail);
+    return this.HttpClient.put<Cocktail>(this.url+'/add_or_update', cocktail);
   }
 }

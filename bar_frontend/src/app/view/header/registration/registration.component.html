@@ -1,0 +1,69 @@
+<div class="page-wrapper bg-img  p-t-50 font-poppins" *transloco="let t">
+  <div class="wrapper wrapper--w680">
+    <div class="card card-4">
+      <div class="card-body">
+        <div class="col text-center">
+          <h2 class="title align-middle">
+            {{t('registration')}}
+          </h2>
+        </div>
+        <form action="/controller" method="POST">
+          <div class="row row-space">
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">
+                  {{t('email')}}:
+                </label>
+                <input class="input--style-4" type="email" required name="email" [placeholder]="t('email')">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">
+                  {{t('username')}}:
+                </label>
+                <input class="input--style-4" type="text" required name="username"
+                       [placeholder]="t('username')">
+              </div>
+            </div>
+          </div>
+          <div class="row row-space">
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">
+                  {{t('password')}}
+                </label>
+                <input class="input--style-4" type="password" name="pwd" required
+                [placeholder]="t('password')">
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group">
+                <label class="label">
+                  {{t('password')}}
+                </label>
+                <input class="input--style-4" type="password" name="pwd" required
+                       [placeholder]="t('password')">
+              </div>
+            </div>
+          </div>
+          <div class="row row-space">
+            <div class="form-check">
+              <label><input type="checkbox" class="form-check-input" required>
+              {{t('age confirm')}}
+              </label>
+            </div>
+          </div>
+
+          <div class="p-t-15">
+            <div class="col text-center">
+              <button class="btn btn--radius-2 btn-dark" type="submit" name="command" value="sign_up">
+                {{t('register')}}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -100,15 +100,10 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
   onSelectChange(event, i) {
-    // console.log(this.selectedIngredient);
     console.log(event);
-    // console.log(this.ingredients.find(ingr => ingr.ingredientName === event));
     this.selectedIngredient[i] = event;
-    // console.log(this.selectedIngredient[i]);
     console.log(this.selectedIngredient[i].unitOfMeasurement);
     this.selectedUnit[i] = this.selectedIngredient[i].unitOfMeasurement;// problem here
-    // console.log(this.selectedUnit[i]);
-    // console.log(this.selectedUnit[i]);
   }
 
   equals(o1: Ingredient, o2: Ingredient) {
@@ -163,24 +158,33 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("submit")
-    const formData = new FormData();
-    formData.append('file', this.cocktailForm.get('cocktailImageFile').value);
-    this.imageService.uploadImage(formData).subscribe(id => {
-      console.log(id);
-      this.newCocktailImage = new Image(id);
-      this.targetCocktail.cocktailName = this.newCocktailName;
-      this.targetCocktail.cocktailRecipe = this.newCocktailRecipe;
-      this.targetCocktail.cocktailImage = this.newCocktailImage;
-      this.newRecipe = [];
-      for(let i = 0; i < this.selectedIngredient.length; i++){
-        this.newRecipe.splice(i, 0, new Recipe(null,this.targetCocktail,this.selectedIngredient[i], this.selectedQuantity[i]));
-      }
-      this.targetCocktail.recipes = this.newRecipe;
+    console.log(this.cocktailForm.get('cocktailImageFile').value.imageId);
+    if (!this.cocktailForm.get('cocktailImageFile').value.imageId) {
+      const formData = new FormData();
+      formData.append('file', this.cocktailForm.get('cocktailImageFile').value);
+      this.imageService.uploadImage(formData).subscribe(id => {
+        console.log(id);
+        this.newCocktailImage = new Image(id);
+        this.updateCocktailValues();
+      });
+    } else {
+      this.updateCocktailValues();
+    }
+    this.dialogRef.close(new DialogResult(DialogAction.SAVE));
+  }
 
-      this.dialogRef.close(new DialogResult(DialogAction.SAVE));
 
-    });
+  updateCocktailValues(){
+    this.targetCocktail.cocktailName = this.newCocktailName;
+    this.targetCocktail.cocktailRecipe = this.newCocktailRecipe;
+    this.targetCocktail.cocktailImage = this.newCocktailImage;
+    this.newRecipe = [];
+    for (let i = 0; i < this.selectedIngredient.length; i++) {
+      this.newRecipe.splice(i, 0, new Recipe(null, this.targetCocktail, this.selectedIngredient[i], Number(this.selectedQuantity[i])));
+    }
+    this.targetCocktail.recipes = this.newRecipe;
+
+    console.log(this.targetCocktail);
   }
 
   ngOnInit(): void {
