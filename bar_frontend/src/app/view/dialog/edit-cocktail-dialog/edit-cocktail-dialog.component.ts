@@ -4,13 +4,14 @@ import {HttpClient} from "@angular/common/http";
 import {Ingredient} from "../../../model/Ingredient";
 import {IngredientServiceImpl} from "../../../service/impl/IngredientServiceImpl";
 import {EditIngredientDialogComponent} from "../edit-ingredient-dialog/edit-ingredient-dialog.component";
-import {DialogAction} from "../DialogResult";
+import {DialogAction, DialogResult} from "../DialogResult";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Cocktail} from "../../../model/Cocktail";
 import {Image} from "../../../model/Image";
 import {Recipe} from "../../../model/Recipe";
 import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
 import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
+import {sequence} from "@angular/animations";
 
 @Component({
   selector: 'app-edit-cocktail-dialog',
@@ -99,8 +100,19 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
   onSelectChange(event, i) {
+    // console.log(this.selectedIngredient);
+    console.log(event);
+    // console.log(this.ingredients.find(ingr => ingr.ingredientName === event));
     this.selectedIngredient[i] = event;
-    this.selectedUnit[i] = this.selectedIngredient[i].unitOfMeasurement;
+    // console.log(this.selectedIngredient[i]);
+    console.log(this.selectedIngredient[i].unitOfMeasurement);
+    this.selectedUnit[i] = this.selectedIngredient[i].unitOfMeasurement;// problem here
+    // console.log(this.selectedUnit[i]);
+    // console.log(this.selectedUnit[i]);
+  }
+
+  equals(o1: Ingredient, o2: Ingredient) {
+    return o1.ingredientId === o2.ingredientId;
   }
 
   onFileChange(event) {
@@ -160,10 +172,13 @@ export class EditCocktailDialogComponent implements OnInit {
       this.targetCocktail.cocktailName = this.newCocktailName;
       this.targetCocktail.cocktailRecipe = this.newCocktailRecipe;
       this.targetCocktail.cocktailImage = this.newCocktailImage;
-      this.targetCocktail.recipes = this.newRecipe;
+      this.newRecipe = [];
       for(let i = 0; i < this.selectedIngredient.length; i++){
         this.newRecipe.splice(i, 0, new Recipe(null,this.targetCocktail,this.selectedIngredient[i], this.selectedQuantity[i]));
       }
+      this.targetCocktail.recipes = this.newRecipe;
+
+      this.dialogRef.close(new DialogResult(DialogAction.SAVE));
 
     });
   }

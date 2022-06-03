@@ -11,4 +11,5 @@ export class Ingredient {
     this.ingredientAlcohol = ingredientAlcohol;
     this.unitOfMeasurement = unitOfMeasurement;
   }
+
 }
