@@ -35,7 +35,7 @@ public class CocktailController {
         return cocktailService.findById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add_or_update")
     public Cocktail addCocktail(@RequestBody Cocktail cocktail) {
     return cocktailService.addOrUpdate(cocktail);
 }
