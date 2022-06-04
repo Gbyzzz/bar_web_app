@@ -1,69 +1,132 @@
-<div class="page-wrapper bg-img  p-t-50 font-poppins" *transloco="let t">
-  <div class="wrapper wrapper--w680">
-    <div class="card card-4">
-      <div class="card-body">
-        <div class="col text-center">
-          <h2 class="title align-middle">
-            {{t('registration')}}
-          </h2>
-        </div>
-        <form action="/controller" method="POST">
-          <div class="row row-space">
-            <div class="col-2">
-              <div class="input-group">
-                <label class="label">
-                  {{t('email')}}:
-                </label>
-                <input class="input--style-4" type="email" required name="email" [placeholder]="t('email')">
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="input-group">
-                <label class="label">
-                  {{t('username')}}:
-                </label>
-                <input class="input--style-4" type="text" required name="username"
-                       [placeholder]="t('username')">
-              </div>
-            </div>
-          </div>
-          <div class="row row-space">
-            <div class="col-2">
-              <div class="input-group">
-                <label class="label">
-                  {{t('password')}}
-                </label>
-                <input class="input--style-4" type="password" name="pwd" required
-                [placeholder]="t('password')">
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="input-group">
-                <label class="label">
-                  {{t('password')}}
-                </label>
-                <input class="input--style-4" type="password" name="pwd" required
-                       [placeholder]="t('password')">
-              </div>
-            </div>
-          </div>
-          <div class="row row-space">
-            <div class="form-check">
-              <label><input type="checkbox" class="form-check-input" required>
-              {{t('age confirm')}}
-              </label>
-            </div>
-          </div>
+<!--<div class="page-wrapper bg-img  p-t-50 font-poppins" *transloco="let t">-->
+<!--  <div class="wrapper wrapper&#45;&#45;w680">-->
+<!--    <div class="card card-4">-->
+<!--      <div class="card-body">-->
+<!--        <div class="col text-center">-->
+<!--          <h2 class="title align-middle">-->
+<!--            {{t('registration')}}-->
+<!--          </h2>-->
+<!--        </div>-->
+<!--        <form action="/controller" method="POST">-->
+<!--          <div class="row row-space">-->
+<!--            <div class="col-2"></div>-->
+<!--            <div class="col-2"></div>-->
+<!--            <div class="col-2">-->
+<!--              <div class="input-group">-->
+<!--                <label class="label">-->
+<!--                  {{t('email')}}:-->
+<!--                </label>-->
+<!--                <input class="input&#45;&#45;style-4" type="email" required name="email" [placeholder]="t('email')">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-2">-->
+<!--              <div class="input-group">-->
+<!--                <label class="label">-->
+<!--                  {{t('username')}}:-->
+<!--                </label>-->
+<!--                <input class="input&#45;&#45;style-4" type="text" required name="username"-->
+<!--                       [placeholder]="t('username')">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row row-space">-->
+<!--            <div class="col-2"></div>-->
+<!--            <div class="col-2"></div>-->
+<!--            <div class="col-2">-->
+<!--              <div class="input-group">-->
+<!--                <label class="label">-->
+<!--                  {{t('password')}}-->
+<!--                </label>-->
+<!--                <input class="input&#45;&#45;style-4" type="password" name="pwd" required-->
+<!--                [placeholder]="t('password')">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-2">-->
+<!--              <div class="input-group">-->
+<!--                <label class="label">-->
+<!--                  {{t('password')}}-->
+<!--                </label>-->
+<!--                <input class="input&#45;&#45;style-4" type="password" name="pwd" required-->
+<!--                       [placeholder]="t('password')">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row row-space">-->
+<!--            <div class="form-check">-->
+<!--              <label><input type="checkbox" class="form-check-input" required>-->
+<!--              {{t('age confirm')}}-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="p-t-15">
-            <div class="col text-center">
-              <button class="btn btn--radius-2 btn-dark" type="submit" name="command" value="sign_up">
-                {{t('register')}}
-              </button>
-            </div>
+<!--          <div class="p-t-15">-->
+<!--            <div class="col text-center">-->
+<!--              <button class="btn btn&#45;&#45;radius-2 btn-dark" type="submit" name="command" value="sign_up">-->
+<!--                {{t('register')}}-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<section class="gradient-custom" [style.background-image]="'url(http://localhost:8080/image/13)'">
+  <div class="container py-5">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Registration Form</h3>
+            <form>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+
+                  <div class="form-outline">
+                    <input type="text" id="firstName" class="form-control form-control-lg" />
+                    <label class="form-label" for="firstName">First Name</label>
+                  </div>
+
+                </div>
+                <div class="col-md-6 mb-4">
+
+                  <div class="form-outline">
+                    <input type="text" id="lastName" class="form-control form-control-lg" />
+                    <label class="form-label" for="lastName">Last Name</label>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4 pb-2">
+
+                  <div class="form-outline">
+                    <input type="email" id="emailAddress" class="form-control form-control-lg" />
+                    <label class="form-label" for="emailAddress">Email</label>
+                  </div>
+
+                </div>
+                <div class="col-md-6 mb-4 pb-2">
+
+                  <div class="form-outline">
+                    <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
+                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="mt-4 pt-2">
+                <input class="btn btn-dark btn-lg" type="submit" value="Register" />
+              </div>
+
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>

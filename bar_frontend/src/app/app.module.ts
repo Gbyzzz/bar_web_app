@@ -38,7 +38,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AboutComponent } from './view/main/about/about.component';
 import { ContactComponent } from './view/main/contact/contact.component';
 import { TranslocoRootModule } from './transloco-root.module';
-import {LoginComponent} from "./view/header/login/login.component";
 import {RegistrationComponent} from "./view/header/registration/registration.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -62,7 +61,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     CocktailsComponent,
     AboutComponent,
     ContactComponent,
-    LoginComponent,
     RegistrationComponent
   ],
   imports: [
