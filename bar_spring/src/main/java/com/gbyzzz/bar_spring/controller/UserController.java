@@ -1,8 +1,8 @@
 package com.gbyzzz.bar_spring.controller;
 
-import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.entity.User;
 import com.gbyzzz.bar_spring.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +23,7 @@ public class UserController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<User> getAllUsers(){
         System.out.println("all users");
         return userService.findAll();
@@ -32,11 +33,6 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id) throws Exception {
         return userService.getUserById(id);
-    }
-
-    @GetMapping("/{id}/userCocktails")
-    public List<Cocktail> getUserCocktailsById(@PathVariable int id) throws Exception {
-        return userService.getUserById(id).getUserCocktails();
     }
 
     @PutMapping("/update")

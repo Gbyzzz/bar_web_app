@@ -1,11 +1,12 @@
 package com.gbyzzz.bar_spring.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -60,13 +61,9 @@ public class User {
     @Column(name = "reg_date")
     private Date regDate;
 
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cocktail_author")
-    private List<Cocktail> userCocktails;
 
     public enum Role {
-        ADMIN, BARTENDER, USER
+        ROLE_ADMIN, ROLE_BARTENDER, ROLE_USER
     }
 
 }

@@ -25,7 +25,6 @@ public class CocktailController {
 
     @GetMapping("/all")
     public List<Cocktail> getCocktails(){
-        System.out.println("all cocktails");
         return cocktailService.findAll();
     }
 

@@ -25,47 +25,47 @@ CREATE TABLE images
 
 DROP TABLE IF EXISTS users;
 
-CREATE TYPE user_role AS ENUM ('ADMIN', 'BARTENDER', 'USER');
+CREATE TYPE user_role AS ENUM ('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER');
 
 
 CREATE TABLE users
 (
     user_id  bigserial PRIMARY KEY,
     username varchar(20) UNIQUE  NOT NULL,
-    password varchar(45)         NOT NULL,
+    password varchar(100)         NOT NULL,
     name     varchar(15)                  DEFAULT NULL,
     surname  varchar(20)                  DEFAULT NULL,
     phone    varchar(15) UNIQUE           DEFAULT NULL,
     email    varchar(256) UNIQUE NOT NULL,
     user_pic bigint REFERENCES images (image_id),
-    role     user_role           NOT NULL DEFAULT 'USER',
+    role     user_role           NOT NULL DEFAULT 'ROLE_USER',
     enabled  boolean             NOT NULL DEFAULT 'false',
     reg_date timestamp           NOT NULL
 );
 
 INSERT INTO users
 VALUES (1, 'Admin', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'Tom', 'Smith',
-        '7876867845', 'admin@bar.com', null, 'ADMIN', true, '2002-03-23'),
+        '7876867845', 'admin@bar.com', null, 'ROLE_ADMIN', true, '2002-03-23'),
        (2, 'Admin1', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'John', 'Cole',
-        '0689984689', 'admin1@bar.com', null, 'ADMIN', true, '2002-03-23'),
+        '0689984689', 'admin1@bar.com', null, 'ROLE_ADMIN', true, '2002-03-23'),
        (3, 'LuckyBartender', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'Sam', 'Green',
-        null, 'samgreen@bar.com', null, 'BARTENDER', true, '2002-03-23'),
+        null, 'samgreen@bar.com', null, 'ROLE_BARTENDER', true, '2002-03-23'),
        (4, 'Jspm', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', null, null, null,
-        'alcoholfan2010@gmail.com', null, 'USER', true, '2002-03-23'),
+        'alcoholfan2010@gmail.com', null, 'ROLE_USER', true, '2002-03-23'),
        (5, 'JDaniels', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'John', null, null,
-        'jdaniels1985@yahoo.com', null, 'BARTENDER', true, '2002-03-23'),
+        'jdaniels1985@yahoo.com', null, 'ROLE_BARTENDER', true, '2002-03-23'),
        (6, 'Gmaster', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'Gabe', null, null,
-        'gmaster@gmail.com', null, 'USER', false, '2002-03-23'),
+        'gmaster@gmail.com', null, 'ROLE_USER', false, '2002-03-23'),
        (7, 'SweetAndSour', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'Julia', null, null,
-        'juli95@gmail.com', null, 'USER', true, '2002-03-23'),
+        'juli95@gmail.com', null, 'ROLE_USER', true, '2002-03-23'),
        (8, 'DNegroni', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'Dan', null, null,
-        'dnegroni@gmail.com', null, 'BARTENDER', false, '2002-03-23'),
+        'dnegroni@gmail.com', null, 'ROLE_BARTENDER', false, '2002-03-23'),
        (9, 'WhiskeySour', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'Will', 'Anderson',
-        null, 'wa1984@gmail.com', null, 'USER', true, '2002-03-23'),
+        null, 'wa1984@gmail.com', null, 'ROLE_USER', true, '2002-03-23'),
        (10, 'RayWJ', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'Ray', null, null,
-        'raywj@gmail.com', null, 'USER', true, '2002-03-23'),
+        'raywj@gmail.com', null, 'ROLE_USER', true, '2002-03-23'),
        (11, 'TipsyBartender', '{bcrypt}$2a$10$jaeKCTq9noCcqqd9F1LzauRsz/3w5USKS5iHt/YTU.7OQdKjj4qbC', 'John', null,
-        null, 'tipsybartender@gmail.com', null, 'BARTENDER', true, '2002-03-23');
+        null, 'tipsybartender@gmail.com', null, 'ROLE_BARTENDER', true, '2002-03-23');
 SELECT setval('users_user_id_seq', (SELECT MAX(user_id) from "users"));
 
 DROP TABLE IF EXISTS cocktails;
@@ -156,8 +156,7 @@ INSERT INTO recipes
 VALUES (1, 1, 1, 3),
        (2, 1, 2, 50),
        (3, 1, 3, 1),
-       (4, 1, 4, 7),
-       (5, 1, 5, null);
+       (4, 1, 4, 7);
 
 SELECT setval('recipes_recipe_id_seq', (SELECT MAX(recipe_id) from "recipes"));
 
