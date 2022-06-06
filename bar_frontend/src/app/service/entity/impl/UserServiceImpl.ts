@@ -25,7 +25,7 @@ export class UserServiceImpl  implements UserService{
   }
 
   findById(id: number): Observable<User> {
-    return this.HttpClient.get<User>(this.url+'/id/' + id);
+    return this.HttpClient.get<User>(this.url+'/' + id);
   }
 
   findAll(): Observable<User[]> {
@@ -34,6 +34,7 @@ export class UserServiceImpl  implements UserService{
   }
 
   update(user: User): Observable<User> {
-    return this.HttpClient.put<User>(this.url+'/update/', user);
+    console.log("update");
+    return this.HttpClient.put<User>(this.url+'/update', user);
   }
 }

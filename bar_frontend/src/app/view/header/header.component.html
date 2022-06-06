@@ -76,18 +76,11 @@
 
   <div class="row" *ngIf="isLoggedIn">
     <li>{{t('hi, ')}}
-      <button type="submit" class="btn btn-link btn-sm" name="command" value="to_user_page">{{targetUsername}}</button>
-
-<!--      <button *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'"-->
-<!--              class="btn btn-link float-right btn-sm mr-5">-->
-<!--        {{t('my cocktails')}}-->
-<!--      </button>-->
-<!--      <button *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'"-->
-<!--              class="btn btn-link float-right btn-sm">-->
-<!--        {{t('add cocktail')}}-->
-<!--      </button>-->
-
+      <button class="btn btn-link btn-sm" [routerLink]="['/profile']">
+        {{targetUsername}}
+      </button>
   </div>
+  <br>
 
   <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top" *transloco="let t">
     <div class="container-fluid">

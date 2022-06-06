@@ -8,6 +8,7 @@ import {ContactComponent} from "./view/main/contact/contact.component";
 import {AdminComponent} from "./view/admin/admin.component";
 import {RegistrationComponent} from "./view/header/registration/registration.component";
 import {AuthGuard} from "./services/auth.guard";
+import {UserPageComponent} from "./view/main/user-page/user-page.component";
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -17,6 +18,8 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ["ROLE_ADMIN"]}},
   {path: 'register', component: RegistrationComponent},
+  {path: 'profile', component: UserPageComponent, canActivate: [AuthGuard],
+    data: { roles: ["ROLE_ADMIN", "ROLE_BARTENDER", "ROLE_USER"]}},
   { path: '**', redirectTo: '' }
 ];
 
