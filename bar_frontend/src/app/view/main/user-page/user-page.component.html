@@ -1,0 +1,120 @@
+<div *transloco="let t">
+  <div class="modal" id="upload">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">
+            {{t('upload your photo')}}
+          </h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <form action="/upload" method="post" enctype='multipart/form-data'>
+            <input type="file" id="myFile" name="filename">
+            <button type="submit" class="btn btn-outline-dark" name="command" value="upload_user_pic">Upload</button>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            {{t('close')}}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+      <div class="col-md-3 border-right">
+        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+          <span class="font-weight-bold">
+<!--            <c:out value="${user.getUsername()}"/>-->
+          </span>
+<!--          <c:if test="${empty user.getUserPic()}">-->
+<!--            <img class="rounded-circle" width="150px"-->
+<!--                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">-->
+<!--          </c:if>-->
+<!--          <c:if test="${not empty user.getUserPic()}">-->
+<!--            <img class="rounded-circle" width="150px"-->
+<!--                 src="${pageContext.request.contextPath}/upload/${user.getUserPic()}">-->
+<!--          </c:if>-->
+          <span class="text-black-50">
+<!--            <c:out value="${user.getEmail()}"/>-->
+          </span>
+          <span>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#upload">
+                        {{t('upload photo')}}
+                    </button>
+                </span></div>
+      </div>
+      <div class="col-md-5 border-right border-top border-bottom">
+        <form action="/controller" method="post">
+          <div class="p-3 py-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="text-right">
+                {{t('profile')}}
+              </h4>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <label class="labels">
+                  {{t('name')}}
+                  :</label>
+<!--                <c:if test="${empty user.getName()}">-->
+<!--                  <input type="text" name="name" class="form-control" placeholder="<fmt:message key=" locale.name"/>">-->
+<!--                </c:if>-->
+<!--                <c:if test="${not empty user.getName()}">-->
+<!--                  <input type="text" name="name" class="form-control" value="${user.getName()}"/>-->
+<!--                </c:if>-->
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <label class="labels">
+                  {{t('surname')}}
+                  :</label>
+<!--                <c:if test="${empty user.getSurname()}">-->
+<!--                  <input type="text" name="surname" class="form-control" placeholder="<fmt:message key=" locale.surname"/>"/>-->
+<!--                </c:if>-->
+<!--                <c:if test="${not empty user.getSurname()}">-->
+<!--                  <input type="text" name="surname" class="form-control" value="${user.getSurname()}"/>-->
+<!--                </c:if>-->
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <label class="labels">
+                  {{t('phone')}}
+                  :</label>
+<!--                <c:if test="${empty user.getPhone()}">-->
+<!--                  <input type="text" name="phone" class="form-control" placeholder="<fmt:message key=" locale.phone"/>">-->
+<!--                </c:if>-->
+<!--                <c:if test="${not empty user.getPhone()}">-->
+<!--                  <input type="text" name="phone" class="form-control" value="${user.getPhone()}">-->
+<!--                </c:if>-->
+              </div>
+            </div>
+            <div class="mt-5 text-center">
+              <button class="btn btn-dark profile-button" name="command" value="change_user_info" type="submit">
+                {{t('save profile')}}
+              </button>
+            </div>
+          </div>
+        </form>
+<!--        <c:if test="${user.getRole() == 'ADMIN'}">-->
+<!--          <form action="/controller" method="post">-->
+<!--            <div class="text-center">-->
+<!--              <button class="btn btn-dark profile-button" name="command" type="submit" value="to_admin_page">-->
+<!--                <fmt:message key="locale.administrate"/>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </c:if>-->
+      </div>
+    </div>
+  </div>
+</div>

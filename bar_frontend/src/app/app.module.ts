@@ -40,6 +40,7 @@ import { ContactComponent } from './view/main/contact/contact.component';
 import { TranslocoRootModule } from './transloco-root.module';
 import {RegistrationComponent} from "./view/header/registration/registration.component";
 import {authInterceptorProviders} from "./service/auth/auth.interceptor";
+import {UserPageComponent} from "./view/main/user-page/user-page.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -62,7 +63,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CocktailsComponent,
     AboutComponent,
     ContactComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    UserPageComponent
   ],
   imports: [
     BrowserModule,

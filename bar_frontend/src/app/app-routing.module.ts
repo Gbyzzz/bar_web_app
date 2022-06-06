@@ -15,9 +15,9 @@ const routes: Routes = [
   {path: 'cocktails/cocktail/:id', component: CocktailComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard],
-  data: { roles: ["Admin"]}},
-  {path: 'register', component: RegistrationComponent}
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ["ROLE_ADMIN"]}},
+  {path: 'register', component: RegistrationComponent},
+  { path: '**', redirectTo: '' }
 ];
 
 
