@@ -31,11 +31,13 @@ public class UserController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public User getUserById(@PathVariable int id) throws Exception {
         return userService.getUserById(id);
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public User updateUser(@RequestBody User user) {
         System.out.println("update User");
         return userService.updateUser(user);
