@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken} from "@angular/core";
 import {Observable} from "rxjs";
 import {IngredientService} from "../IngredientService";
-import {Ingredient} from "../../model/Ingredient";
+import {Ingredient} from "../../../model/Ingredient";
 import {HttpClient} from "@angular/common/http";
 
 export const INGREDIENT_URL_TOKEN = new InjectionToken<string>('url');

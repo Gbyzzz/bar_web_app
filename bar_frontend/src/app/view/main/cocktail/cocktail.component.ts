@@ -1,7 +1,7 @@
 import {Component, InjectionToken, OnInit} from '@angular/core';
 import {Cocktail} from "../../../model/Cocktail";
-import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
-import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
+import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
+import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NavigationStart, Router} from "@angular/router";
 import {filter} from "rxjs";

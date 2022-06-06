@@ -1,6 +1,6 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {ImageService} from "../ImageService";
-import {Image} from "../../model/Image";
+import {Image} from "../../../model/Image";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 

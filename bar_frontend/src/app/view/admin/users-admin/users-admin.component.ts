@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserServiceImpl} from "../../../service/impl/UserServiceImpl";
+import {UserServiceImpl} from "../../../service/entity/impl/UserServiceImpl";
 import {User} from "../../../model/User";
 import {Sort} from "@angular/material/sort";
 import {EditUserDialogComponent} from "../../dialog/edit-user-dialog/edit-user-dialog.component";

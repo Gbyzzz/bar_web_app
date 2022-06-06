@@ -2,15 +2,15 @@ import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Ingredient} from "../../../model/Ingredient";
-import {IngredientServiceImpl} from "../../../service/impl/IngredientServiceImpl";
+import {IngredientServiceImpl} from "../../../service/entity/impl/IngredientServiceImpl";
 import {EditIngredientDialogComponent} from "../edit-ingredient-dialog/edit-ingredient-dialog.component";
 import {DialogAction, DialogResult} from "../DialogResult";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Cocktail} from "../../../model/Cocktail";
 import {Image} from "../../../model/Image";
 import {Recipe} from "../../../model/Recipe";
-import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
-import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
+import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
+import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {sequence} from "@angular/animations";
 
 @Component({

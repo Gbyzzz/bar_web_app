@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
-import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
+import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {Pagination} from "../../../model/pagination/Pagination";
 import {Cocktail} from "../../../model/Cocktail";
-import {ImageService} from "../../../service/ImageService";
-import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
+import {ImageService} from "../../../service/entity/ImageService";
+import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {Image} from "../../../model/Image";
 import {RouterLink} from "@angular/router";
 

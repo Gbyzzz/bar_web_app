@@ -2,7 +2,7 @@ import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {UserService} from "../UserService";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {User} from "../../model/User";
+import {User} from "../../../model/User";
 
 export const USER_URL_TOKEN = new InjectionToken<string>('url');
 

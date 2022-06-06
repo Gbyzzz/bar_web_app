@@ -9,15 +9,15 @@ import {AppComponent} from './app.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './view/header/header.component';
 import {FooterComponent} from './view/footer/footer.component';
-import {COCKTAIL_URL_TOKEN} from "./service/impl/CocktailServiceImpl";
-import {USER_URL_TOKEN} from "./service/impl/UserServiceImpl";
+import {COCKTAIL_URL_TOKEN} from "./service/entity/impl/CocktailServiceImpl";
+import {USER_URL_TOKEN} from "./service/entity/impl/UserServiceImpl";
 import {MainComponent} from './view/main/main.component';
 import {AdminComponent} from './view/admin/admin.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UsersAdminComponent} from './view/admin/users-admin/users-admin.component';
 import {CocktailsAdminComponent} from './view/admin/cocktails-admin/cocktails-admin.component';
 import {MatTabsModule} from "@angular/material/tabs";
-import {INGREDIENT_URL_TOKEN} from "./service/impl/IngredientServiceImpl";
+import {INGREDIENT_URL_TOKEN} from "./service/entity/impl/IngredientServiceImpl";
 import {IngredientsAdminComponent} from './view/admin/ingredients-admin/ingredients-admin.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -30,7 +30,7 @@ import {EditUserDialogComponent} from './view/dialog/edit-user-dialog/edit-user-
 import {MatDialogModule} from "@angular/material/dialog";
 import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
-import {IMAGE_URL_TOKEN} from "./service/impl/ImageServiceImpl";
+import {IMAGE_URL_TOKEN} from "./service/entity/impl/ImageServiceImpl";
 import { CocktailComponent } from './view/main/cocktail/cocktail.component';
 import { CocktailsComponent } from './view/main/cocktails/cocktails.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -39,6 +39,7 @@ import { AboutComponent } from './view/main/about/about.component';
 import { ContactComponent } from './view/main/contact/contact.component';
 import { TranslocoRootModule } from './transloco-root.module';
 import {RegistrationComponent} from "./view/header/registration/registration.component";
+import {authInterceptorProviders} from "./service/auth/auth.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -85,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslocoRootModule
   ],
   providers: [
+    authInterceptorProviders,
 
     {
       provide: COCKTAIL_URL_TOKEN,

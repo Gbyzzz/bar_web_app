@@ -1,9 +1,9 @@
 import {Image} from "./Image";
 
 export enum Role{
-  ADMIN = "ADMIN",
-  BARTENDER = "BARTENDER",
-  USER = "USER",
+  ADMIN = "ROLE_ADMIN",
+  BARTENDER = "ROLE_BARTENDER",
+  USER = "ROLE_USER",
 }
 
 export class User{

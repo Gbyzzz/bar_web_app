@@ -1,114 +1,154 @@
-<div class="offcanvas offcanvas-end" id="signin">
-  <div class="offcanvas-header">
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body">
+<div *transloco="let t">
+  <div class="offcanvas offcanvas-end" id="signin">
+    <div class="offcanvas-header">
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
 
-    <div *transloco="let t">
-      <form action="controller" method="post">
-        {{t('username')}}:
-        <p>
-          <input class="form-control me-2" type="email" name="email" [placeholder]="t('email')" size="10">
-        </p>
-        {{t('password')}}:
-        <p>
-          <input class="form-control me-2" type="password" name="pwd" [placeholder]="t('password')"/>
-        </p>
-        <div>
+      <div>
+        <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+          {{t('username')}}:
+          <div>
+            <input class="form-control me-2" type="email" name="email" [(ngModel)]="form.username"
+                   required #username="ngModel" [placeholder]="t('email')" size="10">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="username.errors && f.submitted">
+              Username is required!
+            </div>
+          </div>
+          {{t('password')}}:
+          <div>
+            <input class="form-control me-2" type="password" name="pwd" [placeholder]="t('password')"
+                   [(ngModel)]="form.password" required minlength="6" #password="ngModel"/>
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="password.errors && f.submitted"
+            >
+              <div *ngIf="password.errors.required">Password is required</div>
+              <div *ngIf="password.errors.minlength">
+                Password must be at least 6 characters
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="text-center">
+              <button class="btn btn-outline-dark me-2" name="command" data-bs-dismiss="offcanvas" value="sign_in"
+                      type="submit">
+                {{t('sign in')}}
+              </button>
+              <button class="btn btn-outline-dark" name="command" value="forgot" type="submit">
+                {{t('forgot password')}}
+              </button>
+            </p>
+          </div>
+          <div class="form-group">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="f.submitted && isLoginFailed"
+            >
+              Login failed: {{ errorMessage }}
+            </div>
+          </div>
+        </form>
+        <form action="/controller" method="post">
           <p class="text-center">
-            <button class="btn btn-outline-dark me-2" name="command" value="sign_in" type="submit">
-              {{t('sign in')}}
-            </button>
-            <button class="btn btn-outline-dark" name="command" value="forgot" type="submit">
-              {{t('forgot password')}}
+            {{t('not registered')}}
+          </p>
+          <p class="text-center">
+            <button type="submit" class="btn btn-link btn-sm" [routerLink]="['/register']" data-bs-dismiss="offcanvas">
+              {{t('sign up here')}}
             </button>
           </p>
-        </div>
-      </form>
-      <form action="/controller" method="post">
-        <p class="text-center">
-          {{t('not registered')}}
-        </p>
-        <p class="text-center">
-          <button type="submit" class="btn btn-link btn-sm" [routerLink]="['/register']" data-bs-dismiss="offcanvas">
-            {{t('sign up here')}}
-          </button>
-        </p>
-      </form>
-    </div>
-
-  </div>
-</div>
-<div class="container">
-  <a [routerLink]="['']" class="logo">
-    <img src="assets/icon.jpg" width="60" class="mx-auto d-block" alt="logo"/>
-  </a>
-</div>
-<!--<c:if test="${not empty user}">-->
-<!--  <form method="post" action="controller">-->
-<!--    <div class="row">-->
-<!--&lt;!&ndash;      <li><fmt:message key="locale.hi"/>,&ndash;&gt;-->
-<!--        <button type="submit" class="btn btn-link btn-sm" name="command" value="to_user_page"><c:out value= "${user.getUsername()}"></c:out></button>-->
-
-<!--        <button type="submit" class="btn btn-link float-right btn-sm mr-5" name="command" value="to_my_cocktails"><fmt:message key="locale.my_cocktails"/></button>-->
-<!--        <button type="submit" class="btn btn-link float-right btn-sm" name="command" value="to_add_cocktail"><fmt:message key="locale.add_cocktail"/></button>-->
-
-<!--    </div>-->
-<!--  </form>-->
-<!--</c:if>-->
-<nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top" *transloco="let t">
-  <div class="container-fluid">
-    <input type="hidden" name="command" value="to_main"/>
-    <a [routerLink]="['']" class="navbar-brand">BAR.com</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mynavbar">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <input type="hidden" name="command" value="to_cocktails"/>
-          <a class="nav-link" [routerLink]="['/cocktails']">{{t('cocktails')}}</a>
-        </li>
-        <li class="nav-item">
-          <input type="hidden" name="command" value="to_about"/>
-          <a href="#" class="nav-link" [routerLink]="['/about']">{{t('about')}}</a>
-        </li>
-        <li class="nav-item">
-          <input type="hidden" name="command" value="to_contact"/>
-          <a href="#" class="nav-link" [routerLink]="['/contact']">{{t('contact')}}</a>
-        </li>
-      </ul>
-      <button type="button" class="btn btn-dark me-3" [routerLink]="['/admin']">
-        {{t('admin')}}
-      </button>
-      <button type="button" class="btn btn-dark me-3" (click)="openAddDialog()">
-        {{t('add cocktail')}}
-      </button>
-      <div class="dropdown">
-        <button type="button" class="btn btn-dark me-3 dropdown-toggle" data-bs-toggle="dropdown">
-          {{siteLanguage}}
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <button class="dropdown-item" type="submit" name="language"
-                  value="en_US" (click)="changeSiteLanguage('en')">English
-          </button>
-          <button class="dropdown-item" type="submit" name="language"
-                  value="ru_RU" (click)="changeSiteLanguage('ru')">Русский
-          </button>
-          <input type="hidden" name="command" value="set_locale">
-        </ul>
+        </form>
       </div>
-                <button class="btn btn-dark me-3" type="button" data-bs-target="#signin" data-bs-toggle="offcanvas" >
-                  {{t('sign in')}}
-                </button>
-<!--            <c:if test="${not empty user}">-->
-<!--              <form action="/controller">-->
-<!--                <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
-<!--                  <fmt:message key="locale.signout"/>-->
-<!--                </button>-->
-<!--              </form>-->
-<!--            </c:if>-->
 
     </div>
   </div>
-</nav>
+  <div class="container">
+    <a [routerLink]="['']" class="logo">
+      <img src="assets/icon.jpg" width="60" class="mx-auto d-block" alt="logo"/>
+    </a>
+  </div>
+
+  <div class="row" *ngIf="isLoggedIn">
+    <li>{{t('hi, ')}}
+      <button type="submit" class="btn btn-link btn-sm" name="command" value="to_user_page">{{targetUsername}}</button>
+
+<!--      <button *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'"-->
+<!--              class="btn btn-link float-right btn-sm mr-5">-->
+<!--        {{t('my cocktails')}}-->
+<!--      </button>-->
+<!--      <button *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'"-->
+<!--              class="btn btn-link float-right btn-sm">-->
+<!--        {{t('add cocktail')}}-->
+<!--      </button>-->
+
+  </div>
+
+  <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top" *transloco="let t">
+    <div class="container-fluid">
+      <input type="hidden" name="command" value="to_main"/>
+      <a [routerLink]="['']" class="navbar-brand">BAR.com</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <input type="hidden" name="command" value="to_cocktails"/>
+            <a class="nav-link" [routerLink]="['/cocktails']">{{t('cocktails')}}</a>
+          </li>
+          <li class="nav-item">
+            <input type="hidden" name="command" value="to_about"/>
+            <a href="#" class="nav-link" [routerLink]="['/about']">{{t('about')}}</a>
+          </li>
+          <li class="nav-item">
+            <input type="hidden" name="command" value="to_contact"/>
+            <a href="#" class="nav-link" [routerLink]="['/contact']">{{t('contact')}}</a>
+          </li>
+        </ul>
+        <button type="button" *ngIf="role === 'ROLE_ADMIN'" class="btn btn-dark me-3" [routerLink]="['/admin']">
+          {{t('admin')}}
+        </button>
+        <button type="button" *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'" class="btn btn-dark me-3"
+                (click)="openAddDialog()">
+          {{t('add cocktail')}}
+        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-dark me-3 dropdown-toggle" data-bs-toggle="dropdown">
+            {{siteLanguage}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <button class="dropdown-item" type="submit" name="language"
+                    value="en_US" (click)="changeSiteLanguage('en')">English
+            </button>
+            <button class="dropdown-item" type="submit" name="language"
+                    value="ru_RU" (click)="changeSiteLanguage('ru')">Русский
+            </button>
+            <input type="hidden" name="command" value="set_locale">
+          </ul>
+        </div>
+        <button *ngIf="!isLoggedIn" class="btn btn-dark me-3" type="button" data-bs-target="#signin"
+                data-bs-toggle="offcanvas">
+          {{t('sign in')}}
+        </button>
+        <button *ngIf="isLoggedIn" class="btn btn-dark me-3" type="button" (click)="logout()"
+                data-bs-toggle="offcanvas">
+          {{t('logout')}}
+        </button>
+        <!--            <c:if test="${not empty user}">-->
+        <!--              <form action="/controller">-->
+        <!--                <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
+        <!--                  <fmt:message key="locale.signout"/>-->
+        <!--                </button>-->
+        <!--              </form>-->
+        <!--            </c:if>-->
+
+      </div>
+    </div>
+  </nav>
+</div>

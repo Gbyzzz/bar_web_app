@@ -1,9 +1,9 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {CocktailService} from "../CocktailService";
-import {Cocktail} from "../../model/Cocktail";
+import {Cocktail} from "../../../model/Cocktail";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {Pagination} from "../../model/pagination/Pagination";
+import {Pagination} from "../../../model/pagination/Pagination";
 
 export const COCKTAIL_URL_TOKEN = new InjectionToken<string>('url');
 

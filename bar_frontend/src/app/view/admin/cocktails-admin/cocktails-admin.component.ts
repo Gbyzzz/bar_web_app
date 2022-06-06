@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {CocktailServiceImpl} from "../../../service/impl/CocktailServiceImpl";
+import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {MatDialog} from "@angular/material/dialog";
 import {Sort} from "@angular/material/sort";
 import {DialogAction} from "../../dialog/DialogResult";
 import {Cocktail} from "../../../model/Cocktail";
 import {EditCocktailDialogComponent} from "../../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
-import {ImageServiceImpl} from "../../../service/impl/ImageServiceImpl";
+import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 
 @Component({
   selector: 'app-cocktails-admin',

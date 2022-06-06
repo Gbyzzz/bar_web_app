@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IngredientServiceImpl} from "../../../service/impl/IngredientServiceImpl";
+import {IngredientServiceImpl} from "../../../service/entity/impl/IngredientServiceImpl";
 import {MatTableDataSource} from "@angular/material/table";
 import {PageEvent} from "@angular/material/paginator";
 import {Ingredient} from "../../../model/Ingredient";
 import {MatDialog} from "@angular/material/dialog";
-import {UserServiceImpl} from "../../../service/impl/UserServiceImpl";
+import {UserServiceImpl} from "../../../service/entity/impl/UserServiceImpl";
 import {User} from "../../../model/User";
 import {Sort} from "@angular/material/sort";
 import {EditUserDialogComponent} from "../../dialog/edit-user-dialog/edit-user-dialog.component";

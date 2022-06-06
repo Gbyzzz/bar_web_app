@@ -18,19 +18,6 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard],
   data: { roles: ["Admin"]}},
   {path: 'register', component: RegistrationComponent}
-
-
-
-  // {
-  //   path: '',
-  //   component: MainComponent,
-  //   children: [
-  //     {path: 'cocktails', component: CocktailsComponent, children:[
-  //         {path: 'cocktails/cocktail', component: CocktailComponent},
-  //       ]},
-  //     {path: 'cocktail', component: CocktailComponent},
-  //   ]
-  // },
 ];
 
 
