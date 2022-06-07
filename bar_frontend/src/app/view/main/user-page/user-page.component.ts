@@ -14,6 +14,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class UserPageComponent implements OnInit {
 
   user: User;
+  username: string;
   newName: string;
   newSurname: string;
   newPhone: string;
@@ -22,6 +23,7 @@ export class UserPageComponent implements OnInit {
   newImageId: number;
   newUserImage: Image;
   userProfileForm: FormGroup;
+  fileHolder: File | null;
 
   constructor(private userService: UserServiceImpl,
               private tokenStorage: TokenStorageService,
@@ -38,11 +40,11 @@ export class UserPageComponent implements OnInit {
     userService.findById(tokenStorage.getUser().id).subscribe(user => {
       this.user = user;
       this.newName = user.name;
+      this.username = user.username;
       this.newSurname = user.surname;
       this.newPhone = user.phone;
       this.newImageId = user.userPic.imageId;
       this.imageSrc = imageService.getImage(this.newImageId);
-      console.log(this.newName);
     });
   }
 
@@ -58,7 +60,8 @@ export class UserPageComponent implements OnInit {
       reader.onload = () => {
         this.imageSrc = reader.result as string;
       };
-      this.userProfileForm.get('userImageFile').setValue(file);
+      this.fileHolder = event.target.files[0];
+      // this.userProfileForm.get('userImageFile').setValue(file);
     }
   }
 
@@ -66,10 +69,12 @@ export class UserPageComponent implements OnInit {
 
     if (!this.userProfileForm.get('userImageFile').value.imageId) {
       const formData = new FormData();
-      formData.append('file', this.userProfileForm.get('userImageFile').value);
+      // formData.append('file', this.userProfileForm.get('userImageFile').value);
+      formData.append('file', this.fileHolder, this.fileHolder.name);
       this.imageService.uploadImage(formData).subscribe(id => {
         console.log(id);
         this.newUserImage = new Image(id);
+        this.user.userPic = this.newUserImage;
         this.updateUserValues();
       });
     } else {
@@ -82,6 +87,6 @@ export class UserPageComponent implements OnInit {
     this.user.surname = this.newSurname;
     this.user.phone = this.newPhone;
     console.log(this.user);
-    this.userService.update(this.user);
+    this.userService.update(this.user).subscribe(res => {});
   }
 }
