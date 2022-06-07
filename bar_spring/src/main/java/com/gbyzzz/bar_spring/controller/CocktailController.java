@@ -3,6 +3,7 @@ package com.gbyzzz.bar_spring.controller;
 import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.entity.pagination.Pagination;
 import com.gbyzzz.bar_spring.service.CocktailService;
+import com.gbyzzz.bar_spring.service.ImageService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,11 @@ import java.util.List;
 public class CocktailController {
 
     private CocktailService cocktailService;
+    private ImageService imageService;
 
-    public CocktailController(CocktailService cocktailService) {
+    public CocktailController(CocktailService cocktailService, ImageService imageService) {
         this.cocktailService = cocktailService;
+        this.imageService = imageService;
     }
 
     @GetMapping("/all")

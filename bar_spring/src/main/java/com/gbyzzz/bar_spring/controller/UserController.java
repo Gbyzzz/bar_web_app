@@ -1,6 +1,7 @@
 package com.gbyzzz.bar_spring.controller;
 
 import com.gbyzzz.bar_spring.entity.User;
+import com.gbyzzz.bar_spring.service.ImageService;
 import com.gbyzzz.bar_spring.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,11 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private ImageService imageService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ImageService imageService) {
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @GetMapping("/all")
@@ -39,7 +42,7 @@ public class UserController {
     @PutMapping("/update")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public User updateUser(@RequestBody User user) {
-        System.out.println("update User");
+        user.setUserPic(imageService.getImageById(user.getUserPic().getImageId()));
         return userService.updateUser(user);
     }
 }

@@ -46,7 +46,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_pic")
-    private Image userPicName;
+    private Image userPic;
 
     @Basic
     @Column(name = "role")
