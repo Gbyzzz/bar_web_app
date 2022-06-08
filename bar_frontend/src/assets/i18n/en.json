@@ -27,5 +27,16 @@
   "name": "Name",
   "surname": "Surname",
   "phone": "Phone",
-  "save": "Save"
+  "save": "Save",
+  "registration form": "Registration Form",
+  "confirm password": "Confirm password",
+  "register": "register",
+  "terms": " I have read and agree to the Terms",
+  "error username available": "This username is not available",
+  "error username valid": "Username must be at least 6 characters and not exceed 20",
+  "error email available": "This email is used by another user",
+  "error email valid": "Please enter a valid email",
+  "error password valid": "Password must be at least 6 characters",
+  "error passwords match": "Passwords do not match",
+  "error accept terms": "Accept Terms is required"
 }

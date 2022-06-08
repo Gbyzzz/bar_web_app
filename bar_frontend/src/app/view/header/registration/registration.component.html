@@ -17,14 +17,11 @@
                            (change)="onUsernameChange($event)"
                     [style.border-color]="(isUsernameAvailable == true && isUsernameValid == true) ? 'green'
                      : ((isUsernameAvailable == false || isUsernameValid == false) ? 'red' : '')"/>
-                    <div *ngIf="f.username.errors" class="invalid-feedback">
-                      <div *ngIf="f.username.errors.required">Username is required</div>
-                      <div *ngIf="f.username.errors.minlength">
-                        Username must be at least 6 characters
-                      </div>
-                      <div *ngIf="f.username.errors.maxlength">
-                        Username must not exceed 20 characters
-                      </div>
+                    <div *ngIf="isUsernameAvailable == false" class="text-danger">
+                      {{t('error username available')}}
+                    </div>
+                    <div *ngIf="isUsernameValid == false" class="text-danger">
+                      {{t('error username valid')}}
                     </div>
                   </div>
 
@@ -42,9 +39,11 @@
                       [style.border-color]="(isEmailAvailable == true && isEmailValid == true) ? 'green' :
                       ((isEmailAvailable == false || isEmailValid == false) ? 'red' : '')"
                     />
-                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                      <div *ngIf="f.email.errors.required">Email is required</div>
-                      <div *ngIf="f.email.errors.email">Email is invalid</div>
+                    <div *ngIf="isEmailAvailable == false" class="text-danger">
+                      {{t('error email available')}}
+                    </div>
+                    <div *ngIf="isEmailValid == false" class="text-danger">
+                      {{t('error email valid')}}
                     </div>
                   </div>
                 </div>
@@ -63,18 +62,10 @@
                       [style.border-color]="(isPasswordValid == true) ? 'green' :
                       ((isPasswordValid == false) ? 'red' : '')"
                     />
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                      <div *ngIf="f.password.errors.required">Password is required</div>
-                      <div *ngIf="f.password.errors.minlength">
-                        Password must be at least 6 characters
-                      </div>
-                      <div *ngIf="f.password.errors.maxlength">
-                        Username must not exceed 40 characters
-                      </div>
+                    <div *ngIf="isPasswordValid == false" class="text-danger">
+                      {{t('error password valid')}}
                     </div>
-
                   </div>
-
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
 
@@ -88,19 +79,10 @@
                       [style.border-color]="(isConfirmPasswordMatch == true) ? 'green' :
                       ((isConfirmPasswordMatch == false) ? 'red' : '')"
                     />
-                    <div
-                      *ngIf="submitted && f.confirmPassword.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.confirmPassword.errors.required">
-                        Confirm Password is required
-                      </div>
-                      <div *ngIf="f.confirmPassword.errors.matching">
-                        Confirm Password does not match
-                      </div>
+                    <div *ngIf="isConfirmPasswordMatch == false" class="text-danger">
+                      {{t('error passwords match')}}
                     </div>
                   </div>
-
                 </div>
               </div>
               <div class="form-group form-check">
@@ -111,20 +93,22 @@
                   class="form-check-input"
                   [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }"
                 />
-                <label for="acceptTerms" class="form-check-label"
-                >I have read and agree to the Terms</label
-                >
-                <div *ngIf="submitted && f.acceptTerms.errors" class="invalid-feedback">
-                  Accept Terms is required
+                <label for="acceptTerms" class="form-check-label">
+                  {{t('terms')}}
+                </label>
+                <div *ngIf="!this.registrationForm.get('acceptTerms').value" class="text-danger">
+                  {{t('error accept terms')}}
                 </div>
               </div>
 
               <div class="mt-4 pt-2">
-                <button class="btn btn-dark btn-lg" type="submit" value="Register">
+                <button class="btn btn-dark btn-lg" type="submit" value="Register"
+                [disabled]="!isConfirmPasswordMatch || !isEmailAvailable || !isEmailValid
+                 || !isPasswordValid || !isUsernameAvailable || !isUsernameValid ||
+                 !this.registrationForm.get('acceptTerms').value">
                   {{t('register')}}
                 </button>
               </div>
-
             </form>
           </div>
         </div>

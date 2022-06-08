@@ -16,17 +16,17 @@ export class RegistrationComponent implements OnInit {
     email: null,
     password: null
   };
+  emailPattern = new RegExp("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
   submitted = false;
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  isUsernameAvailable: boolean;
-  isUsernameValid: boolean;
-  isEmailAvailable: boolean;
-  isEmailValid: boolean;
-  emailPattern = new RegExp("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
-  isPasswordValid: boolean;
-  isConfirmPasswordMatch: boolean;
+  isUsernameAvailable: boolean = undefined;
+  isUsernameValid: boolean = undefined;
+  isEmailAvailable: boolean = undefined;
+  isEmailValid: boolean = undefined;
+  isPasswordValid: boolean = undefined;
+  isConfirmPasswordMatch: boolean = undefined;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -123,8 +123,8 @@ export class RegistrationComponent implements OnInit {
 
   onConfirmPasswordChange(event) {
     console.log(event.target.value);
-    console.log(this.registrationForm.get('password'));
-    if(event.target.value == this.registrationForm.password){
+    console.log(this.registrationForm.get('password').value);
+    if(event.target.value == this.registrationForm.get('password').value){
       this.isConfirmPasswordMatch = true;
     } else {
       this.isConfirmPasswordMatch = false;

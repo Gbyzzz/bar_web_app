@@ -27,5 +27,16 @@
   "name": "Имя",
   "surname": "Фамилия",
   "phone": "Телефон",
-  "save": "Сохранить"
+  "save": "Сохранить",
+  "registration form": "Регистрация",
+  "confirm password": "Подтвердите пароль",
+  "register": "Зарегистрироваться",
+  "terms": "Принимаю условия",
+  "error username available": "Это имя пользователя уже используется",
+  "error username valid": "Имя пользователя должно быть не менее 6 символов и не более 20",
+  "error email available": "Этот email используется другим пользователем",
+  "error email valid": "Введите корректный email",
+  "error password valid": "Пароль должен быть не менее 6 символов",
+  "error passwords match": "Введенные пароли не совпадают",
+  "error accept terms": "Вы должны принять условия"
 }
