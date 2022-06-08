@@ -3,6 +3,7 @@ import {UserService} from "../UserService";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../../../model/User";
+import {addBootstrapToModule} from "@ngneat/transloco/schematics/src/utils/ast-utils";
 
 export const USER_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -36,5 +37,13 @@ export class UserServiceImpl  implements UserService{
   update(user: User): Observable<User> {
     console.log("update");
     return this.HttpClient.put<User>(this.url+'/update', user);
+  }
+
+  isUsernameAvailable(username: string, email: string, password: string): Observable<boolean>{
+    return this.HttpClient.post<boolean>(this.url + '/is_username_available', {username, email, password});
+  }
+
+  isEmailAvailable(username: string, email: string, password: string): Observable<boolean>{
+    return this.HttpClient.post<boolean>(this.url + '/is_email_available', {username, email, password});
   }
 }

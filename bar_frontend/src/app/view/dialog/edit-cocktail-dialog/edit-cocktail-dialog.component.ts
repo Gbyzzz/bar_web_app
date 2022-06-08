@@ -11,7 +11,6 @@ import {Image} from "../../../model/Image";
 import {Recipe} from "../../../model/Recipe";
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
-import {sequence} from "@angular/animations";
 
 @Component({
   selector: 'app-edit-cocktail-dialog',

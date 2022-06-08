@@ -7,7 +7,7 @@ import {AboutComponent} from "./view/main/about/about.component";
 import {ContactComponent} from "./view/main/contact/contact.component";
 import {AdminComponent} from "./view/admin/admin.component";
 import {RegistrationComponent} from "./view/header/registration/registration.component";
-import {AuthGuard} from "./services/auth.guard";
+import {AuthGuard} from "./utils/auth.guard";
 import {UserPageComponent} from "./view/main/user-page/user-page.component";
 
 const routes: Routes = [

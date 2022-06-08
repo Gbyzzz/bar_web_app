@@ -1,28 +1,52 @@
-<section class="gradient-custom" [style.background-image]="'url(http://localhost:8080/image/13)'">
+<section class="gradient-custom" [style.background-image]="'url(http://localhost:8080/image/13)'"
+*transloco="let t">
   <div class="container py-5">
     <div class="row justify-content-center align-items-center">
       <div class="col-12 col-lg-9 col-xl-7">
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Registration Form</h3>
-            <form>
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">{{t('registration form')}}</h3>
+            <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
 
               <div class="row">
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="firstName" class="form-control form-control-lg" />
-                    <label class="form-label" for="firstName">First Name</label>
+                    <label>{{t('username')}}</label>
+                    <input type="text" formControlName="username" class="form-control form-control-lg"
+                           (change)="onUsernameChange($event)"
+                    [style.border-color]="(isUsernameAvailable == true && isUsernameValid == true) ? 'green'
+                     : ((isUsernameAvailable == false || isUsernameValid == false) ? 'red' : '')"/>
+                    <div *ngIf="f.username.errors" class="invalid-feedback">
+                      <div *ngIf="f.username.errors.required">Username is required</div>
+                      <div *ngIf="f.username.errors.minlength">
+                        Username must be at least 6 characters
+                      </div>
+                      <div *ngIf="f.username.errors.maxlength">
+                        Username must not exceed 20 characters
+                      </div>
+                    </div>
                   </div>
 
                 </div>
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="lastName" class="form-control form-control-lg" />
-                    <label class="form-label" for="lastName">Last Name</label>
+                    <label>{{t('email')}}</label>
+                    <input
+                      type="text"
+                      email="true"
+                      formControlName="email"
+                      class="form-control form-control-lg"
+                      (change)="onEmailChange($event)"
+                      [style.border-color]="(isEmailAvailable == true && isEmailValid == true) ? 'green' :
+                      ((isEmailAvailable == false || isEmailValid == false) ? 'red' : '')"
+                    />
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                      <div *ngIf="f.email.errors.required">Email is required</div>
+                      <div *ngIf="f.email.errors.email">Email is invalid</div>
+                    </div>
                   </div>
-
                 </div>
               </div>
 
@@ -30,23 +54,75 @@
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="email" id="emailAddress" class="form-control form-control-lg" />
-                    <label class="form-label" for="emailAddress">Email</label>
+                    <label>{{t('password')}}</label>
+                    <input
+                      type="password"
+                      formControlName="password"
+                      class="form-control form-control-lg"
+                      (change)="onPasswordChange($event)"
+                      [style.border-color]="(isPasswordValid == true) ? 'green' :
+                      ((isPasswordValid == false) ? 'red' : '')"
+                    />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                      <div *ngIf="f.password.errors.required">Password is required</div>
+                      <div *ngIf="f.password.errors.minlength">
+                        Password must be at least 6 characters
+                      </div>
+                      <div *ngIf="f.password.errors.maxlength">
+                        Username must not exceed 40 characters
+                      </div>
+                    </div>
+
                   </div>
 
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
-                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                    <label>{{t('confirm password')}}</label>
+                    <input
+                      type="password"
+                      formControlName="confirmPassword"
+                      class="form-control form-control-lg"
+                      (change)="onConfirmPasswordChange($event)"
+                      [style.border-color]="(isConfirmPasswordMatch == true) ? 'green' :
+                      ((isConfirmPasswordMatch == false) ? 'red' : '')"
+                    />
+                    <div
+                      *ngIf="submitted && f.confirmPassword.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.confirmPassword.errors.required">
+                        Confirm Password is required
+                      </div>
+                      <div *ngIf="f.confirmPassword.errors.matching">
+                        Confirm Password does not match
+                      </div>
+                    </div>
                   </div>
 
+                </div>
+              </div>
+              <div class="form-group form-check">
+                <input
+                  type="checkbox"
+                  formControlName="acceptTerms"
+                  id="acceptTerms"
+                  class="form-check-input"
+                  [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }"
+                />
+                <label for="acceptTerms" class="form-check-label"
+                >I have read and agree to the Terms</label
+                >
+                <div *ngIf="submitted && f.acceptTerms.errors" class="invalid-feedback">
+                  Accept Terms is required
                 </div>
               </div>
 
               <div class="mt-4 pt-2">
-                <input class="btn btn-dark btn-lg" type="submit" value="Register" />
+                <button class="btn btn-dark btn-lg" type="submit" value="Register">
+                  {{t('register')}}
+                </button>
               </div>
 
             </form>
