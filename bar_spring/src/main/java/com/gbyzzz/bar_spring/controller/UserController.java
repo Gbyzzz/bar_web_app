@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_spring.controller;
 
+import com.gbyzzz.bar_spring.controller.payload.request.SignupRequest;
 import com.gbyzzz.bar_spring.entity.User;
 import com.gbyzzz.bar_spring.service.ImageService;
 import com.gbyzzz.bar_spring.service.UserService;
@@ -44,5 +45,15 @@ public class UserController {
     public User updateUser(@RequestBody User user) {
         user.setUserPic(imageService.getImageById(user.getUserPic().getImageId()));
         return userService.updateUser(user);
+    }
+
+    @PostMapping("/is_username_available")
+    public boolean isUsernameAvailable(@RequestBody SignupRequest signupRequest) {
+        return userService.isUsernameAvailable(signupRequest.getUsername());
+    }
+
+    @PostMapping("/is_email_available")
+    public boolean isEmailAvailable(@RequestBody SignupRequest signupRequest) {
+        return userService.isEmailAvailable(signupRequest.getEmail());
     }
 }

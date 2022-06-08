@@ -21,4 +21,8 @@ public interface UserService {
     boolean existsByEmail(String email);
 
     Optional<User> findByUsername(String username);
+
+    boolean isUsernameAvailable(String username);
+
+    boolean isEmailAvailable(String email);
 }
