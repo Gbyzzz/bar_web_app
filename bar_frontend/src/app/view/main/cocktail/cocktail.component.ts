@@ -1,4 +1,4 @@
-import {Component, InjectionToken, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, InjectionToken, OnInit} from '@angular/core';
 import {Cocktail} from "../../../model/Cocktail";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
@@ -32,6 +32,7 @@ export class CocktailComponent implements OnInit {
               private imageService: ImageServiceImpl,
               private voteService: VoteServiceImpl,
               private fb: FormBuilder,
+              private cdr: ChangeDetectorRef,
               private router: Router,
               private tokenStorage: TokenStorageService) {
     this.ratingForm = this.fb.group({
@@ -43,6 +44,7 @@ export class CocktailComponent implements OnInit {
     console.log(this.isUserLoggedIn);
     this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
      this.cocktail = cocktail;
+     console.log(cocktail.recipes[0].cocktail);
      this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
      this.cocktailName = cocktail.cocktailName;
      this.imageSrc = this.imageService.getImage(this.cocktail.cocktailImage.imageId);
@@ -62,6 +64,7 @@ export class CocktailComponent implements OnInit {
     console.log(this.vote);
     this.voteService.add(this.vote).subscribe(res =>{
       this.vote = res;
+      this.cdr.detectChanges();
     });
     console.log(value);
 
