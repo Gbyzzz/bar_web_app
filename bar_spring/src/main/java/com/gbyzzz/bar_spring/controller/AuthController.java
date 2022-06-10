@@ -66,19 +66,7 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (userService.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
-		}
-
-		if (userService.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
-		}
-
-		User user = new User(null, signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()), null,
+				User user = new User(null, signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()), null,
 				null, null, signUpRequest.getEmail(), null, User.Role.ROLE_USER, true,
 				new Date(new java.util.Date().getTime()));
 
