@@ -41,6 +41,7 @@ import { TranslocoRootModule } from './transloco-root.module';
 import {RegistrationComponent} from "./view/header/registration/registration.component";
 import {authInterceptorProviders} from "./service/auth/auth.interceptor";
 import {UserPageComponent} from "./view/main/user-page/user-page.component";
+import {VOTE_URL_TOKEN} from "./service/entity/impl/VoteServiceImpl";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -108,6 +109,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     {
       provide: IMAGE_URL_TOKEN,
       useValue: 'http://localhost:8080/image'
+    },
+
+    {
+      provide: VOTE_URL_TOKEN,
+      useValue: 'http://localhost:8080/vote'
     },
 
   ],

@@ -3,6 +3,8 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 import Validation from "../../../utils/validation";
 import {AuthService} from "../../../service/auth/auth.service";
 import {UserServiceImpl} from "../../../service/entity/impl/UserServiceImpl";
+import {User} from "../../../model/User";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-registration',
@@ -18,8 +20,6 @@ export class RegistrationComponent implements OnInit {
   };
   emailPattern = new RegExp("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
   submitted = false;
-  isSuccessful = false;
-  isSignUpFailed = false;
   errorMessage = '';
   isUsernameAvailable: boolean = undefined;
   isUsernameValid: boolean = undefined;
@@ -31,7 +31,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private userService: UserServiceImpl) {
+              private userService: UserServiceImpl,
+              private router: Router) {
     this.registrationForm = this.formBuilder.group(
       {
         username: [
@@ -69,25 +70,15 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    const { username, email, password } = this.registrationForm;
-
-    if (this.registrationForm.invalid) {
-      return;
-    }
+    const username = this.registrationForm.get('username').value;
+    const email = this.registrationForm.get('email').value;
+    const password = this.registrationForm.get('password').value;
 
     console.log(JSON.stringify(this.registrationForm.value, null, 2));
 
-    this.authService.register(username, email, password).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-      }
-    );
+    this.userService.signUp(username,email,password).subscribe(user =>{
+      this.router.navigate(['']);
+    });
   }
 
   onUsernameChange(event) {

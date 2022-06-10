@@ -1,11 +1,14 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {UserService} from "../UserService";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../../../model/User";
-import {addBootstrapToModule} from "@ngneat/transloco/schematics/src/utils/ast-utils";
 
 export const USER_URL_TOKEN = new InjectionToken<string>('url');
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +20,16 @@ export class UserServiceImpl  implements UserService{
   constructor(@Inject(USER_URL_TOKEN) private baseUrl: string, private HttpClient: HttpClient) {
     this.url = baseUrl;
   }
-  add(user: User): Observable<User> {
-    return this.HttpClient.post<User>(this.url+'/add', user);
+
+  add(obj: User): Observable<User> {
+        throw new Error('Method not implemented.');
+    }
+  signUp(username: string, email: string, password: string): Observable<any> {
+    return this.HttpClient.post(this.url+'/sign_up', {
+      username,
+      email,
+      password
+    }, httpOptions);
   }
 
   delete(id: number): Observable<User> {
