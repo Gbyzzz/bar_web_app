@@ -37,14 +37,19 @@ export class CocktailComponent implements OnInit {
     this.ratingForm = this.fb.group({
       rating: ['', Validators.required],
     });
+
     this.cocktailId = Number(this.router.url.split('/')[this.router.url.split('/').length-1]);
     this.isUserLoggedIn = this.tokenStorage.getUser() == null ? false : true;
     console.log(this.isUserLoggedIn);
     this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
      this.cocktail = cocktail;
+     this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
      this.cocktailName = cocktail.cocktailName;
      this.imageSrc = this.imageService.getImage(this.cocktail.cocktailImage.imageId);
      console.log(this.cocktail);
+    });
+    voteService.findByCocktailUserVote(this.vote).subscribe(res => {
+      this.vote = res;
     });
   }
 
@@ -54,8 +59,7 @@ export class CocktailComponent implements OnInit {
 
   onRate(value: number) {
     this.vote.voteValue = value;
-    this.vote.cocktail = this.cocktail;
-    this.vote.user = ;
+    this.voteService.add(this.vote);
     console.log(value);
 
   }

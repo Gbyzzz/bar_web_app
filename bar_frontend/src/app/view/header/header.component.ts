@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit {
       data => {
         this.tokenStorage.saveToken(data.token);
         console.log(data);
-        this.tokenStorage.saveUser(data);
+        this.tokenStorage.saveUser(data.user);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;

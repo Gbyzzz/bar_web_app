@@ -38,4 +38,7 @@ export class VoteServiceImpl implements VoteService{
   }
 
 
+  findByCocktailUserVote(vote: Vote): Observable<Vote> {
+      return this.HttpClient.post<Vote>(this.url + '/find_by_cocktail_user', vote);
+  }
 }

@@ -37,7 +37,7 @@ export class UserPageComponent implements OnInit {
     });
 
     this.role = tokenStorage.getUser().role;
-    userService.findById(tokenStorage.getUser().id).subscribe(user => {
+    userService.findById(tokenStorage.getUser().userId).subscribe(user => {
       this.user = user;
       this.newName = user.name;
       this.username = user.username;
