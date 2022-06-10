@@ -22,12 +22,15 @@ public class VoteController {
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public Vote makeVote(@RequestBody Vote vote) throws Exception {
+        System.out.println("make vote");
+        System.out.println(vote.getCocktail());
         return voteService.addOrUpdateVote(vote);
     }
 
     @PostMapping("/find_by_cocktail_user")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public Vote findByCocktailUserVote(@RequestBody Vote vote) throws Exception {
+        System.out.println("findByCocktailUserVote");
         return voteService.findByCocktailUserVote(vote);
     }
 

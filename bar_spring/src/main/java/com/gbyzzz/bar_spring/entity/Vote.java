@@ -1,12 +1,20 @@
 package com.gbyzzz.bar_spring.entity;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "votes")
-@Data
+@Table(name = "votes",
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"user_id", "cocktail_id"}))
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Vote {
 
     @Id
@@ -14,11 +22,11 @@ public class Vote {
     @Column(name = "vote_id")
     private Long voteId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
 

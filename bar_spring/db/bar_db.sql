@@ -158,7 +158,7 @@ VALUES (1, 1, 1, 3),
        (3, 1, 3, 1),
        (4, 1, 4, 7);
 
-SELECT setval('recipes_recipe_id_seq', (SELECT MAX(recipe_id) from "recipes"));
+SELECT setval('votes_vote_id_seq', (SELECT MAX(vote_id) from "votes"));
 
 DROP TABLE IF EXISTS votes;
 

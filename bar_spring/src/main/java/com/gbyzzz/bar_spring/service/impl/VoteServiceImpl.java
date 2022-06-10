@@ -22,6 +22,9 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public Vote addOrUpdateVote(Vote vote) {
+        if(vote.getVoteId() != null) {
+            voteRepository.deleteById(vote.getVoteId());
+        }
         return voteRepository.save(vote);
     }
 
