@@ -46,11 +46,11 @@ export class CocktailComponent implements OnInit {
      this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
      this.cocktailName = cocktail.cocktailName;
      this.imageSrc = this.imageService.getImage(this.cocktail.cocktailImage.imageId);
-     console.log(this.cocktail);
-    });
-    voteService.findByCocktailUserVote(this.vote).subscribe(res => {
-      this.vote = res;
-    });
+      voteService.findByCocktailUserVote(this.vote).subscribe(res => {
+        this.vote = res;
+        console.log(res);
+      });    });
+
   }
 
   ngOnInit(): void {
@@ -59,7 +59,10 @@ export class CocktailComponent implements OnInit {
 
   onRate(value: number) {
     this.vote.voteValue = value;
-    this.voteService.add(this.vote);
+    console.log(this.vote);
+    this.voteService.add(this.vote).subscribe(res =>{
+      this.vote = res;
+    });
     console.log(value);
 
   }

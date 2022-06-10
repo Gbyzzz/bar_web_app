@@ -27,8 +27,7 @@
   </div>
   <div class="container ml-5 mr-5">
   </div>
-  <form action="/controller" method="post">
-    <div class="text-center">
+    <div class="text-center" *ngIf="isUserLoggedIn">
       <h3>Rate</h3>
     </div>
     <div class="rating text-center" *ngIf="isUserLoggedIn">
@@ -46,7 +45,6 @@
     <div class="text-center mb-5">
       Rating - {{cocktail.cocktailRating}} (Votes : )
     </div>
-  </form>
 </div>
 
 <!--<form [formGroup]="ratingForm">-->
