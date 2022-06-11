@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,9 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public Cocktail addOrUpdate(Cocktail cocktail) {
-        return cocktailRepository.save(cocktail);
+        cocktail.setPublicationDate(new Date(new java.util.Date().getTime()));
+        Cocktail savedCocktail = cocktailRepository.save(cocktail);
+        return savedCocktail;
     }
 
     @Override

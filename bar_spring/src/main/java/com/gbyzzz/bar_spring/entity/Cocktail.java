@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "cocktails", schema = "public", catalog = "bar_db")
@@ -20,7 +19,7 @@ public class Cocktail {
     @Column(name = "cocktail_name")
     private String cocktailName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "cocktail_author")
     private User cocktailAuthor;
 
@@ -43,9 +42,5 @@ public class Cocktail {
     @Basic
     @Column(name = "approx_alcohol_percentage")
     private int approxAlcoholPercentage;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cocktail")
-    private List<Recipe> recipes;
-
 
 }

@@ -4,8 +4,10 @@ import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.entity.pagination.Pagination;
 import com.gbyzzz.bar_spring.service.CocktailService;
 import com.gbyzzz.bar_spring.service.ImageService;
+import com.gbyzzz.bar_spring.service.RecipeService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +22,12 @@ public class CocktailController {
 
     private CocktailService cocktailService;
     private ImageService imageService;
+    private RecipeService recipeService;
 
-    public CocktailController(CocktailService cocktailService, ImageService imageService) {
+    public CocktailController(CocktailService cocktailService, ImageService imageService, RecipeService recipeService) {
         this.cocktailService = cocktailService;
         this.imageService = imageService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/all")
@@ -38,8 +42,15 @@ public class CocktailController {
     }
 
     @PostMapping("/add_or_update")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER')")
     public Cocktail addCocktail(@RequestBody Cocktail cocktail) {
-    return cocktailService.addOrUpdate(cocktail);
+
+//        cocktail.setApproxAlcoholPercentage(recipeService.calculateAlcohol(cocktail.getRecipes()));
+        recipeService.setCocktail(cocktail);
+        System.out.println(cocktail);
+        cocktail.setCocktailImage(imageService.getImageById(cocktail.getCocktailId()));
+
+        return cocktailService.addOrUpdate(cocktail);
 }
 
     @PostMapping("/all_pages")
