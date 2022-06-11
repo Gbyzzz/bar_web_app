@@ -27,7 +27,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {EditUserDialogComponent} from './view/dialog/edit-user-dialog/edit-user-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
 import {IMAGE_URL_TOKEN} from "./service/entity/impl/ImageServiceImpl";
@@ -42,6 +42,7 @@ import {RegistrationComponent} from "./view/header/registration/registration.com
 import {authInterceptorProviders} from "./service/auth/auth.interceptor";
 import {UserPageComponent} from "./view/main/user-page/user-page.component";
 import {VOTE_URL_TOKEN} from "./service/entity/impl/VoteServiceImpl";
+import {RECIPE_URL_TOKEN} from "./service/entity/impl/RecipeServiceImpl";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -110,11 +111,16 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: IMAGE_URL_TOKEN,
       useValue: 'http://localhost:8080/image'
     },
-
     {
       provide: VOTE_URL_TOKEN,
       useValue: 'http://localhost:8080/vote'
     },
+    {
+      provide: RECIPE_URL_TOKEN,
+      useValue: 'http://localhost:8080/recipe'
+    },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: [] }
 
   ],
   bootstrap: [AppComponent]

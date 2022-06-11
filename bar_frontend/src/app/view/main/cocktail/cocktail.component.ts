@@ -8,6 +8,9 @@ import {filter} from "rxjs";
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
 import {Vote} from "../../../model/Vote";
 import {VoteServiceImpl} from "../../../service/entity/impl/VoteServiceImpl";
+import {Recipe} from "../../../model/Recipe";
+import {RegistrationComponent} from "../../header/registration/registration.component";
+import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 
 export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -25,12 +28,14 @@ export class CocktailComponent implements OnInit {
   ratingForm: FormGroup;
   cocktailId: number;
   cocktailName: string;
+  recipes: Recipe[];
 
   isUserLoggedIn: boolean;
 
   constructor(private cocktailService: CocktailServiceImpl,
               private imageService: ImageServiceImpl,
               private voteService: VoteServiceImpl,
+              private recipeService: RecipeServiceImpl,
               private fb: FormBuilder,
               private cdr: ChangeDetectorRef,
               private router: Router,
@@ -44,7 +49,11 @@ export class CocktailComponent implements OnInit {
     console.log(this.isUserLoggedIn);
     this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
      this.cocktail = cocktail;
-     console.log(cocktail.recipes[0].cocktail);
+     this.recipeService.findByCocktail(cocktail).subscribe(res => {
+       this.recipes = res;
+       console.log(res);
+     });
+     // console.log(cocktail.recipes[0].cocktail);
      this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
      this.cocktailName = cocktail.cocktailName;
      this.imageSrc = this.imageService.getImage(this.cocktail.cocktailImage.imageId);

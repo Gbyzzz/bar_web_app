@@ -117,8 +117,12 @@
       <div class="text-center">
         <p>
           <button type="submit" class="btn btn-outline-dark m-5"
-          (click)="onSubmit()">
+          (click)="onSubmit()" *ngIf="this.data[0]">
             Save cocktail
+          </button>
+          <button type="submit" class="btn btn-outline-dark m-5"
+                  (click)="onAdd()" *ngIf="!this.data[0]">
+            Add cocktail
           </button>
         </p>
       </div>

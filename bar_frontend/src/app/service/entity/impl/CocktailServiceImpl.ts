@@ -20,7 +20,7 @@ export class CocktailServiceImpl implements CocktailService{
   }
 
   add(cocktail: Cocktail): Observable<Cocktail> {
-    return this.HttpClient.post<Cocktail>(this.url+'/add', cocktail);
+    return this.HttpClient.post<Cocktail>(this.url+'/add_or_update', cocktail);
   }
 
   delete(id: number): Observable<Cocktail> {

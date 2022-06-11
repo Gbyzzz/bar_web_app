@@ -108,7 +108,7 @@
           {{t('admin')}}
         </button>
         <button type="button" *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'" class="btn btn-dark me-3"
-                (click)="openAddDialog()">
+                [routerLink]="['/cocktails/add']">
           {{t('add cocktail')}}
         </button>
         <div class="dropdown">

@@ -61,7 +61,6 @@ export class UserPageComponent implements OnInit {
         this.imageSrc = reader.result as string;
       };
       this.fileHolder = event.target.files[0];
-      // this.userProfileForm.get('userImageFile').setValue(file);
     }
   }
 

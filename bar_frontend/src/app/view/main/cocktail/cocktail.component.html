@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-6">
         <h3>{{t('ingredients')}}</h3>
-        <li *ngFor="let recipe of cocktail.recipes">
+        <li *ngFor="let recipe of recipes">
           {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{t(recipe.ingredient.unitOfMeasurement)}}
         </li>
         {{t('Approx. alcohol')}}{{cocktail.approxAlcoholPercentage}}%
