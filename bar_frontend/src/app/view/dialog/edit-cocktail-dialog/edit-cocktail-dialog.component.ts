@@ -78,10 +78,11 @@ export class EditCocktailDialogComponent implements OnInit {
     this.newCocktailImage = this.targetCocktail.cocktailImage;
     this.newCocktailRecipe = this.targetCocktail.cocktailRecipe;
 
-    this.recipeService.findByCocktail(this.targetCocktail).subscribe(res => {
-      this.recipes = res;
-      this.newRecipes = res;
-      if (this.newRecipes) {
+    if(this.targetCocktail.cocktailId) {
+      this.recipeService.findByCocktail(this.targetCocktail).subscribe(res => {
+        this.recipes = res;
+        this.newRecipes = res;
+        if (this.newRecipes) {
           this.newRecipes.forEach(recipe => {
             this.selectedIngredient.splice(this.selectedIngredient.length, 0, recipe.ingredient);
             this.selectedUnit.splice(this.selectedUnit.length, 0, recipe.ingredient.unitOfMeasurement);
@@ -90,7 +91,8 @@ export class EditCocktailDialogComponent implements OnInit {
             this.addIndex++;
           });
         }
-    });
+      });
+    }
 
     // this.newRecipes = this.targetCocktail.recipes;
     // if (this.newRecipes) {

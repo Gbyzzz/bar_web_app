@@ -1,6 +1,5 @@
 import {User} from "./User";
 import {Image} from "./Image";
-import {Recipe} from "./Recipe";
 
 export class Cocktail{
   cocktailId: number;
@@ -11,8 +10,6 @@ export class Cocktail{
   cocktailImage: Image;
   cocktailRecipe: string;
   approxAlcoholPercentage: number;
-  // recipes: Recipe[];
-
 
   constructor(cocktailId?: number, cocktailName?: string, cocktailAuthor?: User, cocktailRating?: number,
               publicationDate?: Date, cocktailImage?: Image, cocktailRecipe?: string,
