@@ -1,15 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IngredientServiceImpl} from "../../../service/entity/impl/IngredientServiceImpl";
-import {MatTableDataSource} from "@angular/material/table";
-import {PageEvent} from "@angular/material/paginator";
 import {Ingredient} from "../../../model/Ingredient";
 import {MatDialog} from "@angular/material/dialog";
-import {UserServiceImpl} from "../../../service/entity/impl/UserServiceImpl";
-import {User} from "../../../model/User";
 import {Sort} from "@angular/material/sort";
-import {EditUserDialogComponent} from "../../dialog/edit-user-dialog/edit-user-dialog.component";
 import {DialogAction} from "../../dialog/DialogResult";
 import {EditIngredientDialogComponent} from "../../dialog/edit-ingredient-dialog/edit-ingredient-dialog.component";
+import {Pagination, SortDirection, SortDirectionUtil} from "../../../model/pagination/Pagination";
+import {User} from "../../../model/User";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-ingredients-admin',
@@ -17,44 +15,94 @@ import {EditIngredientDialogComponent} from "../../dialog/edit-ingredient-dialog
   styleUrls: ['./ingredients-admin.component.css']
 })
 export class IngredientsAdminComponent implements OnInit {
+
+  readonly defaultPageSize = 10;
+  readonly defaultPageNumber = 0;
+  readonly defaultSortDirection = SortDirection.DESC;
+
   ingredients: Ingredient[];
   sortedData: Ingredient[];
+
+  pagination: Pagination;
+  totalIngredientsFound: number;
+
   constructor(private dialog: MatDialog,
-              private ingredientService: IngredientServiceImpl) {
-    this.ingredientService.findAll().subscribe(ingredients => {
-      this.sortedData = ingredients;
-      this.ingredients = ingredients;
-    });
+              private ingredientService: IngredientServiceImpl,
+              private sortDirectionUtil: SortDirectionUtil) {
+    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
+    this.getPage();
+
+    // this.ingredientService.findAll().subscribe(ingredients => {
+    //   this.sortedData = ingredients;
+    //   this.ingredients = ingredients;
+    // });
   }
 
   ngOnInit(): void {
   }
+
+  pageChanged(pageEvent: PageEvent) {
+
+    if (this.pagination.pageSize != pageEvent.pageSize) {
+      this.pagination.pageNumber = 0;
+      console.log("true");
+
+    } else {
+      this.pagination.pageNumber = pageEvent.pageIndex;
+    }
+
+    this.pagination.pageSize = pageEvent.pageSize;
+
+    this.getPage();
+  }
+
+  getPage() {
+    console.log(this.pagination);
+    this.ingredientService.findAllWithPages(this.pagination).subscribe(ingredients =>{
+      this.ingredients = ingredients.content;
+      this.sortedData = ingredients.content;
+      console.log(ingredients);
+      this.totalIngredientsFound = ingredients.totalElements;
+      console.log(this.totalIngredientsFound);
+    });
+  }
+
   updateIngredient(ingredient: Ingredient){
     this.ingredientService.update(ingredient).subscribe();
   }
 
   sortData(sort: Sort) {
-    const data = this.ingredients.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
-      return;
-    }
+    if (this.totalIngredientsFound > this.pagination.pageSize && sort.active == 'ingredientId') {
 
-    this.sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'ingredientId':
-          return compare(a.ingredientId, b.ingredientId, isAsc);
-        case 'ingredientName':
-          return compare(a.ingredientName, b.ingredientName, isAsc);
-        case 'ingredientAlcohol':
-          return compare(a.ingredientAlcohol, b.ingredientAlcohol, isAsc);
-        case 'unitOfMeasurement':
-          return compare(a.unitOfMeasurement, b.unitOfMeasurement, isAsc);
-        default:
-          return 0;
+      if (!sort.active || sort.direction === '') {
+        this.pagination.sortDirection = SortDirection.DESC;
+      } else {
+        this.pagination.sortDirection = this.sortDirectionUtil.change(this.pagination.sortDirection);
       }
-    });
+      this.getPage();
+    } else {
+      const data = this.ingredients.slice();
+      if (!sort.active || sort.direction === '') {
+        this.sortedData = data;
+        return;
+      }
+
+      this.sortedData = data.sort((a, b) => {
+        const isAsc = sort.direction === 'asc';
+        switch (sort.active) {
+          case 'ingredientId':
+            return compare(a.ingredientId, b.ingredientId, isAsc);
+          case 'ingredientName':
+            return compare(a.ingredientName, b.ingredientName, isAsc);
+          case 'ingredientAlcohol':
+            return compare(a.ingredientAlcohol, b.ingredientAlcohol, isAsc);
+          case 'unitOfMeasurement':
+            return compare(a.unitOfMeasurement, b.unitOfMeasurement, isAsc);
+          default:
+            return 0;
+        }
+      });
+    }
   }
 
   openEditDialog(ingredient: Ingredient): void {

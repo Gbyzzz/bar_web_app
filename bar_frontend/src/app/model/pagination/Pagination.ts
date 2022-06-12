@@ -9,12 +9,13 @@ export enum SortDirection{
   providedIn: 'root'
 })
 export class SortDirectionUtil{
-  change(sortDirection: SortDirection){
+  change(sortDirection: SortDirection): SortDirection {
     if(sortDirection === SortDirection.ASC){
       sortDirection = SortDirection.DESC;
     } else {
       sortDirection = SortDirection.ASC;
     }
+    return sortDirection;
   }
 }
 

@@ -26,7 +26,7 @@ export class CocktailsAdminComponent implements OnInit {
   sortedData: Cocktail[];
   recipes: Recipe[];
   pagination: Pagination;
-  totalCocktailsFounded: number;
+  totalCocktailsFound: number;
 
   constructor(private dialog: MatDialog,
               private cocktailService: CocktailServiceImpl,
@@ -57,33 +57,43 @@ export class CocktailsAdminComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
-    this.sortDirectionUtil.change(this.pagination.sortDirection);
-    this.getPage();
-    const data = this.cocktails.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
-      return;
-    }
+    if (this.totalCocktailsFound > this.pagination.pageSize && sort.active == 'cocktailId') {
 
-    this.sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'cocktailId':
-          return compare(a.cocktailId, b.cocktailId, isAsc);
-        case 'cocktailName':
-          return compare(a.cocktailName, b.cocktailName, isAsc);
-        case 'cocktailAuthor':
-          return compare(a.cocktailAuthor.username, b.cocktailAuthor.username, isAsc);
-        case 'cocktailRating':
-          return compare(a.cocktailRating, b.cocktailRating, isAsc);
-        case 'publicationDate':
-          return compare(a.publicationDate, b.publicationDate, isAsc);
-        case 'approxAlcoholPercentage':
-          return compare(a.approxAlcoholPercentage, b.approxAlcoholPercentage, isAsc);
-        default:
-          return 0;
+      if (!sort.active || sort.direction === '') {
+        this.pagination.sortDirection = SortDirection.DESC;
+      } else{
+        this.pagination.sortDirection = this.sortDirectionUtil.change(this.pagination.sortDirection);
       }
-    });
+      this.getPage();
+    } else {
+      const data = this.cocktails.slice();
+      if (!sort.active || sort.direction === '') {
+        this.sortedData = data;
+        this.pagination.sortDirection = SortDirection.DESC;
+        return;
+
+      }
+
+      this.sortedData = data.sort((a, b) => {
+        const isAsc = sort.direction === 'asc';
+        switch (sort.active) {
+          case 'cocktailId':
+            return compare(a.cocktailId, b.cocktailId, isAsc);
+          case 'cocktailName':
+            return compare(a.cocktailName, b.cocktailName, isAsc);
+          case 'cocktailAuthor':
+            return compare(a.cocktailAuthor.username, b.cocktailAuthor.username, isAsc);
+          case 'cocktailRating':
+            return compare(a.cocktailRating, b.cocktailRating, isAsc);
+          case 'publicationDate':
+            return compare(a.publicationDate, b.publicationDate, isAsc);
+          case 'approxAlcoholPercentage':
+            return compare(a.approxAlcoholPercentage, b.approxAlcoholPercentage, isAsc);
+          default:
+            return 0;
+        }
+      });
+    }
   }
 
   pageChanged(pageEvent: PageEvent) {
@@ -102,12 +112,13 @@ export class CocktailsAdminComponent implements OnInit {
   }
 
   getPage() {
+    console.log(this.pagination);
     this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
       this.cocktails = cocktails.content;
       this.sortedData = cocktails.content;
       console.log(cocktails);
-      this.totalCocktailsFounded = cocktails.totalElements;
-      console.log(this.totalCocktailsFounded);
+      this.totalCocktailsFound = cocktails.totalElements;
+      console.log(this.totalCocktailsFound);
     });
   }
 

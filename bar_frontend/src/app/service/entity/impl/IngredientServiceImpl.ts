@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {IngredientService} from "../IngredientService";
 import {Ingredient} from "../../../model/Ingredient";
 import {HttpClient} from "@angular/common/http";
+import {Pagination} from "../../../model/pagination/Pagination";
 
 export const INGREDIENT_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -35,5 +36,9 @@ export class IngredientServiceImpl implements IngredientService {
 
   update(ingredient: Ingredient): Observable<Ingredient> {
     return this.HttpClient.put<Ingredient>(this.url+'/update/', ingredient);
+  }
+
+  findAllWithPages(pagination: Pagination): Observable<any> {
+    return this.HttpClient.post<any>(this.url + '/all_pages', pagination);
   }
 }

@@ -3,6 +3,7 @@ import {UserService} from "../UserService";
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../../../model/User";
+import {Pagination} from "../../../model/pagination/Pagination";
 
 export const USER_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -56,5 +57,9 @@ export class UserServiceImpl  implements UserService{
 
   isEmailAvailable(username: string, email: string, password: string): Observable<boolean>{
     return this.HttpClient.post<boolean>(this.url + '/is_email_available', {username, email, password});
+  }
+
+  findAllWithPages(pagination: Pagination): Observable<any> {
+    return this.HttpClient.post<any>(this.url + '/all_pages', pagination);
   }
 }
