@@ -4,6 +4,7 @@ import {Cocktail} from "../../../model/Cocktail";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Pagination} from "../../../model/pagination/Pagination";
+import {Recipe} from "../../../model/Recipe";
 
 export const COCKTAIL_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -21,6 +22,9 @@ export class CocktailServiceImpl implements CocktailService{
 
   add(cocktail: Cocktail): Observable<Cocktail> {
     return this.HttpClient.post<Cocktail>(this.url+'/add_or_update', cocktail);
+  }
+  addCocktail(cocktail: Cocktail, recipes: Recipe[]): Observable<Cocktail> {
+    return this.HttpClient.post<Cocktail>(this.url+'/add_or_update', {cocktail, recipes} );
   }
 
   delete(id: number): Observable<Cocktail> {

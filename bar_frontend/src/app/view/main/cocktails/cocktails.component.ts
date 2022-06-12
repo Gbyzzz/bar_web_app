@@ -21,10 +21,8 @@ export class CocktailsComponent implements OnInit {
   cocktails: Cocktail[];
   pagination: Pagination;
   totalCocktailsFounded: number;
-  target_cocktail: RouterLink;
 
-  constructor(private cocktailService: CocktailServiceImpl,
-              private imageService: ImageServiceImpl) {
+  constructor(private cocktailService: CocktailServiceImpl) {
 
     this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber);
     console.log(this.pagination);

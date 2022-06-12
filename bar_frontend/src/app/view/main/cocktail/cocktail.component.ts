@@ -11,6 +11,7 @@ import {VoteServiceImpl} from "../../../service/entity/impl/VoteServiceImpl";
 import {Recipe} from "../../../model/Recipe";
 import {RegistrationComponent} from "../../header/registration/registration.component";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
+import {Image} from "../../../model/Image";
 
 export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -23,7 +24,7 @@ export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 export class CocktailComponent implements OnInit {
 
   cocktail: Cocktail;
-  imageSrc: string;
+  image: Image;
   vote: Vote;
   ratingForm: FormGroup;
   cocktailId: number;
@@ -56,11 +57,12 @@ export class CocktailComponent implements OnInit {
      // console.log(cocktail.recipes[0].cocktail);
      this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
      this.cocktailName = cocktail.cocktailName;
-     this.imageSrc = this.imageService.getImage(this.cocktail.cocktailImage.imageId);
-      voteService.findByCocktailUserVote(this.vote).subscribe(res => {
+     this.image = cocktail.cocktailImage;
+     voteService.findByCocktailUserVote(this.vote).subscribe(res => {
         this.vote = res;
         console.log(res);
-      });    });
+      });
+    });
 
   }
 
@@ -76,6 +78,5 @@ export class CocktailComponent implements OnInit {
       this.cdr.detectChanges();
     });
     console.log(value);
-
   }
 }

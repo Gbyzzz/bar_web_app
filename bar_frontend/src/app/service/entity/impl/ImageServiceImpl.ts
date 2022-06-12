@@ -18,8 +18,8 @@ export class ImageServiceImpl implements ImageService{
     this.url = baseUrl;
   }
 
-  uploadImage(formData: FormData): Observable<number> {
-    return this.HttpClient.post<any>(this.url + '/upload', formData);
+  uploadImage(formData: FormData): Observable<Image> {
+    return this.HttpClient.post<Image>(this.url + '/upload', formData);
   }
 
   getImage(id: number): string {

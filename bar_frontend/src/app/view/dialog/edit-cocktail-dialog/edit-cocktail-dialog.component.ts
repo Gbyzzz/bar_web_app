@@ -194,9 +194,8 @@ export class EditCocktailDialogComponent implements OnInit {
     if (!this.cocktailForm.get('cocktailImageFile').value.imageId) {
       const formData = new FormData();
       formData.append('file', this.fileHolder, this.fileHolder.name);
-      this.imageService.uploadImage(formData).subscribe(id => {
-        console.log(id);
-        this.newCocktailImage = new Image(id);
+      this.imageService.uploadImage(formData).subscribe(image => {
+        this.newCocktailImage = image;
         this.updateCocktailValues();
         this.recipes = this.newRecipes;
         this.recipeService.addAll(this.recipes).subscribe(res => {
@@ -212,16 +211,13 @@ export class EditCocktailDialogComponent implements OnInit {
   onAdd(){
       const formData = new FormData();
       formData.append('file', this.fileHolder, this.fileHolder.name);
-      this.imageService.uploadImage(formData).subscribe(id => {
-        console.log(id);
-        this.newCocktailImage = new Image(id);
+      this.imageService.uploadImage(formData).subscribe(image => {
+        this.newCocktailImage = image;
         this.updateCocktailValues();
         this.targetCocktail.cocktailAuthor = this.tokenService.getUser();
         console.log(this.targetCocktail);
-        this.cocktailService.add(this.targetCocktail).subscribe(res => {
-          this.recipeService.addAll(this.recipes).subscribe(result => {
+        this.cocktailService.addCocktail(this.targetCocktail, this.newRecipes).subscribe(res => {
             this.router.navigate(['/cocktails/cocktail/' + res.cocktailId]);
-          })
         });
       });
   }
