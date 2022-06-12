@@ -14,4 +14,6 @@ public interface RecipeService {
     int calculateAlcohol(List<Recipe> recipes);
 
     void setCocktail(Cocktail cocktail);
+
+    void add(List<Recipe> recipes, Cocktail cocktail);
 }

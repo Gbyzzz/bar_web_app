@@ -35,7 +35,7 @@ public class VoteServiceImpl implements VoteService {
     public Vote findByCocktailUserVote(Vote vote) {
         Vote targetVote = vote;
         Optional<Vote> optionalVote = voteRepository.findByCocktailAndUser(vote.getCocktail(), vote.getUser());
-        if(optionalVote.isPresent()){
+        if (optionalVote.isPresent()) {
             targetVote = optionalVote.get();
         }
         return targetVote;
@@ -45,10 +45,10 @@ public class VoteServiceImpl implements VoteService {
     public void updateRating(Cocktail cocktail) {
         List<Vote> cocktailVotes = voteRepository.findByCocktail(cocktail);
         double rating = 0;
-        for(Vote cocktailVote: cocktailVotes){
+        for (Vote cocktailVote : cocktailVotes) {
             rating += cocktailVote.getVoteValue();
         }
-       cocktail.setCocktailRating(rating/cocktailVotes.size());
+        cocktail.setCocktailRating(rating / cocktailVotes.size());
         cocktailRepository.save(cocktail);
     }
 

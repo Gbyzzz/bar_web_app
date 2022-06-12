@@ -1,6 +1,8 @@
 package com.gbyzzz.bar_spring.controller;
 
+import com.gbyzzz.bar_spring.controller.payload.request.AddCocktailRequest;
 import com.gbyzzz.bar_spring.entity.Cocktail;
+import com.gbyzzz.bar_spring.entity.Recipe;
 import com.gbyzzz.bar_spring.entity.pagination.Pagination;
 import com.gbyzzz.bar_spring.service.CocktailService;
 import com.gbyzzz.bar_spring.service.ImageService;
@@ -43,14 +45,13 @@ public class CocktailController {
 
     @PostMapping("/add_or_update")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public Cocktail addCocktail(@RequestBody Cocktail cocktail) {
-
-//        cocktail.setApproxAlcoholPercentage(recipeService.calculateAlcohol(cocktail.getRecipes()));
-        recipeService.setCocktail(cocktail);
-        System.out.println(cocktail);
-        cocktail.setCocktailImage(imageService.getImageById(cocktail.getCocktailId()));
-
-        return cocktailService.addOrUpdate(cocktail);
+    public Cocktail addCocktail(@RequestBody AddCocktailRequest addCocktailRequest) {
+        Cocktail cocktail = addCocktailRequest.getCocktail();
+        List<Recipe> recipes = addCocktailRequest.getRecipes();
+        cocktail.setApproxAlcoholPercentage(recipeService.calculateAlcohol(recipes));
+        Cocktail cocktail1 = cocktailService.addOrUpdate(cocktail);
+        recipeService.add(recipes, cocktail1);
+        return cocktail1;
 }
 
     @PostMapping("/all_pages")

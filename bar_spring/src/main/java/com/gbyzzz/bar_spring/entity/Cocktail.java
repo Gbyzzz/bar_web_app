@@ -31,7 +31,7 @@ public class Cocktail {
     @Column(name = "publication_date")
     private Date publicationDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "image")
     private Image cocktailImage;
 

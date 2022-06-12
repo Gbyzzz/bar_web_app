@@ -23,8 +23,8 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
-    Long uploadImage(@RequestParam("file")MultipartFile file) throws IOException {
-       return imageService.saveImage(file).getImageId();
+    Image uploadImage(@RequestParam("file")MultipartFile file) throws IOException {
+       return imageService.saveImage(file);
     }
 
     @GetMapping("/{id}")

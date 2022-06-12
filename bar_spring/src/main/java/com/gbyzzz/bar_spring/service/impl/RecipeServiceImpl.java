@@ -48,5 +48,13 @@ public class RecipeServiceImpl implements RecipeService {
 //        cocktail.setRecipes(recipes);
     }
 
+    @Override
+    public void add(List<Recipe> recipes, Cocktail cocktail) {
+        for(Recipe recipe : recipes){
+            recipe.setCocktail(cocktail);
+        }
+        recipeRepository.saveAll(recipes);
+    }
+
 
 }
