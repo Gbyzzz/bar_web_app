@@ -1,8 +1,12 @@
 package com.gbyzzz.bar_spring.service.impl;
 
 import com.gbyzzz.bar_spring.entity.User;
+import com.gbyzzz.bar_spring.entity.pagination.Pagination;
 import com.gbyzzz.bar_spring.repository.UserRepository;
 import com.gbyzzz.bar_spring.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +69,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmailAvailable(String email) {
         return !userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Page findAllWithPages(Pagination pagination) {
+        Integer pageNumber = pagination.getPageNumber() != null ? pagination.getPageNumber() : null;
+        Integer pageSize = pagination.getPageSize() != null ? pagination.getPageSize() : null;
+        Sort sort = pagination.getSortDirection().equals(Pagination.SortDirection.DESC) ?
+                Sort.by(Sort.Direction.DESC, "userId") : Sort.by(Sort.Direction.ASC, "userId");
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
+        return userRepository.findAll(pageRequest);
     }
 }

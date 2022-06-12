@@ -1,6 +1,8 @@
 package com.gbyzzz.bar_spring.service;
 
 import com.gbyzzz.bar_spring.entity.User;
+import com.gbyzzz.bar_spring.entity.pagination.Pagination;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +27,6 @@ public interface UserService {
     boolean isUsernameAvailable(String username);
 
     boolean isEmailAvailable(String email);
+
+    Page findAllWithPages(Pagination pagination);
 }
