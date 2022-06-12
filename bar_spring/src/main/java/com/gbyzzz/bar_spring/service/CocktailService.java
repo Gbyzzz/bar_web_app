@@ -17,4 +17,6 @@ public interface CocktailService {
     Cocktail addOrUpdate(Cocktail cocktail);
 
     Page findAllWithPages(Pagination pagination);
+
+    List<Cocktail> findForMainPage();
 }

@@ -12,5 +12,9 @@ import lombok.Setter;
 public class Pagination {
     private Integer pageSize;
     private Integer pageNumber;
+    private SortDirection sortDirection;
 
+    public enum SortDirection {
+        ASC, DESC
+    }
 }

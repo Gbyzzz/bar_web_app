@@ -9,11 +9,13 @@ import java.util.List;
  * @author Anton Pinchuk
  */
 public interface RecipeService {
-    List<Recipe> findRecipesByCocktailId(Cocktail cocktail);
+    List<Recipe> findRecipesByCocktail(Cocktail cocktail);
 
     int calculateAlcohol(List<Recipe> recipes);
 
     void setCocktail(Cocktail cocktail);
 
     void add(List<Recipe> recipes, Cocktail cocktail);
+
+    List<Recipe> findAllRecipesByCocktails(List<Cocktail> cocktails);
 }

@@ -6,6 +6,7 @@ import com.gbyzzz.bar_spring.repository.RecipeRepository;
 import com.gbyzzz.bar_spring.service.RecipeService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> findRecipesByCocktailId(Cocktail cocktail) {
+    public List<Recipe> findRecipesByCocktail(Cocktail cocktail) {
         return recipeRepository.findRecipesByCocktail(cocktail);
     }
 
@@ -54,6 +55,16 @@ public class RecipeServiceImpl implements RecipeService {
             recipe.setCocktail(cocktail);
         }
         recipeRepository.saveAll(recipes);
+    }
+
+    @Override
+    public List<Recipe> findAllRecipesByCocktails(List<Cocktail> cocktails) {
+        List<Recipe> allRecipes = new ArrayList<>();
+        for(Cocktail cocktail : cocktails) {
+             allRecipes.addAll(recipeRepository.findRecipesByCocktail(cocktail));
+        }
+        System.out.println(allRecipes);
+        return allRecipes;
     }
 
 

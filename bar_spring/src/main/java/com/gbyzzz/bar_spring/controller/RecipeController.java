@@ -20,6 +20,11 @@ public class RecipeController {
 
     @PostMapping("/find_by_cocktail")
     public List<Recipe> findByCocktail(@RequestBody Cocktail cocktail) {
-        return recipeService.findRecipesByCocktailId(cocktail);
+        return recipeService.findRecipesByCocktail(cocktail);
+    }
+
+    @PostMapping("/find_all_by_cocktails")
+    public List<Recipe> findAllByCocktails(@RequestBody List<Cocktail>cocktails) {
+        return recipeService.findAllRecipesByCocktails(cocktails);
     }
 }

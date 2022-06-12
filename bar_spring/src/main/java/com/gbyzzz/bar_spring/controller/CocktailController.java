@@ -37,6 +37,11 @@ public class CocktailController {
         return cocktailService.findAll();
     }
 
+    @GetMapping("/main_page")
+    public List<Cocktail> getCocktailsForMainPage(){
+        return cocktailService.findForMainPage();
+    }
+
     @GetMapping("/{id}")
     public Cocktail getCocktail(@PathVariable long id) throws Exception {
         System.out.println("get Cocktail");
