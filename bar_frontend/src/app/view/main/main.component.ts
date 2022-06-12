@@ -16,9 +16,8 @@ export class MainComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  constructor(private cocktailService: CocktailServiceImpl,
-              private imageService: ImageServiceImpl) {
-    this.cocktailService.findAll().subscribe(cocktails => {
+  constructor(private cocktailService: CocktailServiceImpl) {
+    this.cocktailService.findForMain().subscribe(cocktails => {
       this.cocktails = cocktails;
       console.log(cocktails);
 

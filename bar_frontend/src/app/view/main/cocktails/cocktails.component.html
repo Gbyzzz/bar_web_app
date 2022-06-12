@@ -1,10 +1,10 @@
 <div class="text-center font-weight-bold" *transloco="let t"><h1>{{t('cocktails')}}</h1></div>
-<div class="d-flex flex-wrap" *ngFor="let cocktail of cocktails; let i=index">
-     <div class="flex-lg-grow-0 m-3">
+<div class="d-flex flex-wrap">
+     <div class="flex-lg-grow-0 m-3" *ngFor="let cocktail of cocktails; let i=index">
       <div class="post">
         <div class="bg-image hover-zoom">
           <a class="post-img" [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]">
-            <img src="data:image/png;base64,{{cocktail.cocktailImage.bytes}}" width="420"
+            <img src="data:image/png;base64,{{cocktail.cocktailImage.bytes}}" width="474" height="290"
                  [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]"/>
             <div class="text-block">
               <h4><a type="submit" style="color:white"

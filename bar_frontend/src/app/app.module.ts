@@ -43,6 +43,7 @@ import {authInterceptorProviders} from "./service/auth/auth.interceptor";
 import {UserPageComponent} from "./view/main/user-page/user-page.component";
 import {VOTE_URL_TOKEN} from "./service/entity/impl/VoteServiceImpl";
 import {RECIPE_URL_TOKEN} from "./service/entity/impl/RecipeServiceImpl";
+import {RecipeFilterByCocktailPipe} from "./view/pipe/RecipeFilterByCocktailPipe";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -66,7 +67,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AboutComponent,
     ContactComponent,
     RegistrationComponent,
-    UserPageComponent
+    UserPageComponent,
+    RecipeFilterByCocktailPipe
   ],
   imports: [
     BrowserModule,

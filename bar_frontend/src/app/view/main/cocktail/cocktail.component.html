@@ -15,7 +15,7 @@
         {{cocktail.cocktailRecipe}}
       </div>
       <div class="col-6">
-        <img src="data:image/png;base64,{{image.bytes}}" class="mx-auto d-block" alt="logo"/>
+        <img src="data:image/png;base64,{{image.bytes}}" class="mx-auto d-block img" alt="logo"/>
       </div>
     </div>
   </div>
@@ -46,9 +46,3 @@
       Rating - {{cocktail.cocktailRating}} (Votes : )
     </div>
 </div>
-
-<!--<form [formGroup]="ratingForm">-->
-<!--  <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>-->
-<!--  <div>Rating: {{ratingForm.value}}</div>-->
-
-<!--</form>-->

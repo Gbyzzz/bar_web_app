@@ -6,6 +6,10 @@ import {DialogAction} from "../../dialog/DialogResult";
 import {Cocktail} from "../../../model/Cocktail";
 import {EditCocktailDialogComponent} from "../../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
+import {Pagination, SortDirection, SortDirectionUtil} from "../../../model/pagination/Pagination";
+import {PageEvent} from "@angular/material/paginator";
+import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
+import {Recipe} from "../../../model/Recipe";
 
 @Component({
   selector: 'app-cocktails-admin',
@@ -14,15 +18,35 @@ import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 })
 export class CocktailsAdminComponent implements OnInit {
 
+  readonly defaultPageSize = 10;
+  readonly defaultPageNumber = 0;
+  readonly defaultSortDirection = SortDirection.DESC;
+
   cocktails: Cocktail[];
   sortedData: Cocktail[];
+  recipes: Recipe[];
+  pagination: Pagination;
+  totalCocktailsFounded: number;
+
   constructor(private dialog: MatDialog,
               private cocktailService: CocktailServiceImpl,
-              private imageService: ImageServiceImpl) {
-    this.cocktailService.findAll().subscribe(cocktails => {
-      this.sortedData = cocktails;
-      this.cocktails = cocktails;
-    });
+              private imageService: ImageServiceImpl,
+              private recipeService: RecipeServiceImpl,
+              private sortDirectionUtil: SortDirectionUtil) {
+    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
+
+    // this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails => {
+    //   this.sortedData = cocktails;
+    //   this.cocktails = cocktails;
+    //   recipeService.findAllByCocktails(cocktails).subscribe(res => {
+    //       // this.recipes.splice(this.recipes.length, 0, res);
+    //       // this.recipes = this.recipes + res;
+    //     this.recipes = res;
+    //     console.log(this.recipes);
+    //   });
+    // });
+
+    this.getPage();
   }
 
   ngOnInit(): void {
@@ -33,6 +57,8 @@ export class CocktailsAdminComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
+    this.sortDirectionUtil.change(this.pagination.sortDirection);
+    this.getPage();
     const data = this.cocktails.slice();
     if (!sort.active || sort.direction === '') {
       this.sortedData = data;
@@ -57,6 +83,31 @@ export class CocktailsAdminComponent implements OnInit {
         default:
           return 0;
       }
+    });
+  }
+
+  pageChanged(pageEvent: PageEvent) {
+
+    if (this.pagination.pageSize != pageEvent.pageSize) {
+      this.pagination.pageNumber = 0;
+      console.log("true");
+
+    } else {
+      this.pagination.pageNumber = pageEvent.pageIndex;
+    }
+
+    this.pagination.pageSize = pageEvent.pageSize;
+
+    this.getPage();
+  }
+
+  getPage() {
+    this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
+      this.cocktails = cocktails.content;
+      this.sortedData = cocktails.content;
+      console.log(cocktails);
+      this.totalCocktailsFounded = cocktails.totalElements;
+      console.log(this.totalCocktailsFounded);
     });
   }
 

@@ -44,4 +44,8 @@ export class RecipeServiceImpl implements RecipeService{
   addAll(obj: Recipe[]): Observable<Recipe[]> {
     return undefined;
   }
+
+  findAllByCocktails(cocktails: Cocktail[]): Observable<Recipe[]>  {
+    return this.HttpClient.post<Recipe[]>(this.url + '/find_all_by_cocktails', cocktails);
+  }
 }

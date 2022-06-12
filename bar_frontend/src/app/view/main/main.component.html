@@ -59,13 +59,13 @@
     <h2>{{t('new cocktails')}}</h2>
 </div>
 
-<div class="d-flex flex-wrap mb-4 ml-2" *ngFor="let cocktail of cocktails; ">
+<div class="d-flex flex-wrap mb-4 ml-2" >
 
-  <div class="flex-lg-grow-0 m-3">
+  <div class="flex-lg-grow-0 m-3" *ngFor="let cocktail of cocktails; ">
     <div class="post">
       <div class="bg-image hover-zoom container-img">
         <a class="post-img" [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]">
-                      <img src="data:image/png;base64,{{cocktail.cocktailImage.bytes}}" width="420"
+                      <img src="data:image/png;base64,{{cocktail.cocktailImage.bytes}}" width="474"
                            [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]"/>
           <div class="text-block">
             <h4><a style="color:white" [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]">

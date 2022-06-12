@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
-import {Pagination} from "../../../model/pagination/Pagination";
+import {Pagination, SortDirection} from "../../../model/pagination/Pagination";
 import {Cocktail} from "../../../model/Cocktail";
 import {ImageService} from "../../../service/entity/ImageService";
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
@@ -17,6 +17,7 @@ export class CocktailsComponent implements OnInit {
 
   readonly defaultPageSize = 6;
   readonly defaultPageNumber = 0;
+  readonly defaultSortDirection = SortDirection.DESC;
 
   cocktails: Cocktail[];
   pagination: Pagination;
@@ -24,14 +25,10 @@ export class CocktailsComponent implements OnInit {
 
   constructor(private cocktailService: CocktailServiceImpl) {
 
-    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber);
+    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
     console.log(this.pagination);
 
-    this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
-      this.cocktails = cocktails.content;
-      console.log(cocktails);
-      this.totalCocktailsFounded = cocktails.length;
-    });
+    this.getPage();
   }
 
   ngOnInit(): void {
@@ -39,17 +36,41 @@ export class CocktailsComponent implements OnInit {
 
   pageChanged(pageEvent: PageEvent) {
 
-    // если изменили настройку "кол-во на странице" - заново делаем запрос и показываем с 1й страницы
-    if (this.pagination.pageSize !== pageEvent.pageSize) {
-      this.pagination.pageNumber = 0; // новые данные будем показывать с 1-й страницы (индекс 0)
+    if (this.pagination.pageSize != pageEvent.pageSize) {
+      this.pagination.pageNumber = 0;
+      console.log("true");
+
     } else {
-      // если просто перешли на другую страницу
       this.pagination.pageNumber = pageEvent.pageIndex;
     }
 
     this.pagination.pageSize = pageEvent.pageSize;
-    this.pagination.pageNumber = pageEvent.pageIndex;
 
-    this.cocktailService.findAllWithPages(this.pagination); // показываем новые данные
+    this.getPage();
   }
+
+  getPage() {
+    this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
+      this.cocktails = cocktails.content;
+      console.log(cocktails);
+      this.totalCocktailsFounded = cocktails.totalElements;
+      console.log(this.totalCocktailsFounded);
+    });
+  }
+
+  // paging(pageEvent: PageEvent) {
+  //
+  //   // если изменили настройку "кол-во на странице" - заново делаем запрос и показываем с 1й страницы
+  //   if (this.taskSearchValues.pageSize !== pageEvent.pageSize) {
+  //     this.taskSearchValues.pageNumber = 0; // новые данные будем показывать с 1-й страницы (индекс 0)
+  //   } else {
+  //     // если просто перешли на другую страницу
+  //     this.taskSearchValues.pageNumber = pageEvent.pageIndex;
+  //   }
+  //
+  //   this.taskSearchValues.pageSize = pageEvent.pageSize;
+  //   this.taskSearchValues.pageNumber = pageEvent.pageIndex;
+  //
+  //   this.searchTasks(this.taskSearchValues); // показываем новые данные
+  // }
 }

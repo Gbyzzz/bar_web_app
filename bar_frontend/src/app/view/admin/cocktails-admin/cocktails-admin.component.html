@@ -17,7 +17,7 @@
     </tr>
     </thead>
 
-    <tr *ngFor="let cocktail of sortedData">
+    <tr *ngFor="let cocktail of sortedData; let i=index">
       <td class="border-1">{{cocktail.cocktailId}}</td>
       <td class="border-1"><img [src]="this.imageService.getImage(cocktail.cocktailImage.imageId)" width="150px"></td>
       <td class="border-1">{{cocktail.cocktailName}}</td>
@@ -26,7 +26,7 @@
       <td class="border-1">{{cocktail.publicationDate}}</td>
       <td class="border-1">{{cocktail.cocktailRecipe}}</td>
       <td class="border-1">
-        <div *ngFor="let recipe of cocktail.recipes">
+        <div *ngFor="let recipe of recipes | recipeFilterByCocktailPipe:cocktail">
         {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{recipe.ingredient.unitOfMeasurement}}
           <br>
         </div>
@@ -45,4 +45,7 @@
       </td>
     </tr>
   </table>
+  <mat-paginator *ngIf="totalCocktailsFounded > 6" (page)="pageChanged($event)" [pageIndex]="pagination.pageNumber"
+                 [pageSize]="pagination.pageSize" [length]="totalCocktailsFounded"
+                 [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
 </div>

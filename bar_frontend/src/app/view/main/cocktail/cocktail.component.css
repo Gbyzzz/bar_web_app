@@ -110,3 +110,8 @@ body {
 .rating-submit:hover {
   color: #fff
 }
+
+.img{
+  width:100%;
+  max-width:635px;
+}
