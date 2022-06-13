@@ -1,13 +1,13 @@
-<div class="container-fluid">
+<div class="container-fluid" *transloco="let t">
 
   <table matSort (matSortChange)="sortData($event)" class="table table-bordered">
     <thead class="table-dark">
     <tr>
       <th mat-sort-header="ingredientId">ID</th>
-      <th mat-sort-header="ingredientName">Ingredient name</th>
-      <th mat-sort-header="ingredientAlcohol">Alcohol</th>
-      <th mat-sort-header="unitOfMeasurement">Unit of measurement</th>
-      <th mat-sort="edit">Edit</th>
+      <th mat-sort-header="ingredientName">{{t('ingredient name')}}</th>
+      <th mat-sort-header="ingredientAlcohol">{{t('alcohol')}}</th>
+      <th mat-sort-header="unitOfMeasurement">{{t('unit of measurement')}}</th>
+      <th mat-sort="edit">{{t('edit')}}</th>
 
     </tr>
     </thead>

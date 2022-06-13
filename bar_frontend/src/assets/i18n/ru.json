@@ -44,5 +44,8 @@
   "role": "Роль",
   "enabled": "Активен",
   "registration date": "Дата регистрации",
-  "edit": "Изменить"
+  "edit": "Изменить",
+  "ingredient name": "Название ингредиента",
+  "alcohol": "Алкоголь",
+  "unit of measurement": "Единица измерения"
 }

@@ -44,5 +44,8 @@
   "role": "Role",
   "enabled": "Enabled",
   "registration date": "Registration Date",
-  "edit": "Edit"
+  "edit": "Edit",
+  "ingredient name": "Ingredient Name",
+  "alcohol": "Alcohol",
+  "unit of measurement": "Unit of Measurement"
 }
