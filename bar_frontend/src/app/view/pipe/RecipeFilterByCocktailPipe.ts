@@ -7,10 +7,10 @@ import {Recipe} from "../../model/Recipe";
 })
 export class RecipeFilterByCocktailPipe implements PipeTransform {
 
-  transform(items: Recipe[], filter: Cocktail): Recipe[] {
-    if (!items || !filter) {
-      return items;
+  transform(recipes: Recipe[], cocktail: Cocktail): Recipe[] {
+    if (!recipes || !cocktail) {
+      return recipes;
     }
-    return items.filter(item => item.cocktail == filter);
+    return recipes.filter(item => item.cocktail === cocktail);
   }
 }

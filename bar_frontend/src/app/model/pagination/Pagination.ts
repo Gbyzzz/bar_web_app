@@ -29,5 +29,4 @@ export class Pagination{
     this.pageNumber = pageNumber;
     this.sortDirection = sortDirection;
   }
-
 }

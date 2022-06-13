@@ -34,19 +34,13 @@ export class CocktailsAdminComponent implements OnInit {
               private recipeService: RecipeServiceImpl,
               private sortDirectionUtil: SortDirectionUtil) {
     this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
-
+    this.getPage();
     // this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails => {
     //   this.sortedData = cocktails;
     //   this.cocktails = cocktails;
-    //   recipeService.findAllByCocktails(cocktails).subscribe(res => {
-    //       // this.recipes.splice(this.recipes.length, 0, res);
-    //       // this.recipes = this.recipes + res;
-    //     this.recipes = res;
-    //     console.log(this.recipes);
-    //   });
+
     // });
 
-    this.getPage();
   }
 
   ngOnInit(): void {
@@ -119,6 +113,12 @@ export class CocktailsAdminComponent implements OnInit {
       console.log(cocktails);
       this.totalCocktailsFound = cocktails.totalElements;
       console.log(this.totalCocktailsFound);
+      this.recipeService.findAllByCocktails(this.sortedData).subscribe(res => {
+        // this.recipes.splice(this.recipes.length, 0, res);
+        // this.recipes = this.recipes + res;
+        this.recipes = res;
+        console.log(this.recipes);
+      });
     });
   }
 
