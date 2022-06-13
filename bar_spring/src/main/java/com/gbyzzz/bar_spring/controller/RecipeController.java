@@ -25,6 +25,7 @@ public class RecipeController {
 
     @PostMapping("/find_all_by_cocktails")
     public List<Recipe> findAllByCocktails(@RequestBody List<Cocktail>cocktails) {
+        System.out.println(recipeService.findAllRecipesByCocktails(cocktails));
         return recipeService.findAllRecipesByCocktails(cocktails);
     }
 }

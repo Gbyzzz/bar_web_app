@@ -1,12 +1,15 @@
 package com.gbyzzz.bar_spring.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ingredients")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

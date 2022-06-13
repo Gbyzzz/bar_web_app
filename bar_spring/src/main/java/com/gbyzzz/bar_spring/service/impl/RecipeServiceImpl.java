@@ -63,7 +63,6 @@ public class RecipeServiceImpl implements RecipeService {
         for(Cocktail cocktail : cocktails) {
              allRecipes.addAll(recipeRepository.findRecipesByCocktail(cocktail));
         }
-        System.out.println(allRecipes);
         return allRecipes;
     }
 

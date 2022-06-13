@@ -1,13 +1,18 @@
 package com.gbyzzz.bar_spring.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "recipes")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Recipe {
 
     @Id
@@ -15,7 +20,7 @@ public class Recipe {
     @Column(name = "recipe_id")
     private Long recipeId;
 
-    @JsonBackReference
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
