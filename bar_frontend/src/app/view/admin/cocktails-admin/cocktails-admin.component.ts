@@ -51,7 +51,8 @@ export class CocktailsAdminComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
-    if (this.totalCocktailsFound > this.pagination.pageSize && sort.active == 'cocktailId') {
+    if (this.totalCocktailsFound > this.pagination.pageSize && (sort.active == 'cocktailId'
+      || sort.active == 'publicationDate')) {
 
       if (!sort.active || sort.direction === '') {
         this.pagination.sortDirection = SortDirection.DESC;

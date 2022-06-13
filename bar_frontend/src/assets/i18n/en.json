@@ -47,5 +47,9 @@
   "edit": "Edit",
   "ingredient name": "Ingredient Name",
   "alcohol": "Alcohol",
-  "unit of measurement": "Unit of Measurement"
+  "unit of measurement": "Unit of Measurement",
+  "photo": "Photo",
+  "cocktail name": "Cocktail Name",
+  "cocktail author": "Cocktail Author",
+  "rating": "Rating"
 }

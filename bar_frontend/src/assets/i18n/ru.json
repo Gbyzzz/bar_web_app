@@ -47,5 +47,9 @@
   "edit": "Изменить",
   "ingredient name": "Название ингредиента",
   "alcohol": "Алкоголь",
-  "unit of measurement": "Единица измерения"
+  "unit of measurement": "Единица измерения",
+  "photo": "Фото",
+  "cocktail name": "Название коктейля",
+  "cocktail author": "Автор коктейля",
+  "rating": "Рейтинг"
 }

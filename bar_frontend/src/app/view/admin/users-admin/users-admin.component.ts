@@ -84,7 +84,8 @@ export class UsersAdminComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
-    if (this.totalUsersFound > this.pagination.pageSize && sort.active == 'userId') {
+    if (this.totalUsersFound > this.pagination.pageSize && (sort.active == 'userId'
+    || sort.active == 'regDate')) {
       if (!sort.active || sort.direction === '') {
         this.pagination.sortDirection = SortDirection.DESC;
       } else {

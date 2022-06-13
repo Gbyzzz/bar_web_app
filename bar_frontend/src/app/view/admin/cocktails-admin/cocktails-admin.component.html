@@ -1,18 +1,18 @@
-<div class="container-fluid">
+<div class="container-fluid" *transloco="let t">
 
   <table matSort (matSortChange)="sortData($event)" class="table table-bordered">
     <thead class="table-dark">
     <tr>
       <th mat-sort-header="cocktailId">ID</th>
-      <th mat-header="cocktailImage">Image</th>
-      <th mat-sort-header="cocktailName">Cocktail Name</th>
-      <th mat-sort-header="cocktailAuthor">Cocktail Author</th>
-      <th mat-sort-header="cocktailRating">Rating</th>
-      <th mat-sort-header="publicationDate">Publication Date</th>
-      <th mat-header="cocktailRecipe">Recipe</th>
-      <th mat-header="ingredients">Ingredients</th>
-      <th mat-sort-header="approxAlcoholPercentage">Alcohol</th>
-      <th mat-sort="edit">Edit</th>
+      <th mat-header="cocktailImage">{{t('photo')}}</th>
+      <th mat-sort-header="cocktailName">{{t('cocktail name')}}</th>
+      <th mat-sort-header="cocktailAuthor">{{t('cocktail author')}}</th>
+      <th mat-sort-header="cocktailRating">{{t('rating')}}</th>
+      <th mat-sort-header="publicationDate">{{t('publication date')}}</th>
+      <th mat-header="cocktailRecipe">{{t('recipe')}}</th>
+      <th mat-header="ingredients">{{t('ingredients')}}</th>
+      <th mat-sort-header="approxAlcoholPercentage">{{t('alcohol')}}</th>
+      <th mat-sort="edit">{{t('edit')}}</th>
 
     </tr>
     </thead>
