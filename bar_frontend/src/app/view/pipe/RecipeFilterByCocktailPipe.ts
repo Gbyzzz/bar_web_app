@@ -11,6 +11,10 @@ export class RecipeFilterByCocktailPipe implements PipeTransform {
     if (!recipes || !cocktail) {
       return recipes;
     }
-    return recipes.filter(item => item.cocktail === cocktail);
+    console.log("pipe");
+    console.log(recipes);
+    console.log(cocktail);
+    console.log(recipes.filter(item => item.cocktail === cocktail));
+    return recipes.filter(item => JSON.stringify(item.cocktail) === JSON.stringify(cocktail));
   }
 }

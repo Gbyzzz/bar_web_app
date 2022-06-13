@@ -69,6 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegistrationComponent,
     UserPageComponent,
     RecipeFilterByCocktailPipe
+
   ],
   imports: [
     BrowserModule,

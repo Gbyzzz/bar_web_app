@@ -119,6 +119,7 @@ export class CocktailsAdminComponent implements OnInit {
         this.recipes = res;
         console.log(this.recipes);
       });
+
     });
   }
 

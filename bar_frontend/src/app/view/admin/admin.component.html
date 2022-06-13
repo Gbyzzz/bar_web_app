@@ -2,18 +2,18 @@
 <!--    <strong>Error!</strong> ${message}.-->
 <!--  </div>-->
 
-<mat-tab-group mat-align-tabs="center">
-  <mat-tab label="Users">
+<mat-tab-group mat-align-tabs="center" *transloco="let t">
+  <mat-tab label="{{t('users')}}">
     <ng-template matTabContent>
       <app-users-admin></app-users-admin>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Cocktails">
+  <mat-tab label="{{t('cocktails')}}">
     <ng-template matTabContent>
     <app-cocktails-admin></app-cocktails-admin>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Ingredients">
+  <mat-tab label="{{t('ingredients')}}">
     <ng-template matTabContent>
       <app-ingredients-admin></app-ingredients-admin>
     </ng-template>
