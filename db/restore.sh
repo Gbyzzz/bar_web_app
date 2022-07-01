@@ -1,0 +1,1 @@
+pg_restore -d bar_db /var/lib/postgresql/backup/bardb_dump.sql

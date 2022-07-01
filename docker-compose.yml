@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  postgres:
+    build: ./db
+    ports:
+      - "5433:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bar_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  backend:
+    build: ./bar_spring
+    restart: always
+    depends_on:
+      - "postgres"
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/bar_db?stringtype=unspecified
+  frontend:
+    build: ./bar_frontend
+    restart: always
+    ports:
+      - "4200:4200"
+    volumes:
+      - /app/node_modules
+      - ./bar_frontend:/app
+
+volumes:
+  postgres-data:
