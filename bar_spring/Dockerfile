@@ -1,5 +1,12 @@
-FROM openjdk:8-jdk-alpine
+FROM gradle:7.4.2-jdk8
 EXPOSE 8080
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+WORKDIR /app
+COPY . /app
+# fetch dependencies
+RUN chmod +x start.sh && gradle getDeps
+
+# script which watches source file changes in background and executes bootRun
+CMD ["sh", "start.sh"]
+#ARG JAR_FILE=build/libs/*.jar
+#COPY ${JAR_FILE} app.jar
+#ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

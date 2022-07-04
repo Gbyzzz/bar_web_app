@@ -28,7 +28,7 @@ dependencies {
     implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -39,6 +39,20 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-bootRepackage {
-    excludeDevtools = false
+task getDeps(type: Copy) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from configurations.compileClasspath into "libs/"
+    from configurations.runtimeClasspath into "libs/"
+}
+
+//springBoot  {
+//    excludeDevtools = false
+//}
+
+task buildAndReload {
+    dependsOn build
+    mustRunAfter build
+    doLast {
+        new File(".", "reload-trigger.txt").text = "${System.currentTimeMillis()}"
+    }
 }
