@@ -58,7 +58,7 @@ tasks.named('test') {
 }
 
 task getDeps(type: Copy) {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy = DuplicatesStrategy .EXCLUDE
     from configurations.compileClasspath into "libs/"
     from configurations.runtimeClasspath into "libs/"
 }
