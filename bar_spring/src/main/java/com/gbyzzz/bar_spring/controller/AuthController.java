@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.Date;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class AuthController {
 
@@ -72,3 +72,4 @@ public class AuthController {
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 }
+

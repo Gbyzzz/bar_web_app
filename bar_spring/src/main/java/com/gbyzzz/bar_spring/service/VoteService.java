@@ -10,7 +10,7 @@ public interface VoteService {
 
     Vote addOrUpdateVote (Vote vote);
 
-    Vote findByCocktailUserVote(Vote vote);
+    Vote findVoteByCocktailAndUser(Vote vote);
 
     void updateRating(Cocktail cocktail);
 }

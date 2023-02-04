@@ -1,19 +1,15 @@
 package com.gbyzzz.bar_spring.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "cocktails", schema = "public", catalog = "bar_db")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class Cocktail {
 
     @Id

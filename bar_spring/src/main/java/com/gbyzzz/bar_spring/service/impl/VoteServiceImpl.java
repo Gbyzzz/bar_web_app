@@ -32,7 +32,7 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Vote findByCocktailUserVote(Vote vote) {
+    public Vote findVoteByCocktailAndUser(Vote vote) {
         Vote targetVote = vote;
         Optional<Vote> optionalVote = voteRepository.findByCocktailAndUser(vote.getCocktail(), vote.getUser());
         if (optionalVote.isPresent()) {

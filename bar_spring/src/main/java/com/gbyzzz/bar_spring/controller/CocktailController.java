@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/cocktail")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class CocktailController {
 
     private CocktailService cocktailService;

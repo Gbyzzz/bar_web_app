@@ -1,7 +1,11 @@
-FROM node:alpine
+FROM node:alpine AS builder
 WORKDIR /app
-EXPOSE 4200
 COPY package*.json ./
-RUN npm install
+RUN npm install && npm install -g gzipper
 COPY . ./
-CMD ["npm", "run", "start"]
+RUN npm run build
+FROM nginx:alpine
+COPY --from=builder /app/dist/bar_frontend /usr/share/nginx/html/
+COPY /nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 7777
+ENTRYPOINT ["nginx","-g","daemon off;"]

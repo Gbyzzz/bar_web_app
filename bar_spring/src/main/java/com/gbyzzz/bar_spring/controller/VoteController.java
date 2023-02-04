@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/vote")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class VoteController {
 
     VoteService voteService;
@@ -35,7 +35,7 @@ public class VoteController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public Vote findByCocktailUserVote(@RequestBody Vote vote) throws Exception {
         System.out.println("findByCocktailUserVote");
-        return voteService.findByCocktailUserVote(vote);
+        return voteService.findVoteByCocktailAndUser(vote);
     }
 
 }

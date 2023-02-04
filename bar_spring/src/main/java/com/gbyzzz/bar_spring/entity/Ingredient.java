@@ -6,10 +6,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "ingredients")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

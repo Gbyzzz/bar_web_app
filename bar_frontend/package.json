@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
-    "build": "ng build",
+    "start": "ng serve  --host 0.0.0.0 && gzipper c ./dist --include js,css,html --output-file-format [filename].[ext] ./dist/",
+    "build": "ng build --prod --aot --build-optimizer && gzipper compress ./dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -40,6 +40,8 @@
     "@angular/compiler-cli": "~13.3.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "brotli-webpack-plugin": "^1.1.0",
+    "compression-webpack-plugin": "^10.0.0",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

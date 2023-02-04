@@ -1,4 +1,4 @@
-FROM gradle:7.4.2-jdk8
+FROM gradle:7.4.2-jdk17
 EXPOSE 8080
 WORKDIR /app
 COPY . /app

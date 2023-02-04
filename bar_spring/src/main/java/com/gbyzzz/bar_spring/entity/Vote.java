@@ -1,9 +1,6 @@
 package com.gbyzzz.bar_spring.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -13,10 +10,9 @@ import javax.persistence.*;
 @Table(name = "votes",
         uniqueConstraints=
         @UniqueConstraint(columnNames={"user_id", "cocktail_id"}))
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class Vote {
 
     @Id

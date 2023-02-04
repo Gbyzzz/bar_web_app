@@ -1,17 +1,26 @@
 package com.gbyzzz.bar_spring.entity;
 
-import lombok.*;
+import com.gbyzzz.bar_spring.entity.type.PGUserRoleType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.sql.Date;
 
+
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
+@TypeDef(
+        name = "pgsql_enum",
+        typeClass = PGUserRoleType.class
+)
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +57,7 @@ public class User {
 
     @Basic
     @Column(name = "role")
+    @Type( type = "pgsql_enum" )
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -63,5 +73,4 @@ public class User {
     public enum Role {
         ROLE_ADMIN, ROLE_BARTENDER, ROLE_USER
     }
-
 }

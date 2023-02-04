@@ -55,7 +55,8 @@ public class CocktailServiceImpl implements CocktailService {
         Integer pageNumber = pagination.getPageNumber() != null ? pagination.getPageNumber() : null;
         Integer pageSize = pagination.getPageSize() != null ? pagination.getPageSize() : null;
         Sort sort = pagination.getSortDirection().equals(Pagination.SortDirection.DESC) ?
-                Sort.by(Sort.Direction.DESC, "cocktailId") : Sort.by(Sort.Direction.ASC, "cocktailId");
+                Sort.by(Sort.Direction.DESC, "cocktailId") :
+                Sort.by(Sort.Direction.ASC, "cocktailId");
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
         return cocktailRepository.findAll(pageRequest);
     }
