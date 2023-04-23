@@ -23,7 +23,7 @@ How to run:
 1) Most convenient way is to run it in Docker, just run 'docker compose up' and wait until it will deploy.
 Then you can reach it by the default url: 'http://localhost:7777/'
 2) As this app is using Redis as cache you should run Redis first (Default host/port - localhost:6379), configure
-database by installing PostgreSQL and then run backend by running 'gradle build; java -jar build/libs/bar_spring-0.0.1-SNAPSHOT.jar' command and frontend by running 'ng serve' command Then you can reach it by the default url: 'http://localhost:4200/'
+database by installing PostgreSQL and then run backend by running 'gradle build; java -jar build/libs/bar_spring-0.0.1-SNAPSHOT.jar' command and frontend by running 'ng serve' command. Then you can reach it by the default url: 'http://localhost:4200/'
 
 
 
