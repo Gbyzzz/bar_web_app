@@ -30,7 +30,7 @@ public class Source {
     public static User user3 = new User(3L, "Jspm", "132435", null, null,
             null,"alcoholfan2010@gmail.com", null, User.Role.ROLE_USER,
             true, new Date(2022-1900, 10-1, 25));
-    public static Cocktail cocktail1 = new Cocktail(1L, "Old Fashioned", users.get(0), 0.0d,
+    public static Cocktail cocktail1 = new Cocktail(1L, "Old Fashioned", users.get(0), 5,
             new Date(2022-1900, 10-1, 25), null,
             "В стакан олд фэшн кладём кусочек сахара, капаем на него Ангостуру и воду." +
                     "При помощи мадлера измельчаем сахар, превращая в некое подобие сиропа на дне бокала." +
@@ -41,7 +41,7 @@ public class Source {
                     "Сбрызгиваем цедрой апельсина." +
                     "Подаём без украшения.", 33);
 
-    public static Cocktail cocktail2 = new Cocktail(2L, "Long Island Ice Tea", users.get(1), 0,
+    public static Cocktail cocktail2 = new Cocktail(2L, "Long Island Ice Tea", users.get(1), 5,
             new Date(2022-1900, 10-1, 25), null,
             "Наполняем бокал льдом и до половины — колой." +
                     "Наполняем шейкер льдом и наливаем туда водку, джин, ром, текилу и трипл сек." +

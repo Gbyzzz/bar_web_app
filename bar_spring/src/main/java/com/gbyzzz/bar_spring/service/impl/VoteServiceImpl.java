@@ -5,6 +5,7 @@ import com.gbyzzz.bar_spring.entity.Vote;
 import com.gbyzzz.bar_spring.repository.CocktailRepository;
 import com.gbyzzz.bar_spring.repository.VoteRepository;
 import com.gbyzzz.bar_spring.service.VoteService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "cs", key = "#vote.cocktail.cocktailId")
     public Vote addOrUpdateVote(Vote vote) {
 
 
@@ -48,7 +50,8 @@ public class VoteServiceImpl implements VoteService {
         for (Vote cocktailVote : cocktailVotes) {
             rating += cocktailVote.getVoteValue();
         }
-        cocktail.setCocktailRating(rating / cocktailVotes.size());
+        rating /= cocktailVotes.size();
+        cocktail.setCocktailRating(rating);
         cocktailRepository.save(cocktail);
     }
 

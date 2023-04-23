@@ -13,6 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -45,6 +47,8 @@ class VoteServiceImplTest extends BarSpringApplicationTests {
     void updateRating(Cocktail expected, Cocktail inputed, Vote newVote) throws Exception {
         voteService.addOrUpdateVote(newVote);
         voteService.updateRating(inputed);
+        Cocktail cocktail = cocktailService.findById(inputed.getCocktailId());
+        List<Cocktail> cocktails = cocktailService.findAll();
         assertEquals(expected, cocktailService.findById(inputed.getCocktailId()));
 
     }

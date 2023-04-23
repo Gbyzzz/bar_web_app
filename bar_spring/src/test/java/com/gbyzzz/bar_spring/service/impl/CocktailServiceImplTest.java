@@ -3,6 +3,7 @@ package com.gbyzzz.bar_spring.service.impl;
 import com.gbyzzz.bar_spring.BarSpringApplicationTests;
 import com.gbyzzz.bar_spring.Source;
 import com.gbyzzz.bar_spring.entity.Cocktail;
+import com.gbyzzz.bar_spring.repository.CocktailRepository;
 import com.gbyzzz.bar_spring.service.CocktailService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,6 +22,9 @@ class CocktailServiceImplTest extends BarSpringApplicationTests {
     @Autowired
     CocktailService cocktailService;
 
+    @Autowired
+    CocktailRepository cocktailRepository;
+
     @Test
     void findAll() {
         System.out.println(cocktailService.findAll());
@@ -30,6 +34,8 @@ class CocktailServiceImplTest extends BarSpringApplicationTests {
     @ParameterizedTest
     @MethodSource("com.gbyzzz.bar_spring.Source#provideCocktailsById")
     void findById(Cocktail expected, long id) throws Exception {
+        Cocktail cocktail1 = cocktailRepository.findById(id).get();
+        Cocktail cocktail = cocktailService.findById(id);
         assertEquals(expected, cocktailService.findById(id));
     }
 
