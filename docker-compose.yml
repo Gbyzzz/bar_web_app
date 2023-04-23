@@ -11,12 +11,19 @@ services:
       POSTGRES_DB: bar_db
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  bar-redis:
+    container_name: bar-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: always
   backend:
     build: ./bar_spring
     restart: always
     container_name: backend
     depends_on:
       - "postgres"
+      - "bar-redis"
     ports:
       - "8080:8080"
     volumes:
@@ -25,6 +32,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/bar_db?stringtype=unspecified
       - SPRING_FLYWAY_ENABLED=false
+      - SPRING_REDIS_HOST=bar-redis
   #    command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
   frontend:
     build: ./bar_frontend

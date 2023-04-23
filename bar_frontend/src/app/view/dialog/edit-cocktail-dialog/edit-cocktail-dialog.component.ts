@@ -146,7 +146,7 @@ export class EditCocktailDialogComponent implements OnInit {
     return o1.ingredientId === o2.ingredientId;
   }
 
-  onFileChange(event) {
+  onFileChange(event): void {
     const reader = new FileReader();
 
     if (event.target.files && event.target.files.length) {
@@ -159,7 +159,7 @@ export class EditCocktailDialogComponent implements OnInit {
     }
   }
 
-  addIngredient(ingredient: Ingredient) {
+  addIngredient(ingredient: Ingredient): void {
     this.ingredientService.add(ingredient).subscribe(ingredient => {
       this.ingredients.splice(this.ingredients.length, 0, ingredient);
     });
@@ -189,7 +189,7 @@ export class EditCocktailDialogComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     console.log(this.cocktailForm.get('cocktailImageFile').value.imageId);
     if (!this.cocktailForm.get('cocktailImageFile').value.imageId) {
       const formData = new FormData();
@@ -208,7 +208,7 @@ export class EditCocktailDialogComponent implements OnInit {
     this.dialogRef.close(new DialogResult(DialogAction.SAVE));
   }
 
-  onAdd(){
+  onAdd(): void {
       const formData = new FormData();
       formData.append('file', this.fileHolder, this.fileHolder.name);
       this.imageService.uploadImage(formData).subscribe(image => {
@@ -223,7 +223,7 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
 
-  updateCocktailValues(){
+  updateCocktailValues() :void {
     this.targetCocktail.cocktailName = this.newCocktailName;
     this.targetCocktail.cocktailRecipe = this.newCocktailRecipe;
     this.targetCocktail.cocktailImage = this.newCocktailImage;
