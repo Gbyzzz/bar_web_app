@@ -52,7 +52,7 @@ public class User {
 
     @Basic
     @Column(name = "role")
-    @Type( type = "pgsql_enum" )
+    @Type(type = "pgsql_enum")
     @Enumerated(EnumType.STRING)
     private Role role;
 
