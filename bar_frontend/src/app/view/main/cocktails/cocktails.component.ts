@@ -3,10 +3,6 @@ import {PageEvent} from "@angular/material/paginator";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {Pagination, SortDirection} from "../../../model/pagination/Pagination";
 import {Cocktail} from "../../../model/Cocktail";
-import {ImageService} from "../../../service/entity/ImageService";
-import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
-import {Image} from "../../../model/Image";
-import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-cocktails',
@@ -57,20 +53,4 @@ export class CocktailsComponent implements OnInit {
       console.log(this.totalCocktailsFounded);
     });
   }
-
-  // paging(pageEvent: PageEvent) {
-  //
-  //   // если изменили настройку "кол-во на странице" - заново делаем запрос и показываем с 1й страницы
-  //   if (this.taskSearchValues.pageSize !== pageEvent.pageSize) {
-  //     this.taskSearchValues.pageNumber = 0; // новые данные будем показывать с 1-й страницы (индекс 0)
-  //   } else {
-  //     // если просто перешли на другую страницу
-  //     this.taskSearchValues.pageNumber = pageEvent.pageIndex;
-  //   }
-  //
-  //   this.taskSearchValues.pageSize = pageEvent.pageSize;
-  //   this.taskSearchValues.pageNumber = pageEvent.pageIndex;
-  //
-  //   this.searchTasks(this.taskSearchValues); // показываем новые данные
-  // }
 }

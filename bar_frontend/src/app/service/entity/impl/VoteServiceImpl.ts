@@ -3,6 +3,7 @@ import {VoteService} from "../VoteService";
 import {Vote} from "../../../model/Vote";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Cocktail} from "../../../model/Cocktail";
 
 export const VOTE_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -42,5 +43,10 @@ export class VoteServiceImpl implements VoteService{
 
   findByCocktailUserVote(vote: Vote): Observable<Vote> {
       return this.HttpClient.post<Vote>(this.url + '/find_by_cocktail_user', vote);
+  }
+
+  getVoteCountByCocktail(cocktail: Cocktail): Observable<number> {
+    // @ts-ignore
+    return this.HttpClient.post<number>(this.url + '/get_vote_count_by_cocktail', cocktail);
   }
 }

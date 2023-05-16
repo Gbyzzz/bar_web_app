@@ -1,9 +1,10 @@
 package com.gbyzzz.bar_spring.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gbyzzz.bar_spring.entity.type.PGByteArrayType;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class Image {
     private Long size;
 
     @Lob
-    @Type(type="org.hibernate.type.BinaryType")
+    @Type(PGByteArrayType.class)
     @Column(name = "bytes")
     private byte[] bytes;
 

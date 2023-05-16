@@ -3,6 +3,7 @@ package com.gbyzzz.bar_spring.controller;
 import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.entity.Recipe;
 import com.gbyzzz.bar_spring.service.RecipeService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,10 +13,16 @@ import java.util.List;
 @RequestMapping("/recipe")
 public class RecipeController {
 
-    private RecipeService recipeService;
+    private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
+    }
+
+    @PostMapping("/add_or_update")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
+    public List<Recipe> addAll(@RequestBody List<Recipe> recipes) {
+        return recipeService.addAll(recipes);
     }
 
     @PostMapping("/find_by_cocktail")
@@ -24,6 +31,7 @@ public class RecipeController {
     }
 
     @PostMapping("/find_all_by_cocktails")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
     public List<Recipe> findAllByCocktails(@RequestBody List<Cocktail>cocktails) {
         System.out.println(recipeService.findAllRecipesByCocktails(cocktails));
         return recipeService.findAllRecipesByCocktails(cocktails);

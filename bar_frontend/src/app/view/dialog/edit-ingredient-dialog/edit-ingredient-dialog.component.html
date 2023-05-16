@@ -1,9 +1,10 @@
+<div *transloco="let t">
 <mat-dialog-content>
-  <p mat-dialog-title>Add/Edit ingredient {{ingredient.ingredientName}}</p>
+  <p mat-dialog-title>{{t('add/edit ingredient')}} - {{ingredient.ingredientName}}</p>
 
   <mat-form-field appearance="outline" class="m-1" *ngIf="ingredient.ingredientId">
 
-    <mat-label>IngredientID</mat-label>
+    <mat-label>ID</mat-label>
     <input #inputTitle
            matInput
            [(ngModel)]="ingredient.ingredientId"
@@ -12,7 +13,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Ingredient name</mat-label>
+    <mat-label>{{t('ingredient name')}}</mat-label>
     <input #inputTitle
            matInput
            required
@@ -37,7 +38,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Alcohol</mat-label>
+    <mat-label>{{t('alcohol')}}</mat-label>
     <input #inputTitle
            matInput
 
@@ -62,8 +63,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Unit of Measurement</mat-label>
-    <!-- если задача завершена - контрол не будет доступен -->
+    <mat-label>{{t('unit of measurement')}}</mat-label>
     <input #inputTitle
            matInput
 
@@ -89,7 +89,6 @@
 </mat-dialog-content>
 
 
-<!--  кнопки возможных действий-->
 <mat-dialog-actions>
 
 
@@ -99,12 +98,11 @@
             [disabled] = "newUnitOfMeasurement.trim().length === 0 || newIngredientName.trim().length === 0"
       mat-raised-button color="primary"
       (click)="confirm()">
-      Сохранить
+      {{t('save')}}
     </button>
 
-
-    <!--    <button mat-raised-button (click)="cancel()">Отмена</button>-->
 
   </div>
 
 </mat-dialog-actions>
+</div>

@@ -47,8 +47,6 @@ export class EditCocktailDialogComponent implements OnInit {
               private dialog: MatDialog,
               private ingredientService: IngredientServiceImpl,
               private fb: FormBuilder,
-              // private dialogRef: MatDialogRef<EditIngredientDialogComponent>,
-              // @Inject(MAT_DIALOG_DATA) private data: [Cocktail],
               private injector: Injector,
               private router: Router,
               private tokenService: TokenStorageService,
@@ -74,6 +72,7 @@ export class EditCocktailDialogComponent implements OnInit {
     } else {
       this.targetCocktail = new Cocktail();
     }
+
     this.newCocktailName = this.targetCocktail.cocktailName;
     this.newCocktailImage = this.targetCocktail.cocktailImage;
     this.newCocktailRecipe = this.targetCocktail.cocktailRecipe;
@@ -93,17 +92,6 @@ export class EditCocktailDialogComponent implements OnInit {
         }
       });
     }
-
-    // this.newRecipes = this.targetCocktail.recipes;
-    // if (this.newRecipes) {
-    //   this.newRecipes.forEach(recipe => {
-    //     this.selectedIngredient.splice(this.selectedIngredient.length, 0, recipe.ingredient);
-    //     this.selectedUnit.splice(this.selectedUnit.length, 0, recipe.ingredient.unitOfMeasurement);
-    //     this.selectedQuantity.splice(this.selectedQuantity.length, 0, recipe.quantity);
-    //     this.ingredientsRecipe().insert(this.addIndex, this.newIngredientsRecipe());
-    //     this.addIndex++;
-    //   });
-    // }
   }
 
   ngOnInit(): void {
@@ -198,12 +186,20 @@ export class EditCocktailDialogComponent implements OnInit {
         this.newCocktailImage = image;
         this.updateCocktailValues();
         this.recipes = this.newRecipes;
-        this.recipeService.addAll(this.recipes).subscribe(res => {
+        this.recipeService.addAll(this.recipes)
+          .subscribe(res => {
           console.log(res);
         });
       });
     } else {
       this.updateCocktailValues();
+      console.log(this.recipes);
+      this.recipes = this.newRecipes;
+      console.log(this.recipes);
+      this.recipeService.addAll(this.recipes)
+        .subscribe(res => {
+        console.log(res);
+      });
     }
     this.dialogRef.close(new DialogResult(DialogAction.SAVE));
   }
@@ -229,10 +225,9 @@ export class EditCocktailDialogComponent implements OnInit {
     this.targetCocktail.cocktailImage = this.newCocktailImage;
     this.newRecipes = [];
     for (let i = 0; i < this.selectedIngredient.length; i++) {
-      this.newRecipes.splice(i, 0, new Recipe(null, null,
+      this.newRecipes.splice(i, 0, new Recipe(null, this.targetCocktail,
         this.selectedIngredient[i], Number(this.selectedQuantity[i])));
     }
-
     console.log(this.targetCocktail);
   }
 }

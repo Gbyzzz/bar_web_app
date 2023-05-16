@@ -1,7 +1,6 @@
 package com.gbyzzz.bar_spring.controller;
 
 import com.gbyzzz.bar_spring.controller.payload.request.SignupRequest;
-import com.gbyzzz.bar_spring.controller.payload.response.MessageResponse;
 import com.gbyzzz.bar_spring.entity.User;
 import com.gbyzzz.bar_spring.entity.pagination.Pagination;
 import com.gbyzzz.bar_spring.service.ImageService;
@@ -12,8 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -25,9 +22,9 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private ImageService imageService;
+    private final ImageService imageService;
 
     PasswordEncoder encoder;
 
@@ -45,14 +42,14 @@ public class UserController {
     }
 
     @PostMapping("/all_pages")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Page<User>> getAllWithPages(@RequestBody Pagination pagination) {
         Page result = userService.findAllWithPages(pagination);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public User getUserById(@PathVariable int id) throws Exception {
         return userService.getUserById(id);
     }
@@ -60,24 +57,26 @@ public class UserController {
     @PutMapping("/update")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public User updateUser(@RequestBody User user) {
-        user.setUserPic(imageService.getImageById(user.getUserPic().getImageId()));
+        if(user.getUserPic() != null) {
+            user.setUserPic(imageService.getImageById(user.getUserPic().getImageId()));
+        }
         return userService.updateUser(user);
     }
 
-    @PostMapping("/sign_up")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        System.out.println("sign up");
-        System.out.println(signUpRequest.getPassword());
-
-        User user = new User(null, signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()), null,
-                null, null, signUpRequest.getEmail(), null, User.Role.ROLE_USER, true,
-                new Date(new java.util.Date().getTime()));
-
-
-        userService.updateUser(user);
-
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-    }
+//    @PostMapping("/sign_up")
+//    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+//        System.out.println("sign up");
+//        System.out.println(signUpRequest.getPassword());
+//
+//        User user = new User(null, signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()), null,
+//                null, null, signUpRequest.getEmail(), null, User.Role.ROLE_USER, true,
+//                new Date(new java.util.Date().getTime()));
+//
+//
+//        userService.updateUser(user);
+//
+//        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+//    }
 
     @PostMapping("/is_username_available")
     public boolean isUsernameAvailable(@RequestBody SignupRequest signupRequest) {

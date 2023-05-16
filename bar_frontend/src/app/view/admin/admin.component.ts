@@ -12,10 +12,6 @@ import {MatTableDataSource} from "@angular/material/table";
 export class AdminComponent implements OnInit {
 
 
-  ingredientsDataSource : any = new MatTableDataSource();
-
-
-
 
   constructor() {
   }

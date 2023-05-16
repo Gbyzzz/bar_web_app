@@ -15,17 +15,4 @@ public class JwtResponse {
 		this.token = token;
 		this.user = user;
 	}
-
-	//	private Long id;
-//	private String username;
-//	private String email;
-//	private User.Role role;
-//
-//	public JwtResponse(String accessToken, Long id, String username, String email, User.Role role) {
-//		this.token = accessToken;
-//		this.id = id;
-//		this.username = username;
-//		this.email = email;
-//		this.role = role;
-//	}
 }

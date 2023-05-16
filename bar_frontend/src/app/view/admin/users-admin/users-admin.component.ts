@@ -34,10 +34,6 @@ export class UsersAdminComponent implements OnInit {
     console.log(this.pagination);
 
     this.getPage();
-    // this.userService.findAll().subscribe(users => {
-    //   this.sortedData = users;
-    //   this.users = users;
-    // });
   }
 
   ngOnInit(): void {

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Cocktail} from "../../model/Cocktail";
 import {CocktailServiceImpl} from "../../service/entity/impl/CocktailServiceImpl";
-import {ImageServiceImpl} from "../../service/entity/impl/ImageServiceImpl";
-import {EditCocktailDialogComponent} from "../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
-import {DialogAction} from "../dialog/DialogResult";
 
 @Component({
   selector: 'app-main',

@@ -15,4 +15,5 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     Optional<Vote> findByCocktailAndUser(Cocktail cocktail, User user);
     List<Vote> findByCocktail(Cocktail cocktail);
+    Long countAllByCocktail(Cocktail cocktail);
 }

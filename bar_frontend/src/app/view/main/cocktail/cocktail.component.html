@@ -31,6 +31,7 @@
       <h3>Rate</h3>
     </div>
     <div class="rating text-center" *ngIf="isUserLoggedIn">
+      <input hidden [value]="vote" curs>
       <input type="submit" name="rating" (click)="onRate(5)" id="5" value="5" class="ml-1">
       <label for="5">☆</label>
       <input type="submit" name="rating" (click)="onRate(4)" id="4" value="4">
@@ -43,6 +44,6 @@
       <label for="1">☆</label>
     </div>
     <div class="text-center mb-5">
-      Rating - {{cocktail.cocktailRating}} (Votes : )
+      Rating - {{cocktail.cocktailRating}} (Votes : {{voteCount}})
     </div>
 </div>

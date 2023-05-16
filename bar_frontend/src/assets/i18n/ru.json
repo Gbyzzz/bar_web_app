@@ -51,5 +51,17 @@
   "photo": "Фото",
   "cocktail name": "Название коктейля",
   "cocktail author": "Автор коктейля",
-  "rating": "Рейтинг"
+  "rating": "Рейтинг",
+  "add/edit ingredient": "Добавление/изменение ингредиента",
+  "add new cocktail recipe" : "Добавить новый коктейль",
+  "save cocktail": "Сохранить коктейль",
+  "add new ingredient": "Добавить новый ингредиент",
+  "add ingredients": "Добавить ингредиент",
+  "file": "Файл",
+  "add": "Добавить",
+  "password must be at least 6 characters": "Пароль должен состоять из не менее 6 символов",
+  "username is required": "Требуется имя пользователя!",
+  "password is required": "Требуется пароль",
+  "login failed": "Ошибка входа"
 }
+

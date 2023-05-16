@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Role, User} from "../../../model/User";
 import {DialogAction, DialogResult} from "../DialogResult";
 import {Ingredient} from "../../../model/Ingredient";
 
@@ -12,8 +11,8 @@ import {Ingredient} from "../../../model/Ingredient";
 export class EditIngredientDialogComponent implements OnInit {
 
   constructor(
-    private dialogRef: MatDialogRef<EditIngredientDialogComponent>, // // для возможности работы с текущим диалог. окном
-    @Inject(MAT_DIALOG_DATA) private data: [Ingredient], // данные, которые передаем в текущее диалоговое окно
+    private dialogRef: MatDialogRef<EditIngredientDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: [Ingredient],
   ) { }
 
   ingredient: Ingredient;

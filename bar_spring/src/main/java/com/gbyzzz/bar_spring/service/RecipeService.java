@@ -16,4 +16,6 @@ public interface RecipeService {
     void add(List<Recipe> recipes, Cocktail cocktail);
 
     List<Recipe> findAllRecipesByCocktails(List<Cocktail> cocktails);
+
+    List<Recipe> addAll(List<Recipe> recipes);
 }

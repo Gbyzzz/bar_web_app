@@ -22,11 +22,11 @@ export class IngredientServiceImpl implements IngredientService {
   }
 
   delete(id: number): Observable<Ingredient> {
-    return this.HttpClient.delete<Ingredient>(this.url+'/delete/'+ id);
+    return this.HttpClient.delete<Ingredient>(this.url+'/delete'+ id);
   }
 
   findById(id: number): Observable<Ingredient> {
-    return this.HttpClient.get<Ingredient>(this.url+'/id/' + id);
+    return this.HttpClient.get<Ingredient>(this.url+'/id' + id);
   }
 
   findAll(): Observable<any> {
@@ -35,7 +35,7 @@ export class IngredientServiceImpl implements IngredientService {
   }
 
   update(ingredient: Ingredient): Observable<Ingredient> {
-    return this.HttpClient.put<Ingredient>(this.url+'/update/', ingredient);
+    return this.HttpClient.put<Ingredient>(this.url+'/update', ingredient);
   }
 
   findAllWithPages(pagination: Pagination): Observable<any> {

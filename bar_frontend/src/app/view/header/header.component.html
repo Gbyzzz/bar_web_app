@@ -15,7 +15,7 @@
               class="alert alert-danger"
               role="alert"
               *ngIf="username.errors && f.submitted">
-              Username is required!
+              {{t('username is required')}}
             </div>
           </div>
           <br>
@@ -28,9 +28,11 @@
               role="alert"
               *ngIf="password.errors && f.submitted"
             >
-              <div *ngIf="password.errors.required">Password is required</div>
+              <div *ngIf="password.errors.required">
+                {{t('password is required')}}
+              </div>
               <div *ngIf="password.errors.minlength">
-                Password must be at least 6 characters
+                {{t('password must be at least 6 characters')}}
               </div>
             </div>
           </div>
@@ -50,18 +52,18 @@
             <div
               class="alert alert-danger"
               role="alert"
-              *ngIf="f.submitted && isLoginFailed"
-            >
-              Login failed: {{ errorMessage }}
+              *ngIf="f.submitted && isLoginFailed">
+              {{t('login failed')}}: {{ errorMessage }}
             </div>
           </div>
         </form>
-        <form action="/controller" method="post">
+        <form>
           <p class="text-center">
             {{t('not registered')}}
           </p>
           <p class="text-center">
-            <button type="submit" class="btn btn-link btn-sm" [routerLink]="['/register']" data-bs-dismiss="offcanvas">
+            <button type="submit" class="btn btn-link btn-sm"
+                    [routerLink]="['/register']" data-bs-dismiss="offcanvas">
               {{t('sign up here')}}
             </button>
           </p>
@@ -94,15 +96,12 @@
       <div class="collapse navbar-collapse" id="mynavbar">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <input type="hidden" name="command" value="to_cocktails"/>
             <a class="nav-link" [routerLink]="['/cocktails']">{{t('cocktails')}}</a>
           </li>
           <li class="nav-item">
-            <input type="hidden" name="command" value="to_about"/>
             <a href="#" class="nav-link" [routerLink]="['/about']">{{t('about')}}</a>
           </li>
           <li class="nav-item">
-            <input type="hidden" name="command" value="to_contact"/>
             <a href="#" class="nav-link" [routerLink]="['/contact']">{{t('contact')}}</a>
           </li>
         </ul>
@@ -135,13 +134,6 @@
                 data-bs-toggle="offcanvas">
           {{t('logout')}}
         </button>
-        <!--            <c:if test="${not empty user}">-->
-        <!--              <form action="/controller">-->
-        <!--                <button class="btn btn-dark me-3" type="submit" name="command" value="sign_out" >-->
-        <!--                  <fmt:message key="locale.signout"/>-->
-        <!--                </button>-->
-        <!--              </form>-->
-        <!--            </c:if>-->
 
       </div>
     </div>

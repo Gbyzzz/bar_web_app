@@ -18,7 +18,7 @@ export class RecipeServiceImpl implements RecipeService{
     this.url = baseUrl;
   }
   add(obj: Recipe): Observable<Recipe> {
-    return undefined;
+    return this.HttpClient.post<Recipe>(this.url + '/add_or_update', obj);
   }
 
   delete(id: number): Observable<Recipe> {
@@ -42,7 +42,7 @@ export class RecipeServiceImpl implements RecipeService{
   }
 
   addAll(obj: Recipe[]): Observable<Recipe[]> {
-    return undefined;
+    return this.HttpClient.post<Recipe[]>(this.url + '/add_or_update', obj);
   }
 
   findAllByCocktails(cocktails: Cocktail[]): Observable<Recipe[]>  {

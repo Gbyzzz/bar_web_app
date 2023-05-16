@@ -16,7 +16,7 @@ export class EditUserDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: [User], // данные, которые передаем в текущее диалоговое окно
   ) { }
 
-  roles = Object.keys(Role);
+  roles = Object.values(Role);
 
   form: FormGroup;
 

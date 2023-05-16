@@ -68,7 +68,6 @@ export class UserPageComponent implements OnInit {
 
     if (!this.userProfileForm.get('userImageFile').value.imageId) {
       const formData = new FormData();
-      // formData.append('file', this.userProfileForm.get('userImageFile').value);
       formData.append('file', this.fileHolder, this.fileHolder.name);
       this.imageService.uploadImage(formData).subscribe(image => {
         this.newUserImage = image;

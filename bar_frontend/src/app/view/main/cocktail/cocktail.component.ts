@@ -4,12 +4,10 @@ import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceI
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NavigationStart, Router} from "@angular/router";
-import {filter} from "rxjs";
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
 import {Vote} from "../../../model/Vote";
 import {VoteServiceImpl} from "../../../service/entity/impl/VoteServiceImpl";
 import {Recipe} from "../../../model/Recipe";
-import {RegistrationComponent} from "../../header/registration/registration.component";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 import {Image} from "../../../model/Image";
 
@@ -30,6 +28,7 @@ export class CocktailComponent implements OnInit {
   cocktailId: number;
   cocktailName: string;
   recipes: Recipe[];
+  voteCount: number;
 
   isUserLoggedIn: boolean;
 
@@ -54,7 +53,9 @@ export class CocktailComponent implements OnInit {
        this.recipes = res;
        console.log(res);
      });
-     // console.log(cocktail.recipes[0].cocktail);
+      this.voteService.getVoteCountByCocktail(cocktail).subscribe(count =>{
+        this.voteCount = count;
+      });
      this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
      this.cocktailName = cocktail.cocktailName;
      this.image = cocktail.cocktailImage;
@@ -76,6 +77,18 @@ export class CocktailComponent implements OnInit {
     this.voteService.add(this.vote).subscribe(res =>{
       this.vote = res;
       this.cdr.detectChanges();
+    this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
+      this.cocktail = cocktail;
+      console.log(cocktail);
+      this.voteService.getVoteCountByCocktail(cocktail).subscribe(count =>{
+        this.voteCount = count;
+        console.log(count);
+      });
+      this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
+        this.vote = res;
+        console.log(res);
+      });
+    });
     });
     console.log(value);
   }

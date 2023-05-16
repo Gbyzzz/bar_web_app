@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_spring.controller;
 
+import com.gbyzzz.bar_spring.entity.Cocktail;
 import com.gbyzzz.bar_spring.entity.Vote;
 import com.gbyzzz.bar_spring.service.CocktailService;
 import com.gbyzzz.bar_spring.service.VoteService;
@@ -23,7 +24,7 @@ public class VoteController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public Vote makeVote(@RequestBody Vote vote) throws Exception {
         vote.setCocktail(cocktailService.findById(vote.getCocktail().getCocktailId()));
         Vote savedVote = voteService.addOrUpdateVote(vote);
@@ -32,10 +33,17 @@ public class VoteController {
     }
 
     @PostMapping("/find_by_cocktail_user")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public Vote findByCocktailUserVote(@RequestBody Vote vote) throws Exception {
         System.out.println("findByCocktailUserVote");
         return voteService.findVoteByCocktailAndUser(vote);
     }
 
+
+    @PostMapping("/get_vote_count_by_cocktail")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
+    public Long getVoteCountByCocktail(@RequestBody Cocktail cocktail) throws Exception {
+        System.out.println("getVoteCountByCocktail");
+        return voteService.getVoteCountByCocktail(cocktail);
+    }
 }

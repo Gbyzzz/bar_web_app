@@ -1,6 +1,6 @@
 package com.gbyzzz.bar_spring.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 

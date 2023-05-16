@@ -55,4 +55,9 @@ public class VoteServiceImpl implements VoteService {
         cocktailRepository.save(cocktail);
     }
 
+    @Override
+    public Long getVoteCountByCocktail(Cocktail cocktail) {
+        return voteRepository.countAllByCocktail(cocktail);
+    }
+
 }

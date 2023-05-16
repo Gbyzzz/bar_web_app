@@ -40,15 +40,16 @@ public class AuthController {
 		this.jwtUtils = jwtUtils;
 	}
 
-	@PostMapping("/signin")
+	@PostMapping("/sign_in")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
 
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+						loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
-		
+
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 //		List<String> roles = userDetails.getAuthorities().stream()
 //				.map(item -> item.getAuthority())
@@ -60,13 +61,13 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtResponse(jwt, user));
 	}
 
-	@PostMapping("/signup")
+	@PostMapping("/sign_up")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-				User user = new User(null, signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()), null,
-				null, null, signUpRequest.getEmail(), null, User.Role.ROLE_USER, true,
+				User user = new User(null, signUpRequest.getUsername(),
+						encoder.encode(signUpRequest.getPassword()), null,
+				null, null, signUpRequest.getEmail(), null,
+						User.Role.ROLE_USER, true,
 				new Date(new java.util.Date().getTime()));
-
-
 		userService.updateUser(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

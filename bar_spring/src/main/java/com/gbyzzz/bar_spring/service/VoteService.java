@@ -13,4 +13,6 @@ public interface VoteService {
     Vote findVoteByCocktailAndUser(Vote vote);
 
     void updateRating(Cocktail cocktail);
+
+    Long getVoteCountByCocktail(Cocktail cocktail);
 }

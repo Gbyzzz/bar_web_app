@@ -32,19 +32,21 @@ public class IngredientController {
     }
 
     @PostMapping("/all_pages")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Page<User>> getAllWithPages(@RequestBody Pagination pagination) {
         Page result = ingredientService.findAllWithPages(pagination);
         return ResponseEntity.ok(result);
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     Ingredient updateIngredient(@RequestBody Ingredient ingredient){
         System.out.println("update ingredient");
         return ingredientService.addOrUpdate(ingredient);
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
     Ingredient addIngredient(@RequestBody Ingredient ingredient){
         System.out.println("add ingredient");
 //        ingredient.setIngredientId(null);

@@ -5,6 +5,7 @@ import com.gbyzzz.bar_spring.service.ImageService;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +24,7 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     Image uploadImage(@RequestParam("file")MultipartFile file) throws IOException {
        return imageService.saveImage(file);
     }

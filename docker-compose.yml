@@ -32,7 +32,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/bar_db?stringtype=unspecified
       - SPRING_FLYWAY_ENABLED=false
-      - SPRING_REDIS_HOST=bar-redis
+      - SPRING_DATA_REDIS_HOST=bar-redis
   #    command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
   frontend:
     build: ./bar_frontend

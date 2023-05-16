@@ -7,7 +7,7 @@
             {{username}}
           </span>
             <img *ngIf="!newImageId && !imageSrc" class="rounded-circle" width="150px"
-                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                 src="assets/default_profile_photo.jpg">
             <img *ngIf="!imageSrc && newImageId" class="rounded-circle" width="150px"
                  [src]="this.imageService.getImage(newImageId)">
           <img class="rounded-circle" width="150px" [src]="imageSrc" *ngIf="imageSrc">
@@ -23,7 +23,6 @@
             (change)="onFileChange($event)">
 
           <span class="text-black-50">
-<!--            <c:out value="${user.getEmail()}"/>-->
           </span>
           </div>
       </div>

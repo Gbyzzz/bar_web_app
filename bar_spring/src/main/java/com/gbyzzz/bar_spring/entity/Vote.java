@@ -2,7 +2,7 @@ package com.gbyzzz.bar_spring.entity;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity

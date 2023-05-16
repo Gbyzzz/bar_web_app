@@ -1,21 +1,15 @@
 package com.gbyzzz.bar_spring.entity;
 
 import com.gbyzzz.bar_spring.entity.type.PGUserRoleType;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "users")
-@TypeDef(
-        name = "pgsql_enum",
-        typeClass = PGUserRoleType.class
-)
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +46,7 @@ public class User {
 
     @Basic
     @Column(name = "role")
-    @Type(type = "pgsql_enum")
+    @Type(PGUserRoleType.class)
     @Enumerated(EnumType.STRING)
     private Role role;
 

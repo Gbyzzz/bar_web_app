@@ -1,9 +1,10 @@
+<div  *transloco="let t">
 <mat-dialog-content>
   <p mat-dialog-title>{{user.username}}</p>
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>UserID</mat-label>
+    <mat-label>ID</mat-label>
     <input #inputTitle
            matInput
            [(ngModel)]="user.userId"
@@ -12,7 +13,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Username</mat-label>
+    <mat-label>{{t('username')}}</mat-label>
     <input #inputTitle
            matInput
            [required]="true"
@@ -35,7 +36,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Name</mat-label>
+    <mat-label>{{t('name')}}</mat-label>
     <!-- если задача завершена - контрол не будет доступен -->
     <input #inputTitle
            matInput
@@ -59,7 +60,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Surname</mat-label>
+    <mat-label>{{t('surname')}}</mat-label>
     <!-- если задача завершена - контрол не будет доступен -->
     <input #inputTitle
            matInput
@@ -83,7 +84,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Phone</mat-label>
+    <mat-label>{{t('phone')}}</mat-label>
     <!-- если задача завершена - контрол не будет доступен -->
     <input #inputTitle
            matInput
@@ -107,7 +108,7 @@
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Email</mat-label>
+    <mat-label>{{t('email')}}</mat-label>
     <input #inputTitle
            matInput
            required
@@ -130,7 +131,7 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="m-1">
-    <mat-label>Role</mat-label>
+    <mat-label>{{t('role')}}</mat-label>
     <mat-select [(ngModel)]="newRole">
       <mat-option *ngFor="let role of roles" [value]="role">
         {{role}}
@@ -142,43 +143,37 @@
 <mat-checkbox color="primary"
   (click)="$event.stopPropagation()"
               [(ngModel)]="newEnabled">
-  <mat-label>Enabled</mat-label>
+  <mat-label>{{t('enabled')}}</mat-label>
 
 </mat-checkbox>
 
   <mat-form-field appearance="outline" class="m-1">
 
-    <mat-label>Registration Date</mat-label>
+    <mat-label>{{t('registration date')}}</mat-label>
     <input #inputTitle
            matInput
            [disabled]="true"
            [(ngModel)]="user.regDate">
 
   </mat-form-field>
-  <!--    выпадающий список приоритетов-->
-  <!--
-  работаем с id объектов, чтобы корректно работали компоненты выпад. списка
--->
 
 </mat-dialog-content>
 
 
-<!--  кнопки возможных действий-->
 <mat-dialog-actions>
 
 
-  <div class="col-md-5 col-12">
+  <div class="col-md-5 col-12" >
 
     <button type="button" class="btn btn-outline-dark"
       mat-raised-button color="primary"
             [disabled] = "newUsername.trim().length === 0 || newEmail.trim().length === 0"
       (click)="confirm()">
-      Сохранить
+      {{t('save')}}
     </button>
 
-
-<!--    <button mat-raised-button (click)="cancel()">Отмена</button>-->
 
   </div>
 
 </mat-dialog-actions>
+</div>

@@ -1,5 +1,3 @@
-import * as bytes from "bytes";
-
 export class Image {
   imageId: number;
   name: string;

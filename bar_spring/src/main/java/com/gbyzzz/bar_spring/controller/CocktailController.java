@@ -49,7 +49,7 @@ public class CocktailController {
     }
 
     @PostMapping("/add_or_update")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
     public Cocktail addCocktail(@RequestBody AddCocktailRequest addCocktailRequest) {
         Cocktail cocktail = addCocktailRequest.getCocktail();
         List<Recipe> recipes = addCocktailRequest.getRecipes();
@@ -58,6 +58,12 @@ public class CocktailController {
         recipeService.add(recipes, cocktail1);
         return cocktail1;
 }
+
+    @PutMapping("/add_or_update")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
+    public Cocktail updateCocktail(@RequestBody Cocktail cocktail) {
+        return cocktailService.addOrUpdate(cocktail);
+    }
 
     @PostMapping("/all_pages")
     public ResponseEntity<RestPage<Cocktail>> getAllWithPages(@RequestBody Pagination pagination) {

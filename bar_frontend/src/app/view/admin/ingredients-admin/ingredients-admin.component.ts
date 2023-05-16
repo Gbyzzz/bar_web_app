@@ -31,11 +31,6 @@ export class IngredientsAdminComponent implements OnInit {
               private sortDirectionUtil: SortDirectionUtil) {
     this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
     this.getPage();
-
-    // this.ingredientService.findAll().subscribe(ingredients => {
-    //   this.sortedData = ingredients;
-    //   this.ingredients = ingredients;
-    // });
   }
 
   ngOnInit(): void {

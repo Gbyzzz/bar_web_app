@@ -1,14 +1,13 @@
 import {Image} from "./Image";
 
-export enum Role{
+export enum Role {
   ADMIN = "ROLE_ADMIN",
   BARTENDER = "ROLE_BARTENDER",
   USER = "ROLE_USER",
 }
 
-export class User{
+export class User {
 
-  private static _Role = Role;
 
   userId: number;
   username: string;
@@ -20,7 +19,6 @@ export class User{
   role: Role;
   enabled: boolean;
   regDate: Date;
-
 
 
   constructor(userId: number, username: string, email: string, role: Role, enabled: boolean, regDate: Date,

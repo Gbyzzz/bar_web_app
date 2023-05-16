@@ -49,7 +49,7 @@ public class CocktailServiceImpl implements CocktailService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "cs_pages", allEntries = true)
+    @CacheEvict(cacheNames = {"cs_pages", "cs"}, allEntries = true)
     public Cocktail addOrUpdate(Cocktail cocktail) {
         cocktail.setPublicationDate(new Date(new java.util.Date().getTime()));
         Cocktail savedCocktail = cocktailRepository.save(cocktail);

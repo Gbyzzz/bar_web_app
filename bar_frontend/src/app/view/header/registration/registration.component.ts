@@ -76,7 +76,7 @@ export class RegistrationComponent implements OnInit {
 
     console.log(JSON.stringify(this.registrationForm.value, null, 2));
 
-    this.userService.signUp(username,email,password).subscribe(user =>{
+    this.authService.register(username,email,password).subscribe(user =>{
       this.router.navigate(['']);
     });
   }
