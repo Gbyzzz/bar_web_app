@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  postgres:
+  bar_postgres:
     build: ./db
     ports:
       - "5433:5432"
@@ -11,38 +11,74 @@ services:
       POSTGRES_DB: bar_db
     volumes:
       - postgres-data:/var/lib/postgresql/data
-  bar-redis:
-    container_name: bar-redis
+  bar_redis:
+    container_name: bar_redis
     image: redis:latest
     ports:
       - "6379:6379"
     restart: always
-  backend:
-    build: ./bar_spring
+  bar_rabbitmq:
+    container_name: bar_rabbitmq
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     restart: always
-    container_name: backend
+  bar_backend:
+    build: ./bar_backend
+    restart: always
+    container_name: bar_backend
     depends_on:
-      - "postgres"
-      - "bar-redis"
+      - "bar_postgres"
+      - "bar_redis"
+      - "bar_rabbitmq"
     ports:
       - "8080:8080"
     volumes:
-      - ./bar_spring:/app
+      - ./bar_backend:/app
     working_dir: /app
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/bar_db?stringtype=unspecified
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://bar_postgres:5432/bar_db?stringtype=unspecified
       - SPRING_FLYWAY_ENABLED=false
-      - SPRING_DATA_REDIS_HOST=bar-redis
-  #    command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
-  frontend:
+      - GBYZZZ_URL_TO_VALIDATE=http://baruserenable:8081/validate
+      - SPRING_DATA_REDIS_HOST=bar_redis
+      - SPRING_RABBITMQ_HOST=bar_rabbitmq
+
+  bar_frontend:
     build: ./bar_frontend
-    container_name: frontend
+    container_name: bar_frontend
     restart: always
     ports:
       - "7777:7777"
     volumes:
       - /app/node_modules
       - ./bar_frontend:/app
+
+  bar_user_enable:
+    build: ./bar_user_enable
+    restart: always
+    container_name: baruserenable
+    depends_on:
+      - "bar_redis"
+      - "bar_rabbitmq"
+    ports:
+      - "8081:8081"
+    working_dir: /app
+    environment:
+      - SPRING_RABBITMQ_HOST=bar_rabbitmq
+      - SPRING_DATA_REDIS_HOST=bar_redis
+
+  bar_email:
+    build: ./bar_email
+    restart: always
+    container_name: bar_email
+    depends_on:
+      - "bar_rabbitmq"
+    ports:
+      - "8082:8082"
+    working_dir: /app
+    environment:
+      - SPRING_RABBITMQ_HOST=bar_rabbitmq
 
 volumes:
   postgres-data:

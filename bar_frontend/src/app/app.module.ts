@@ -31,19 +31,22 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/
 import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
 import {IMAGE_URL_TOKEN} from "./service/entity/impl/ImageServiceImpl";
-import { CocktailComponent } from './view/main/cocktail/cocktail.component';
-import { CocktailsComponent } from './view/main/cocktails/cocktails.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AboutComponent } from './view/main/about/about.component';
-import { ContactComponent } from './view/main/contact/contact.component';
-import { TranslocoRootModule } from './transloco-root.module';
-import {RegistrationComponent} from "./view/header/registration/registration.component";
+import {CocktailComponent} from './view/main/cocktail/cocktail.component';
+import {CocktailsComponent} from './view/main/cocktails/cocktails.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {AboutComponent} from './view/main/about/about.component';
+import {ContactComponent} from './view/main/contact/contact.component';
+import {TranslocoRootModule} from './transloco-root.module';
+import {RegistrationComponent} from "./view/registration/registration.component";
 import {authInterceptorProviders} from "./service/auth/auth.interceptor";
 import {UserPageComponent} from "./view/main/user-page/user-page.component";
 import {VOTE_URL_TOKEN} from "./service/entity/impl/VoteServiceImpl";
 import {RECIPE_URL_TOKEN} from "./service/entity/impl/RecipeServiceImpl";
+import {VALIDATE_URL_TOKEN} from "./service/auth/validate-email.service";
 import {RecipeFilterByCocktailPipe} from "./view/pipe/RecipeFilterByCocktailPipe";
+import {ValidateComponent} from "./view/registration/validate/validate.component";
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -68,7 +71,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ContactComponent,
     RegistrationComponent,
     UserPageComponent,
-    RecipeFilterByCocktailPipe
+    RecipeFilterByCocktailPipe,
+    ValidateComponent
 
   ],
   imports: [
@@ -93,6 +97,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslocoRootModule
   ],
   providers: [
+    HeaderComponent,
     authInterceptorProviders,
 
     {
@@ -114,16 +119,24 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: IMAGE_URL_TOKEN,
       useValue: 'http://localhost:8080/image'
     },
+
     {
       provide: VOTE_URL_TOKEN,
       useValue: 'http://localhost:8080/vote'
     },
+
     {
       provide: RECIPE_URL_TOKEN,
       useValue: 'http://localhost:8080/recipe'
     },
-    { provide: MatDialogRef, useValue: {} },
-    { provide: MAT_DIALOG_DATA, useValue: [] }
+
+    {
+      provide: VALIDATE_URL_TOKEN,
+      useValue: 'http://localhost:8080/validate'
+    },
+
+    {provide: MatDialogRef, useValue: {}},
+    {provide: MAT_DIALOG_DATA, useValue: []}
 
   ],
   bootstrap: [AppComponent]

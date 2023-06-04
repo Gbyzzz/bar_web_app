@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Cocktail} from "../../model/Cocktail";
 import {CocktailServiceImpl} from "../../service/entity/impl/CocktailServiceImpl";
+import {TokenStorageService} from "../../service/auth/token-storage.service";
 
 @Component({
   selector: 'app-main',
@@ -13,10 +14,12 @@ export class MainComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  constructor(private cocktailService: CocktailServiceImpl) {
+  constructor(private cocktailService: CocktailServiceImpl,
+  private tokenStorage: TokenStorageService) {
     this.cocktailService.findForMain().subscribe(cocktails => {
       this.cocktails = cocktails;
       console.log(cocktails);
+      console.log(this.tokenStorage.getUser())
 
     });
   }

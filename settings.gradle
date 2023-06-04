@@ -1,0 +1,6 @@
+rootProject.name = 'bar_web_app'
+
+includeBuild 'bar_backend'
+includeBuild 'bar_email'
+includeBuild 'bar_frontend'
+includeBuild 'bar_user_enable'
