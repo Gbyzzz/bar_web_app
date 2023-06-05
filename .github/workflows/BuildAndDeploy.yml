@@ -1,0 +1,65 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Test with Gradle
+        run: gradle test
+
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push bar_backend
+        uses: docker/build-push-action@v4
+        with:
+          file: ./bar_backend/Dockerfile
+          push: true
+          tags: gbyzzz/gbyzzz_repository:bar_web_app_backend
+
+      - name: Build and push bar_email
+        uses: docker/build-push-action@v4
+        with:
+          file: ./bar_email/Dockerfile
+          push: true
+          tags: gbyzzz/gbyzzz_repository:bar_web_app_email
+
+      - name: Build and push bar_user_enable
+        uses: docker/build-push-action@v4
+        with:
+          file: ./bar_email/Dockerfile
+          push: true
+          tags: gbyzzz/gbyzzz_repository:bar_web_app_user_enable
+
+      - name: Build and push bar_frontend
+        uses: docker/build-push-action@v4
+        with:
+          file: ./bar_email/Dockerfile
+          push: true
+          tags: gbyzzz/gbyzzz_repository:bar_web_app_frontend
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: ./db/Dockerfile
+          context: ./db
+          push: true
+          tags: gbyzzz/gbyzzz_repository:bar_web_app_postgres
