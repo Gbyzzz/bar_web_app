@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar_user_enable_deployment
+  labels:
+    app: bar_user_enable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bar_user_enable
+  template:
+    metadata:
+      labels:
+        app: bar_user_enable
+    spec:
+      containers:
+        - name: bar_user_enable
+          image: gbyzzz/gbyzzz_repository:bar_web_app_user_enable
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATA_REDIS_HOST
+              value: "bar_redis"
+            - name: SPRING_RABBITMQ_HOST
+              value: "bar_rabbitmq"

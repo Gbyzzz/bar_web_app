@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar_frontend_deployment
+  labels:
+    app: bar_frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bar_frontend
+  template:
+    metadata:
+      labels:
+        app: bar_frontend
+    spec:
+      containers:
+        - name: bar_frontend
+          image: gbyzzz/gbyzzz_repository:bar_web_app_frontend
+          ports:
+            - containerPort: 4200

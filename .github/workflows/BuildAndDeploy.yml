@@ -46,14 +46,14 @@ jobs:
       - name: Build and push bar_user_enable
         uses: docker/build-push-action@v4
         with:
-          file: ./bar_email/Dockerfile
+          file: ./bar_user_enable/Dockerfile
           push: true
           tags: gbyzzz/gbyzzz_repository:bar_web_app_user_enable
 
       - name: Build and push bar_frontend
         uses: docker/build-push-action@v4
         with:
-          file: ./bar_email/Dockerfile
+          file: ./bar_frontend/Dockerfile
           push: true
           tags: gbyzzz/gbyzzz_repository:bar_web_app_frontend
 

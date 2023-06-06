@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar_rabbitmq
+  labels:
+    app: bar_rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar_rabbitmq
+  template:
+    metadata:
+      labels:
+        app: bar_rabbitmq
+    spec:
+      containers:
+        - name: bar_rabbitmq
+          image: rabbitmq:latest
+          ports:
+            - containerPort: 5672
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar_redis
+  labels:
+    app: bar_redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar_redis
+  template:
+    metadata:
+      labels:
+        app: bar_redis
+    spec:
+      containers:
+        - name: bar_redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379

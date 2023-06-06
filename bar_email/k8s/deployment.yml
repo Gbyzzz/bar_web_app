@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar_email_deployment
+  labels:
+    app: bar_email
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bar_email
+  template:
+    metadata:
+      labels:
+        app: bar_email
+    spec:
+      containers:
+        - name: bar_backend
+          image: gbyzzz/gbyzzz_repository:bar_web_app_email
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_RABBITMQ_HOST
+              value: "bar_rabbitmq"

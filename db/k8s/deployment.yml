@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: barpostgres
+  labels:
+    app: bar_postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar_postgres
+  template:
+    metadata:
+      labels:
+        app: bar_postgres
+    spec:
+      containers:
+        - name: bar_postgres
+          image: gbyzzz/gbyzzz_repository:bar_web_app_postgres
+          ports:
+            - containerPort: 5432

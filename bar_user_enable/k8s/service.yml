@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: baruserenable
+spec:
+  selector:
+    app.kubernetes.io/name: bar_user_enable
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081

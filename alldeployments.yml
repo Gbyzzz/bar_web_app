@@ -1,0 +1,189 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-rabbitmq
+  labels:
+    app: bar-rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: bar-rabbitmq
+    spec:
+      containers:
+        - name: bar-rabbitmq
+          image: rabbitmq:latest
+          ports:
+            - containerPort: 5672
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-postgres
+  labels:
+    app: bar-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-postgres
+  template:
+    metadata:
+      labels:
+        app: bar-postgres
+    spec:
+      containers:
+        - name: bar-postgres
+          image: gbyzzz/gbyzzz_repository:bar_web_app_postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "bar_db"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-redis
+  labels:
+    app: bar-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-redis
+  template:
+    metadata:
+      labels:
+        app: bar-redis
+    spec:
+      containers:
+        - name: bar-redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-backend
+  labels:
+    app: bar-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-backend
+  template:
+    metadata:
+      labels:
+        app: bar-backend
+    spec:
+      containers:
+        - name: bar-backend
+          image: gbyzzz/gbyzzz_repository:bar_web_app_backend
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://bar-postgres:5432/bar_db?stringtype=unspecified"
+            - name: SPRING_FLYWAY_ENABLED
+              value: "false"
+            - name: GBYZZZ_URL_TO_VALIDATE
+              value: "http://bar-user-enable:8081/validate"
+            - name: SPRING_DATA_REDIS_HOST
+              value: "bar-redis"
+            - name: SPRING_RABBITMQ_HOST
+              value: "bar-rabbitmq"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-email
+  labels:
+    app: bar-email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-email
+  template:
+    metadata:
+      labels:
+        app: bar-email
+    spec:
+      containers:
+        - name: bar-backend
+          image: gbyzzz/gbyzzz_repository:bar_web_app_email
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_RABBITMQ_HOST
+              value: "bar-rabbitmq"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-frontend
+  labels:
+    app: bar-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-frontend
+  template:
+    metadata:
+      labels:
+        app: bar-frontend
+    spec:
+      containers:
+        - name: bar-frontend
+          image: gbyzzz/gbyzzz_repository:bar_web_app_frontend
+          ports:
+            - containerPort: 4200
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-user-enable
+  labels:
+    app: bar-user-enable
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-user-enable
+  template:
+    metadata:
+      labels:
+        app: bar-user-enable
+    spec:
+      containers:
+        - name: bar-user-enable
+          image: gbyzzz/gbyzzz_repository:bar_web_app_user_enable
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATA_REDIS_HOST
+              value: "bar-redis"
+            - name: SPRING_RABBITMQ_HOST
+              value: "bar-rabbitmq"
