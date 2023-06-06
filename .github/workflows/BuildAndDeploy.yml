@@ -54,6 +54,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           file: ./bar_frontend/Dockerfile
+          context: ./bar_frontend
           push: true
           tags: gbyzzz/gbyzzz_repository:bar_web_app_frontend
 
