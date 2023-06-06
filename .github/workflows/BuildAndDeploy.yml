@@ -40,6 +40,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           file: ./bar_email/Dockerfile
+          context: ./bar_email
           push: true
           tags: gbyzzz/gbyzzz_repository:bar_web_app_email
 
@@ -47,6 +48,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           file: ./bar_user_enable/Dockerfile
+          context: ./bar_user_enable
           push: true
           tags: gbyzzz/gbyzzz_repository:bar_web_app_user_enable
 

@@ -1,6 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: bar-redis
+  labels:
+    app: bar-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-redis
+  template:
+    metadata:
+      labels:
+        app: bar-redis
+    spec:
+      containers:
+        - name: bar-redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: bar-rabbitmq
   labels:
     app: bar-rabbitmq
@@ -48,30 +72,6 @@ spec:
               value: "postgres"
             - name: POSTGRES_DB
               value: "bar_db"
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: bar-redis
-  labels:
-    app: bar-redis
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: bar-redis
-  template:
-    metadata:
-      labels:
-        app: bar-redis
-    spec:
-      containers:
-        - name: bar-redis
-          image: redis:latest
-          ports:
-            - containerPort: 6379
 
 ---
 
@@ -157,7 +157,7 @@ spec:
         - name: bar-frontend
           image: gbyzzz/gbyzzz_repository:bar_web_app_frontend
           ports:
-            - containerPort: 4200
+            - containerPort: 7777
 
 ---
 
