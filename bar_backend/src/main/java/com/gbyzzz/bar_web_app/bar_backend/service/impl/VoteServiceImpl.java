@@ -8,6 +8,7 @@ import com.gbyzzz.bar_web_app.bar_backend.service.VoteService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public void updateRating(Cocktail cocktail) {
         List<Vote> cocktailVotes = voteRepository.findByCocktail(cocktail);
-        double rating = 0;
+        float rating = 0;
         for (Vote cocktailVote : cocktailVotes) {
             rating += cocktailVote.getVoteValue();
         }

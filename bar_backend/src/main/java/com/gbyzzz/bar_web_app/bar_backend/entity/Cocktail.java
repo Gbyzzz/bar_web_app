@@ -23,7 +23,7 @@ public class Cocktail {
 
     @Basic
     @Column(name = "cocktail_rating")
-    private double cocktailRating;
+    private float cocktailRating;
 
     @Basic
     @Column(name = "publication_date")
@@ -45,7 +45,7 @@ public class Cocktail {
     }
 
     public Cocktail(Long cocktailId, String cocktailName, User cocktailAuthor,
-                    double cocktailRating, Date publicationDate, Image cocktailImage,
+                    float cocktailRating, Date publicationDate, Image cocktailImage,
                     String cocktailRecipe, int approxAlcoholPercentage) {
         this.cocktailId = cocktailId;
         this.cocktailName = cocktailName;
@@ -81,11 +81,11 @@ public class Cocktail {
         this.cocktailAuthor = cocktailAuthor;
     }
 
-    public double getCocktailRating() {
+    public float getCocktailRating() {
         return cocktailRating;
     }
 
-    public void setCocktailRating(double cocktailRating) {
+    public void setCocktailRating(float cocktailRating) {
         this.cocktailRating = cocktailRating;
     }
 
