@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Component, InjectionToken, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, InjectionToken, NgModule, OnInit} from '@angular/core';
 import {Cocktail} from "../../../model/Cocktail";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {NavigationStart, Router} from "@angular/router";
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
 import {Vote} from "../../../model/Vote";
@@ -11,6 +11,7 @@ import {Recipe} from "../../../model/Recipe";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 import {Image} from "../../../model/Image";
 import {LoginSharedService} from "../../../service/auth/login-shared.service";
+import {ClickEvent, StarRatingConfigService, StarRatingModule} from 'angular-star-rating';
 
 export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -18,14 +19,15 @@ export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 @Component({
   selector: 'app-cocktail',
   templateUrl: './cocktail.component.html',
-  styleUrls: ['./cocktail.component.css']
+  styleUrls: ['./cocktail.component.css'],
+  providers: [StarRatingConfigService]
 })
 export class CocktailComponent implements OnInit {
 
   cocktail: Cocktail;
   image: Image;
   vote: Vote;
-  ratingForm: FormGroup;
+  ratingForm: UntypedFormGroup;
   cocktailId: number;
   cocktailName: string;
   recipes: Recipe[];
@@ -37,11 +39,12 @@ export class CocktailComponent implements OnInit {
               private imageService: ImageServiceImpl,
               private voteService: VoteServiceImpl,
               private recipeService: RecipeServiceImpl,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private cdr: ChangeDetectorRef,
               private router: Router,
               private tokenStorage: TokenStorageService,
-              private sharedService: LoginSharedService) {
+              private sharedService: LoginSharedService,
+              private starRatingModule: StarRatingModule) {
     this.ratingForm = this.fb.group({
       rating: ['', Validators.required],
     });
@@ -86,8 +89,8 @@ export class CocktailComponent implements OnInit {
   }
 
 
-  onRate(value: number) {
-    this.vote.voteValue = value;
+  onRate(value: ClickEvent) {
+    this.vote.voteValue = value.rating;
     console.log(this.vote);
     this.voteService.add(this.vote).subscribe(res =>{
       this.vote = res;

@@ -30,18 +30,12 @@
     <div class="text-center" *ngIf="isUserLoggedIn">
       <h3>Rate</h3>
     </div>
-    <div class="rating text-center" *ngIf="isUserLoggedIn && this.tokenStorage.getUser().enabled">
-      <input hidden [value]="vote" curs>
-      <input type="submit" name="rating" (click)="onRate(5)" id="5" value="5" class="ml-1">
-      <label for="5">☆</label>
-      <input type="submit" name="rating" (click)="onRate(4)" id="4" value="4">
-      <label for="4">☆</label>
-      <input type="submit" name="rating" (click)="onRate(3)" id="3" value="3">
-      <label for="3">☆</label>
-      <input type="submit" name="rating" (click)="onRate(2)" id="2" value="2">
-      <label for="2">☆</label>
-      <input type="submit" name="rating" (click)="onRate(1)" id="1" value="1">
-      <label for="1">☆</label>
+    <div class="text-center">
+      <star-rating [readOnly]="!isUserLoggedIn || this.tokenStorage.getUser() == null && !this.tokenStorage.getUser().enabled"
+                   [hoverEnabled]="true" (starClickChange)="onRate($event)"
+                   [rating]="vote.voteValue != 0 ? vote.voteValue : cocktail.cocktailRating"
+                   [showHalfStars]="true">
+      </star-rating>
     </div>
     <div class="text-center mb-5">
       Rating - {{cocktail.cocktailRating}} (Votes : {{voteCount == null ? 0 : voteCount}})

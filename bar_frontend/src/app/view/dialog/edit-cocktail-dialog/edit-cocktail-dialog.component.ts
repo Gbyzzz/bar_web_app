@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Inject, Injector, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Ingredient} from "../../../model/Ingredient";
 import {IngredientServiceImpl} from "../../../service/entity/impl/IngredientServiceImpl";
@@ -27,7 +27,7 @@ export class EditCocktailDialogComponent implements OnInit {
   selectedIngredient: Ingredient[] = [];
   selectedUnit: string[] = [];
   selectedQuantity: number[] = [];
-  cocktailForm: FormGroup;
+  cocktailForm: UntypedFormGroup;
   newIngredient: Ingredient;
 
   ingredients: Ingredient[];
@@ -46,7 +46,7 @@ export class EditCocktailDialogComponent implements OnInit {
               private cdr: ChangeDetectorRef,
               private dialog: MatDialog,
               private ingredientService: IngredientServiceImpl,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private injector: Injector,
               private router: Router,
               private tokenService: TokenStorageService,
@@ -97,11 +97,11 @@ export class EditCocktailDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ingredientsRecipe(): FormArray {
-    return this.cocktailForm.get("ingredientsRecipe") as FormArray
+  ingredientsRecipe(): UntypedFormArray {
+    return this.cocktailForm.get("ingredientsRecipe") as UntypedFormArray
   }
 
-  newIngredientsRecipe(): FormGroup {
+  newIngredientsRecipe(): UntypedFormGroup {
     return this.fb.group({
       ingredientSelect: '',
       quantity: '',

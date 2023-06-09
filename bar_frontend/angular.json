@@ -104,5 +104,7 @@
       }
     }
   },
-  "defaultProject": "bar_frontend"
+  "cli": {
+    "analytics": false
+  }
 }

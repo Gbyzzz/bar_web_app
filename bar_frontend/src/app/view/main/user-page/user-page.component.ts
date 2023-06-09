@@ -4,7 +4,7 @@ import {TokenStorageService} from "../../../service/auth/token-storage.service";
 import {User} from "../../../model/User";
 import {Image} from "../../../model/Image";
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-userpage',
@@ -22,13 +22,13 @@ export class UserPageComponent implements OnInit {
   role: string;
   newImageId: number;
   newUserImage: Image;
-  userProfileForm: FormGroup;
+  userProfileForm: UntypedFormGroup;
   fileHolder: File | null;
 
   constructor(private userService: UserServiceImpl,
               private tokenStorage: TokenStorageService,
               private imageService: ImageServiceImpl,
-              private fb: FormBuilder,) {
+              private fb: UntypedFormBuilder,) {
     this.userProfileForm = this.fb.group({
       userImageFile: '',
       userName: '',

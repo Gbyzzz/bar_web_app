@@ -1,5 +1,5 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, UntypedFormBuilder, FormGroup, Validators} from "@angular/forms";
 import Validation from "../../utils/validation";
 import {AuthService} from "../../service/auth/auth.service";
 import {UserServiceImpl} from "../../service/entity/impl/UserServiceImpl";
@@ -30,7 +30,7 @@ export class RegistrationComponent implements OnInit {
   isConfirmPasswordMatch: boolean = undefined;
 
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private authService: AuthService,
               private userService: UserServiceImpl,
               private router: Router,

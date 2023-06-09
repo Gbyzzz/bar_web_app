@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Role, User} from "../../../model/User";
 import {DialogAction, DialogResult} from "../DialogResult";
@@ -18,7 +18,7 @@ export class EditUserDialogComponent implements OnInit {
 
   roles = Object.values(Role);
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   user: User;
   newUsername: string;

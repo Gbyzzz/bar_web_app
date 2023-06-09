@@ -46,6 +46,7 @@ import {RECIPE_URL_TOKEN} from "./service/entity/impl/RecipeServiceImpl";
 import {VALIDATE_URL_TOKEN} from "./service/auth/validate-email.service";
 import {RecipeFilterByCocktailPipe} from "./view/pipe/RecipeFilterByCocktailPipe";
 import {ValidateComponent} from "./view/registration/validate/validate.component";
+import {StarRatingModule} from "angular-star-rating";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -94,7 +95,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     ReactiveFormsModule,
     TranslateModule,
-    TranslocoRootModule
+    TranslocoRootModule,
+    StarRatingModule
   ],
   providers: [
     HeaderComponent,

@@ -15,8 +15,8 @@ import {
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormArray,
-  FormControl,
+  UntypedFormArray,
+  UntypedFormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
@@ -53,14 +53,14 @@ export class ValidateComponent implements OnInit {
   onTouched?: () => void;
 
 
-  getFormArray(size: number): FormArray {
+  getFormArray(size: number): UntypedFormArray {
     const arr = [];
 
     for (let i = 0; i < size; i++) {
-      arr.push(new FormControl(''));
+      arr.push(new UntypedFormControl(''));
     }
 
-    return new FormArray(arr);
+    return new UntypedFormArray(arr);
   }
 
   writeValue(value: string): void {
