@@ -44,6 +44,6 @@
       <label for="1">☆</label>
     </div>
     <div class="text-center mb-5">
-      Rating - {{cocktail.cocktailRating}} (Votes : {{voteCount}})
+      Rating - {{cocktail.cocktailRating}} (Votes : {{voteCount == null ? 0 : voteCount}})
     </div>
 </div>

@@ -10,6 +10,7 @@ import {VoteServiceImpl} from "../../../service/entity/impl/VoteServiceImpl";
 import {Recipe} from "../../../model/Recipe";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 import {Image} from "../../../model/Image";
+import {LoginSharedService} from "../../../service/auth/login-shared.service";
 
 export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -39,16 +40,17 @@ export class CocktailComponent implements OnInit {
               private fb: FormBuilder,
               private cdr: ChangeDetectorRef,
               private router: Router,
-              private tokenStorage: TokenStorageService) {
+              private tokenStorage: TokenStorageService,
+              private sharedService: LoginSharedService) {
     this.ratingForm = this.fb.group({
       rating: ['', Validators.required],
     });
 
     this.cocktailId = Number(this.router.url.split('/')[this.router.url.split('/').length-1]);
-    this.isUserLoggedIn = this.tokenStorage.getUser() == null ? false : true;
     console.log(this.isUserLoggedIn);
     this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
-     this.cocktail = cocktail;
+      this.isUserLoggedIn = this.tokenStorage.getUser() == null ? false : true;
+      this.cocktail = cocktail;
      this.recipeService.findByCocktail(cocktail).subscribe(res => {
        this.recipes = res;
        console.log(res);
@@ -56,7 +58,7 @@ export class CocktailComponent implements OnInit {
       this.voteService.getVoteCountByCocktail(cocktail).subscribe(count =>{
         this.voteCount = count;
       });
-     this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
+      this.vote = new Vote(null, this.tokenStorage.getUser(), cocktail, 0);
      this.cocktailName = cocktail.cocktailName;
      this.image = cocktail.cocktailImage;
      voteService.findByCocktailUserVote(this.vote).subscribe(res => {
@@ -68,6 +70,19 @@ export class CocktailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
+      console.log("event");
+      this.isUserLoggedIn = loggedIn;
+      this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktail, 0);
+      this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
+        this.vote = res;
+        console.log(res);
+        this.voteService.getVoteCountByCocktail(this.cocktail).subscribe(count =>{
+          this.voteCount = count;
+        });
+      });
+      // Perform any other necessary actions when userLoggedIn changes
+    });
   }
 
 

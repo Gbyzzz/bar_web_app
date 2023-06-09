@@ -39,7 +39,6 @@ services:
     working_dir: /app
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://bar_postgres:5432/bar_db?stringtype=unspecified
-      - SPRING_FLYWAY_ENABLED=false
       - GBYZZZ_URL_TO_VALIDATE=http://baruserenable:8081/validate
       - SPRING_DATA_REDIS_HOST=bar_redis
       - SPRING_RABBITMQ_HOST=bar_rabbitmq

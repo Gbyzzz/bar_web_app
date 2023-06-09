@@ -5,7 +5,7 @@ import {AuthService} from "../../service/auth/auth.service";
 import {UserServiceImpl} from "../../service/entity/impl/UserServiceImpl";
 import {Router} from "@angular/router";
 import {TokenStorageService} from "../../service/auth/token-storage.service";
-import {HeaderComponent, SharedService} from "../header/header.component";
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
   selector: 'app-registration',

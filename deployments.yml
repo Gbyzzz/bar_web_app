@@ -82,7 +82,7 @@ metadata:
   labels:
     app: bar-backend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: bar-backend
@@ -99,8 +99,6 @@ spec:
           env:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://bar-postgres:5432/bar_db?stringtype=unspecified"
-            - name: SPRING_FLYWAY_ENABLED
-              value: "false"
             - name: GBYZZZ_URL_TO_VALIDATE
               value: "http://bar-user-enable:8081/validate"
             - name: SPRING_DATA_REDIS_HOST
@@ -144,7 +142,7 @@ metadata:
   labels:
     app: bar-frontend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: bar-frontend

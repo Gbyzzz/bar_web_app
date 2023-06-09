@@ -9,7 +9,7 @@ import {Role} from "../../model/User";
 import {AuthService} from "../../service/auth/auth.service";
 import {TokenStorageService} from "../../service/auth/token-storage.service";
 import {Router} from "@angular/router";
-import {BehaviorSubject} from "rxjs";
+import {LoginSharedService} from "../../service/auth/login-shared.service";
 
 @Component({
   selector: 'app-header',
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private tokenStorage: TokenStorageService,
-              private sharedService: SharedService) {
+              private sharedService: LoginSharedService) {
   }
 
   changeSiteLanguage(language: string): void {
@@ -146,20 +146,3 @@ export class HeaderComponent implements OnInit {
   }
 }
 
-@Injectable({
-  providedIn: 'root'
-})
-export class SharedService {
-  private eventLoggedSource = new BehaviorSubject<boolean>(false);
-  eventLoggedSubject = this.eventLoggedSource.asObservable();
-  private eventUsernameSource = new BehaviorSubject<String>("");
-  eventUsernameSubject = this.eventUsernameSource.asObservable();
-  constructor() { }
-
-  emitLoggedEvent(value: boolean) {
-    this.eventLoggedSource.next(value)
-  }
-  emitUsernameEvent(value: string) {
-    this.eventUsernameSource.next(value)
-  }
-}

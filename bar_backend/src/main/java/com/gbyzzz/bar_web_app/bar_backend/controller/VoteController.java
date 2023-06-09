@@ -41,7 +41,6 @@ public class VoteController {
 
 
     @PostMapping("/get_vote_count_by_cocktail")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public Long getVoteCountByCocktail(@RequestBody Cocktail cocktail) throws Exception {
         System.out.println("getVoteCountByCocktail");
         return voteService.getVoteCountByCocktail(cocktail);
