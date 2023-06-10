@@ -17,11 +17,11 @@ public class Vote {
     @Column(name = "vote_id")
     private Long voteId;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
 

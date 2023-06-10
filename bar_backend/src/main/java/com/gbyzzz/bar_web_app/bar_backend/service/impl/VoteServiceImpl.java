@@ -52,7 +52,7 @@ public class VoteServiceImpl implements VoteService {
             rating += cocktailVote.getVoteValue();
         }
         rating /= cocktailVotes.size();
-        cocktail.setCocktailRating(rating);
+        cocktail.setCocktailRating((float) Math.round(rating * 10) /10);
         cocktailRepository.save(cocktail);
     }
 
