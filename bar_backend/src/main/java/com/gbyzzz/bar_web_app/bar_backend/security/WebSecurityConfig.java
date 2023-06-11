@@ -39,8 +39,6 @@ public class WebSecurityConfig {
 				.disable()
 				.authorizeHttpRequests()
 				.requestMatchers( "/**").permitAll()
-//				.requestMatchers(POST, "/signin", "/user/sign_up", "/image/upload",
-//						"/user/is_username_available", "/user/is_email_available", "/cocktail/find_all_by_cocktails").permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()
@@ -68,33 +66,4 @@ public class WebSecurityConfig {
 			}
 		};
 	}
-
-//	@Bean
-//	public UserDetailsService userDetailsService() {
-//		return username -> repository.findByEmail(username)
-//				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-//	}
-
-
-
-//	@Bean
-//	public AuthenticationManager authenticationManagerBean() throws Exception {
-//		return super.authenticationManagerBean();
-//	}
-
-
-
-//	protected void configure(HttpSecurity http) throws Exception {
-//		http.cors().and().csrf().disable()
-//			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//			.authorizeRequests()
-//				.antMatchers(HttpMethod.GET, "/image/*","/cocktail/*","/ingredient/*","/hi").permitAll()
-//				.antMatchers(HttpMethod.POST, "/cocktail/all_pages", "/signin", "/user/sign_up", "/image/upload",
-//						"/user/is_username_available", "/user/is_email_available", "/recipe/find_by_cocktail",
-//						"/recipe/find_all_by_cocktails", "/cocktail/find_all_by_cocktails").permitAll()
-//			.anyRequest().authenticated();
-//
-//		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-//	}
 }

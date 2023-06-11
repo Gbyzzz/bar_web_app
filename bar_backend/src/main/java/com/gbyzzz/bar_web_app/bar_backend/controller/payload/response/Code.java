@@ -1,7 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.controller.payload.response;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Objects;
 

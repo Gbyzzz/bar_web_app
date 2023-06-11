@@ -26,12 +26,9 @@ public class UserController {
 
     private final ImageService imageService;
 
-    PasswordEncoder encoder;
-
-    public UserController(UserService userService, ImageService imageService, PasswordEncoder encoder) {
+    public UserController(UserService userService, ImageService imageService) {
         this.userService = userService;
         this.imageService = imageService;
-        this.encoder = encoder;
     }
 
     @GetMapping("/all")
@@ -62,21 +59,6 @@ public class UserController {
         }
         return userService.updateUser(user);
     }
-
-//    @PostMapping("/sign_up")
-//    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-//        System.out.println("sign up");
-//        System.out.println(signUpRequest.getPassword());
-//
-//        User user = new User(null, signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()), null,
-//                null, null, signUpRequest.getEmail(), null, User.Role.ROLE_USER, true,
-//                new Date(new java.util.Date().getTime()));
-//
-//
-//        userService.updateUser(user);
-//
-//        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-//    }
 
     @PostMapping("/is_username_available")
     public boolean isUsernameAvailable(@RequestBody SignupRequest signupRequest) {

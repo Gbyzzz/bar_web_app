@@ -1,6 +1,5 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
-import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.LoginRequest;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupRequest;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.Code;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.JwtResponse;

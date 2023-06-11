@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class VoteController {
 
-    VoteService voteService;
-    CocktailService cocktailService;
+    private final VoteService voteService;
+    private final CocktailService cocktailService;
 
     public VoteController(VoteService voteService, CocktailService cocktailService) {
         this.voteService = voteService;

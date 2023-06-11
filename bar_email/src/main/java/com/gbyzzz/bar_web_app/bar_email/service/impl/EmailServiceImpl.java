@@ -4,51 +4,39 @@ import com.gbyzzz.bar_web_app.bar_email.entity.Code;
 import com.gbyzzz.bar_web_app.bar_email.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class EmailServiceImpl implements EmailService {
+    private final ResourceLoader resourceLoader;
+
 
     private static final String SUBJECT = "Email confirmation";
 
     private final JavaMailSender emailSender;
 
-    public EmailServiceImpl(JavaMailSender emailSender) {
+    public EmailServiceImpl(ResourceLoader resourceLoader, JavaMailSender emailSender) {
+        this.resourceLoader = resourceLoader;
         this.emailSender = emailSender;
     }
 
     public void sendSimpleMessage(Code code) throws MessagingException, IOException {
-
-        System.out.println();
-        BufferedReader reader = new BufferedReader(new FileReader((EmailServiceImpl.class.getClassLoader().getResource("templates").getPath() + "/mail.html").substring(1)));
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        String ls = System.getProperty("line.separator");
-        while ((line = reader.readLine()) != null) {
-            stringBuilder.append(line);
-            stringBuilder.append(ls);
-        }
-// delete the last new line separator
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        reader.close();
-
-        String mail = stringBuilder.toString();
+        Resource resource = resourceLoader.getResource("classpath:email/mail.html");
+        String mail = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharsets.UTF_8);
 
         MimeMessage message = emailSender.createMimeMessage();
         mail = mail.replace("{{VERIFICATION_CODE}}", code.getCode().toString());
 
-
-
-
-// use the true flag to indicate you need a multipart message
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//        SimpleMailMessage message = new SimpleMailMessage();
         helper.setTo(code.getEmail());
         helper.setSubject(SUBJECT);
 

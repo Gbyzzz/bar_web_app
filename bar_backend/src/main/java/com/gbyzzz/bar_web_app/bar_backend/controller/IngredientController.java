@@ -19,7 +19,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class IngredientController {
 
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
@@ -49,13 +49,6 @@ public class IngredientController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
     Ingredient addIngredient(@RequestBody Ingredient ingredient){
         System.out.println("add ingredient");
-//        ingredient.setIngredientId(null);
         return ingredientService.addOrUpdate(ingredient);
     }
-
-//    @GetMapping("/search")
-//    List<Ingredient> getIngredients(){
-//        System.out.println("all ingredients");
-//        return ingredientService.findAll();
-//    }
 }

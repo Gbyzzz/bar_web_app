@@ -6,7 +6,6 @@ import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.AddCocktail
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import com.gbyzzz.bar_web_app.bar_backend.service.CocktailService;
-import com.gbyzzz.bar_web_app.bar_backend.service.ImageService;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,13 +21,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class CocktailController {
 
-    private CocktailService cocktailService;
-    private ImageService imageService;
-    private RecipeService recipeService;
+    private final CocktailService cocktailService;
+    private final RecipeService recipeService;
 
-    public CocktailController(CocktailService cocktailService, ImageService imageService, RecipeService recipeService) {
+    public CocktailController(CocktailService cocktailService, RecipeService recipeService) {
         this.cocktailService = cocktailService;
-        this.imageService = imageService;
         this.recipeService = recipeService;
     }
 

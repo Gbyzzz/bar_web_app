@@ -8,6 +8,7 @@ shelf/
 out/
 /.project
 /.classpathqw
+!gradle/wrapper/gradle-wrapper.jar
 
 *.log
 *.ctxt

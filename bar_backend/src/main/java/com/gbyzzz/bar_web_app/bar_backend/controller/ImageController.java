@@ -17,7 +17,7 @@ import java.io.IOException;
 @RequestMapping("/image")
 public class ImageController {
 
-    private ImageService imageService;
+    private final ImageService imageService;
 
     public ImageController(ImageService imageService) {
         this.imageService = imageService;
