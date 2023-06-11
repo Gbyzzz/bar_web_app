@@ -25,8 +25,8 @@ public class EmailServiceImpl implements EmailService {
 
     public void sendSimpleMessage(Code code) throws MessagingException, IOException {
 
-
-        BufferedReader reader = new BufferedReader(new FileReader("bar_email/src/test/resources/templates/mail.html"));
+        System.out.println();
+        BufferedReader reader = new BufferedReader(new FileReader((EmailServiceImpl.class.getClassLoader().getResource("templates").getPath() + "/mail.html").substring(1)));
         StringBuilder stringBuilder = new StringBuilder();
         String line;
         String ls = System.getProperty("line.separator");
