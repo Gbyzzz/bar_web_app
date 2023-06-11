@@ -57,8 +57,10 @@ export class HeaderComponent implements OnInit {
     this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
       console.log("event");
       this.isLoggedIn = loggedIn;
-      // Perform any other necessary actions when userLoggedIn changes
-    });
+      if(this.isLoggedIn == true) {
+        const button = document.getElementById('close_sign_in');
+        button.click();
+      }    });
     this.sharedService.eventUsernameSubject.subscribe((username: string) => {
       console.log("event");
       this.targetUsername = username;

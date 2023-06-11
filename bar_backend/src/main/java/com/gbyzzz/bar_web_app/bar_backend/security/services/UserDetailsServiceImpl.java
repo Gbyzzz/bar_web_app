@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = new User();
+		User user;
 		if(username.contains("@")){
 			user = userService.findByEmail(username);
 		} else {

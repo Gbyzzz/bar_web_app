@@ -1,7 +1,7 @@
 <div *transloco="let t">
   <div class="offcanvas offcanvas-end" id="signin">
     <div class="offcanvas-header">
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" id="close_sign_in"></button>
     </div>
     <div class="offcanvas-body">
 
@@ -39,7 +39,7 @@
           <br>
           <div>
             <p class="text-center">
-              <button class="btn btn-outline-dark me-2" name="command" data-bs-dismiss="offcanvas" value="sign_in"
+              <button class="btn btn-outline-dark me-2" name="command" value="sign_in"
                       type="submit">
                 {{t('sign in')}}
               </button>
