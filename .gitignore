@@ -9,6 +9,7 @@ out/
 /.project
 /.classpathqw
 !gradle/wrapper/gradle-wrapper.jar
+*/node_modules
 
 *.log
 *.ctxt
