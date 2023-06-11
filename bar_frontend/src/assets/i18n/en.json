@@ -15,6 +15,7 @@
   "drop(s)": "drop(s)",
   "username": "Username",
   "email": "Email",
+  "username or email" : "Please input your username or email",
   "password": "Password",
   "sign in": "Sign In",
   "forgot password": "Forgot password",

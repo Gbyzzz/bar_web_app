@@ -7,7 +7,7 @@
 
       <div>
         <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-          {{t('username')}}
+          {{t('username or email')}}:
           <div>
             <input class="form-control me-2" name="username" [(ngModel)]="form.username"
                    required #username="ngModel" [placeholder]="t('username')" size="10">
@@ -19,7 +19,7 @@
             </div>
           </div>
           <br>
-          {{t('password')}}
+          {{t('password')}}:
           <div>
             <input class="form-control me-2" type="password" name="pwd" [placeholder]="t('password')"
                    [(ngModel)]="form.password" required minlength="6" #password="ngModel"/>
