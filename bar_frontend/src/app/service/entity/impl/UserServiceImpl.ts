@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../../../model/User";
 import {Pagination} from "../../../model/pagination/Pagination";
+import {PasswordChange} from "../../../model/registration/PasswordChange";
 
 export const USER_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -42,12 +43,10 @@ export class UserServiceImpl  implements UserService{
   }
 
   findAll(): Observable<User[]> {
-    console.log("find all");
     return this.HttpClient.get<User[]>(this.url+'/all');
   }
 
   update(user: User): Observable<User> {
-    console.log("update");
     return this.HttpClient.put<User>(this.url+'/update', user);
   }
 
@@ -62,4 +61,6 @@ export class UserServiceImpl  implements UserService{
   findAllWithPages(pagination: Pagination): Observable<any> {
     return this.HttpClient.post<any>(this.url + '/all_pages', pagination);
   }
+
+
 }

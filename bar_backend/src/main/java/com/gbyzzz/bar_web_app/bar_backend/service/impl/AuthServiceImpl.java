@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
+import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.ChangePasswordRequest;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupRequest;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.Code;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.JwtResponse;
@@ -86,6 +87,26 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return valid;
+    }
+    @Override
+    public boolean isPasswordValid(ChangePasswordRequest changePasswordRequest) {
+        return encoder.matches(changePasswordRequest.getOldPassword(),
+                userService.findByEmail(changePasswordRequest.getEmail()).getPassword());
+
+    }
+
+    @Override
+    public boolean changePassword(ChangePasswordRequest changePasswordRequest) {
+        if(!isPasswordValid(changePasswordRequest)){
+            return false;
+        }
+
+        User user = userService.findByEmail(changePasswordRequest.getEmail());
+        user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
+        if(userService.updateUser(user) != null){
+            return true;
+        }
+        return false;
     }
 
 }

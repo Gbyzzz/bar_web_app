@@ -22,8 +22,6 @@ export class CocktailsComponent implements OnInit {
   constructor(private cocktailService: CocktailServiceImpl) {
 
     this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
-    console.log(this.pagination);
-
     this.getPage();
   }
 
@@ -34,8 +32,6 @@ export class CocktailsComponent implements OnInit {
 
     if (this.pagination.pageSize != pageEvent.pageSize) {
       this.pagination.pageNumber = 0;
-      console.log("true");
-
     } else {
       this.pagination.pageNumber = pageEvent.pageIndex;
     }
@@ -48,9 +44,7 @@ export class CocktailsComponent implements OnInit {
   getPage() {
     this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
       this.cocktails = cocktails.content;
-      console.log(cocktails);
       this.totalCocktailsFounded = cocktails.totalElements;
-      console.log(this.totalCocktailsFounded);
     });
   }
 }

@@ -32,9 +32,6 @@ export class EditUserDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.data[0];
-    console.log(this.user);
-    console.log(this.data);
-
     this.newUsername = this.user.username;
     this.newName = this.user.name;
     this.newSurname = this.user.surname;
@@ -42,8 +39,6 @@ export class EditUserDialogComponent implements OnInit {
     this.newPhone = this.user.phone;
     this.newEmail = this.user.email;
     this.newEnabled = this.user.enabled;
-    console.log(this.newRole);
-
   }
 
   confirm(): void {

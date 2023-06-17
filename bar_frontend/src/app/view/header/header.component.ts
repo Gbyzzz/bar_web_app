@@ -55,14 +55,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
-      console.log("event");
       this.isLoggedIn = loggedIn;
-      if(this.isLoggedIn == true) {
+      if(this.isLoggedIn) {
         const button = document.getElementById('close_sign_in');
         button.click();
       }    });
     this.sharedService.eventUsernameSubject.subscribe((username: string) => {
-      console.log("event");
       this.targetUsername = username;
       // Perform any other necessary actions when userLoggedIn changes
     });
@@ -96,14 +94,11 @@ export class HeaderComponent implements OnInit {
     this.role = this.tokenStorage.getUser().role;
     this.targetUsername = this.tokenStorage.getUser()
       .username;
-    console.log("isLoggedIn");
-    console.log(this.isLoggedIn);
     this.sharedService.emitLoggedEvent(true);
     this.sharedService.emitUsernameEvent(this.tokenStorage.getUser()
       .username);
 
 
-    // this.reloadPage();
     if (!this.tokenStorage.getUser().enabled) {
       this.router.navigate(['/validate/']);
 

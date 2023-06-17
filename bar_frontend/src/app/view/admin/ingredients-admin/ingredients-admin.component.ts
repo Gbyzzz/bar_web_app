@@ -40,8 +40,6 @@ export class IngredientsAdminComponent implements OnInit {
 
     if (this.pagination.pageSize != pageEvent.pageSize) {
       this.pagination.pageNumber = 0;
-      console.log("true");
-
     } else {
       this.pagination.pageNumber = pageEvent.pageIndex;
     }
@@ -52,13 +50,10 @@ export class IngredientsAdminComponent implements OnInit {
   }
 
   getPage() {
-    console.log(this.pagination);
     this.ingredientService.findAllWithPages(this.pagination).subscribe(ingredients =>{
       this.ingredients = ingredients.content;
       this.sortedData = ingredients.content;
-      console.log(ingredients);
       this.totalIngredientsFound = ingredients.totalElements;
-      console.log(this.totalIngredientsFound);
     });
   }
 

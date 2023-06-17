@@ -124,9 +124,7 @@ export class EditCocktailDialogComponent implements OnInit {
   }
 
   onSelectChange(event, i) {
-    console.log(event);
     this.selectedIngredient[i] = event;
-    console.log(this.selectedIngredient[i].unitOfMeasurement);
     this.selectedUnit[i] = this.selectedIngredient[i].unitOfMeasurement;// problem here
   }
 
@@ -168,17 +166,13 @@ export class EditCocktailDialogComponent implements OnInit {
       }
 
       if (result.action === DialogAction.SAVE) {
-        console.log(this.newIngredient);
         this.addIngredient(this.newIngredient);
-
-        console.log(this.ingredients);
         return;
       }
     });
   }
 
   onSubmit(): void {
-    console.log(this.cocktailForm.get('cocktailImageFile').value.imageId);
     if (!this.cocktailForm.get('cocktailImageFile').value.imageId) {
       const formData = new FormData();
       formData.append('file', this.fileHolder, this.fileHolder.name);
@@ -188,17 +182,13 @@ export class EditCocktailDialogComponent implements OnInit {
         this.recipes = this.newRecipes;
         this.recipeService.addAll(this.recipes)
           .subscribe(res => {
-          console.log(res);
         });
       });
     } else {
       this.updateCocktailValues();
-      console.log(this.recipes);
       this.recipes = this.newRecipes;
-      console.log(this.recipes);
       this.recipeService.addAll(this.recipes)
         .subscribe(res => {
-        console.log(res);
       });
     }
     this.dialogRef.close(new DialogResult(DialogAction.SAVE));
@@ -211,7 +201,6 @@ export class EditCocktailDialogComponent implements OnInit {
         this.newCocktailImage = image;
         this.updateCocktailValues();
         this.targetCocktail.cocktailAuthor = this.tokenService.getUser();
-        console.log(this.targetCocktail);
         this.cocktailService.addCocktail(this.targetCocktail, this.newRecipes).subscribe(res => {
             this.router.navigate(['/cocktails/cocktail/' + res.cocktailId]);
         });
@@ -228,6 +217,5 @@ export class EditCocktailDialogComponent implements OnInit {
       this.newRecipes.splice(i, 0, new Recipe(null, this.targetCocktail,
         this.selectedIngredient[i], Number(this.selectedQuantity[i])));
     }
-    console.log(this.targetCocktail);
   }
 }

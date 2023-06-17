@@ -50,13 +50,11 @@ export class CocktailComponent implements OnInit {
     });
 
     this.cocktailId = Number(this.router.url.split('/')[this.router.url.split('/').length-1]);
-    console.log(this.isUserLoggedIn);
     this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
       this.isUserLoggedIn = this.tokenStorage.getUser() == null ? false : true;
       this.cocktail = cocktail;
      this.recipeService.findByCocktail(cocktail).subscribe(res => {
        this.recipes = res;
-       console.log(res);
      });
       this.voteService.getVoteCountByCocktail(cocktail).subscribe(count =>{
         this.voteCount = count;
@@ -66,7 +64,6 @@ export class CocktailComponent implements OnInit {
      this.image = cocktail.cocktailImage;
      voteService.findByCocktailUserVote(this.vote).subscribe(res => {
         this.vote = res;
-        console.log(res);
       });
     });
 
@@ -74,12 +71,10 @@ export class CocktailComponent implements OnInit {
 
   ngOnInit(): void {
     this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
-      console.log("event");
       this.isUserLoggedIn = loggedIn;
       this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktail, 0);
       this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
         this.vote = res;
-        console.log(res);
         this.voteService.getVoteCountByCocktail(this.cocktail).subscribe(count =>{
           this.voteCount = count;
         });
@@ -91,23 +86,18 @@ export class CocktailComponent implements OnInit {
 
   onRate(value: ClickEvent) {
     this.vote.voteValue = value.rating;
-    console.log(this.vote);
     this.voteService.add(this.vote).subscribe(res =>{
       this.vote = res;
       this.cdr.detectChanges();
     this.cocktailService.findById(this.cocktailId).subscribe(cocktail =>{
       this.cocktail = cocktail;
-      console.log(cocktail);
       this.voteService.getVoteCountByCocktail(cocktail).subscribe(count =>{
         this.voteCount = count;
-        console.log(count);
       });
       this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
         this.vote = res;
-        console.log(res);
       });
     });
     });
-    console.log(value);
   }
 }

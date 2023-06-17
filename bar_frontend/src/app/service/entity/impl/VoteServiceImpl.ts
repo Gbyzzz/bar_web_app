@@ -19,8 +19,6 @@ export class VoteServiceImpl implements VoteService{
     this.url = baseUrl;
   }
   add(vote: Vote): Observable<Vote> {
-    console.log("add");
-    console.log(vote);
     return this.HttpClient.post<Vote>(this.url + '/add', vote);
   }
 

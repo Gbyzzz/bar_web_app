@@ -15,11 +15,6 @@ export class AppComponent implements OnInit{
   }
 
   constructor(private userService: UserServiceImpl) {
-    // this.translate.addLangs(['en', 'ru']);
-    // this.translate.setDefaultLang('en');
-    //
-    // const browserLang = this.translate.getBrowserLang();
-    // this.translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
   }
 
 }

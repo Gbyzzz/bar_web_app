@@ -89,7 +89,6 @@ export class CocktailsAdminComponent implements OnInit {
 
     if (this.pagination.pageSize != pageEvent.pageSize) {
       this.pagination.pageNumber = 0;
-      console.log("true");
 
     } else {
       this.pagination.pageNumber = pageEvent.pageIndex;
@@ -101,16 +100,12 @@ export class CocktailsAdminComponent implements OnInit {
   }
 
   getPage() {
-    console.log(this.pagination);
     this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
       this.cocktails = cocktails.content;
       this.sortedData = cocktails.content;
-      console.log(cocktails);
       this.totalCocktailsFound = cocktails.totalElements;
-      console.log(this.totalCocktailsFound);
       this.recipeService.findAllByCocktails(this.sortedData).subscribe(res => {
         this.recipes = res;
-        console.log(this.recipes);
       });
 
     });

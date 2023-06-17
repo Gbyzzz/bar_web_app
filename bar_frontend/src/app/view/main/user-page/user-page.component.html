@@ -1,15 +1,20 @@
+<div *ngIf="isPasswordChanged" class="alert alert-success alert-dismissible">
+  <button #closeAlertButton id="close_alert" type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <strong>Success!</strong> This alert box could indicate a successful or positive action.
+</div>
+
 <form [formGroup]="userProfileForm" *transloco="let t">
-  <div class="container rounded bg-white mt-5 mb-5">
+  <div class="container rounded bg-white mt-5 mb-5 align-items-center">
     <div class="row">
-      <div class="col-md-3 border-right">
+      <div class="col-md-3 border-right m-3">
         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
           <span class="font-weight-bold">
             {{username}}
           </span>
-            <img *ngIf="!newImageId && !imageSrc" class="rounded-circle" width="150px"
-                 src="assets/default_profile_photo.jpg">
-            <img *ngIf="!imageSrc && newImageId" class="rounded-circle" width="150px"
-                 [src]="this.imageService.getImage(newImageId)">
+          <img *ngIf="!newImageId && !imageSrc" class="rounded-circle" width="150px"
+               src="assets/default_profile_photo.jpg">
+          <img *ngIf="!imageSrc && newImageId" class="rounded-circle" width="150px"
+               [src]="this.imageService.getImage(newImageId)">
           <img class="rounded-circle" width="150px" [src]="imageSrc" *ngIf="imageSrc">
 
           <br>
@@ -24,46 +29,135 @@
 
           <span class="text-black-50">
           </span>
-          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-dark  profile-button" data-bs-toggle="modal"
+                  data-bs-target="#myModal">
+            {{t('change password')}}
+          </button>
+        </div>
       </div>
-      <div class="col-md-5 card shadow-2-strong card-registration" style="border-radius: 15px;">
-          <div class="p-3 py-5">
-            <div class="d-flex text-center mb-3">
-              <h4>
-                {{t('profile')}}
-              </h4>
-            </div>
-            <div class="row mt-2">
-              <div class="col-md-12">
-                <label class="labels">
-                  {{t('name')}}
-                </label>
-                  <input type="text" name="name" formControlName="userName" class="form-control" [(ngModel)]="newName">
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-12">
-                <label class="labels">
-                  {{t('surname')}}
-                </label>
-                  <input type="text" name="surname" formControlName="userSurname" class="form-control"  [(ngModel)]="newSurname"/>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-12">
-                <label class="labels">
-                  {{t('phone')}}
-                </label>
-                  <input type="text" name="phone" formControlName="userPhone" class="form-control"  [(ngModel)]="newPhone">
-              </div>
-            </div>
-            <div class="mt-5 text-center">
-              <button class="btn btn-dark profile-button" (click)="onSave()" type="submit">
-                {{t('save')}}
-              </button>
+
+      <div class="col-md-5 card shadow-2-strong card-registration m-3" style="border-radius: 15px;">
+        <div class="p-3 py-5">
+          <div class="d-flex text-center mb-3">
+            <h4>
+              {{t('profile')}}
+            </h4>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <label class="labels">
+                {{t('name')}}
+              </label>
+              <input type="text" name="name" formControlName="userName" class="form-control"
+                     [(ngModel)]="newName">
             </div>
           </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <label class="labels">
+                {{t('surname')}}
+              </label>
+              <input type="text" name="surname" formControlName="userSurname" class="form-control"
+                     [(ngModel)]="newSurname"/>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <label class="labels">
+                {{t('phone')}}
+              </label>
+              <input type="text" name="phone" formControlName="userPhone" class="form-control"
+                     [(ngModel)]="newPhone">
+            </div>
+          </div>
+          <div class="mt-5 text-center">
+            <button class="btn btn-dark profile-button" type="submit">
+              {{t('save')}}
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="col-md-3 border-right">
     </div>
   </div>
 </form>
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header" *transloco="let t">
+        <h4 class="modal-title text-center"> {{t('change password')}}</h4>
+        <button id ="close_modal" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" *transloco="let t">
+        <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitChangePassword()">
+
+
+          <div class="form-outline mt-2">
+            <label>{{t('old password')}}</label>
+            <input
+              type="password"
+              formControlName="oldPassword"
+              class="form-control form-control-lg"
+              [style.border-color]="oldPasswordValue != '' ?
+               (isOldPasswordMatch == true ? 'green' : 'red') : ''"
+              (change)="onOldPasswordInputChange()"/>
+            <div *ngIf="isOldPasswordMatch == false" class="text-danger">
+              {{t('old password not right')}}
+            </div>
+          </div>
+
+          <div class="form-outline mt-2">
+            <label>{{t('new password')}}</label>
+            <input type="password"
+                   formControlName="newPassword"
+                   class="form-control form-control-lg"
+                   (change)="onInputChange()"
+                   [style.border-color]="newPasswordValue != '' ? ((isPasswordValid == true &&
+               isNewPasswordUniqueToOld == true) ? 'green' :
+                      ((isPasswordValid == false ||
+                       isNewPasswordUniqueToOld == false) ? 'red' : '')):''"/>
+            <div *ngIf="isPasswordValid == false && newPasswordValue != ''" class="text-danger">
+              {{t('error password valid')}}
+            </div>
+            <div *ngIf="isNewPasswordUniqueToOld == false && newPasswordValue != ''" class="text-danger">
+            {{t('error password not unique')}}
+          </div>
+          </div>
+
+          <div class="form-outline mt-2">
+            <div class="form-outline">
+              <label>{{t('confirm password')}}</label>
+              <input
+                type="password"
+                formControlName="confirmPassword"
+                class="form-control form-control-lg"
+                (change)="onInputChange()"
+                [style.border-color]="confirmPasswordValue != '' ? ((isConfirmPasswordMatch == true &&
+               isNewPasswordUniqueToOld == true) ? 'green' :
+                      ((isConfirmPasswordMatch == false ||
+                       isNewPasswordUniqueToOld == false) ? 'red' : '')) : ''"/>
+              <div *ngIf="isConfirmPasswordMatch == false && confirmPasswordValue != ''" class="text-danger">
+                {{t('error passwords match')}}
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 text-center">
+            <button class="btn btn-dark profile-button" type="submit">
+              {{t('change password')}}
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -76,9 +76,6 @@ export class RegistrationComponent implements OnInit {
     const username = this.registrationForm.get('username').value;
     const email = this.registrationForm.get('email').value;
     const password = this.registrationForm.get('password').value;
-
-    console.log(JSON.stringify(this.registrationForm.value, null, 2));
-
     this.authService.register(username,email,password).subscribe(data => {
       this.headerComponent.loggedInEvent.emit(true);
       this.headerComponent.login(data);
@@ -101,8 +98,6 @@ export class RegistrationComponent implements OnInit {
 
   onEmailChange(event) {
     this.isEmailValid = this.emailPattern.test(event.target.value);
-    console.log(this.isEmailValid);
-
     this.userService.isEmailAvailable('', event.target.value, '').subscribe(res => {
       this.isEmailAvailable = res;
     })
@@ -118,8 +113,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   onConfirmPasswordChange(event) {
-    console.log(event.target.value);
-    console.log(this.registrationForm.get('password').value);
     if(event.target.value == this.registrationForm.get('password').value){
       this.isConfirmPasswordMatch = true;
     } else {

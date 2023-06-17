@@ -31,7 +31,6 @@ export class UsersAdminComponent implements OnInit {
               private userService: UserServiceImpl,
               private sortDirectionUtil: SortDirectionUtil) {
     this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
-    console.log(this.pagination);
 
     this.getPage();
   }
@@ -43,8 +42,6 @@ export class UsersAdminComponent implements OnInit {
 
     if (this.pagination.pageSize != pageEvent.pageSize) {
       this.pagination.pageNumber = 0;
-      console.log("true");
-
     } else {
       this.pagination.pageNumber = pageEvent.pageIndex;
     }
@@ -58,9 +55,7 @@ export class UsersAdminComponent implements OnInit {
     this.userService.findAllWithPages(this.pagination).subscribe(users => {
       this.users = users.content;
       this.sortedData = users.content;
-      console.log(users);
       this.totalUsersFound = users.totalElements;
-      console.log(this.totalUsersFound);
     });
   }
 

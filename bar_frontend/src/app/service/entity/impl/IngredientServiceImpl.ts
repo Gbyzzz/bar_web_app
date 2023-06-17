@@ -30,7 +30,6 @@ export class IngredientServiceImpl implements IngredientService {
   }
 
   findAll(): Observable<any> {
-    console.log("find all");
     return this.HttpClient.get<Ingredient[]>(this.url+'/all');
   }
 

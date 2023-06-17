@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
+import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.ChangePasswordRequest;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
@@ -7,6 +8,8 @@ import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +21,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    //TODO check method's names
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
 
     public UserServiceImpl(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
@@ -86,4 +90,12 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userRepository.findUserByEmailIgnoreCase(email).orElseThrow();
     }
+
+    @Override
+    public ResponseEntity<?> changePassword(ChangePasswordRequest changePasswordRequest) {
+
+        return null;
+    }
+
+
 }

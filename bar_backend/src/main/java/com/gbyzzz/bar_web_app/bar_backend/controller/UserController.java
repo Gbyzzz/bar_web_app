@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.controller;
 
+import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.ChangePasswordRequest;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupRequest;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
@@ -11,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -69,4 +71,5 @@ public class UserController {
     public boolean isEmailAvailable(@RequestBody SignupRequest signupRequest) {
         return userService.isEmailAvailable(signupRequest.getEmail());
     }
+
 }
