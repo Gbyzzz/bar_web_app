@@ -1,8 +1,8 @@
 export class Code {
   email: String;
-  code: number;
+  code: String;
 
-  constructor(email?: String, code?: number) {
+  constructor(email?: String, code?: String) {
     this.email = email;
     this.code = code;
   }

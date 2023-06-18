@@ -40,4 +40,8 @@ export class AuthService {
   changePassword(passwordChange: PasswordChange): Observable<any> {
     return this.http.post<any>(AUTH_API + 'change_password', passwordChange);
   }
+
+  recoverPassword(email: String): Observable<any> {
+    return this.http.post<any>(AUTH_API + 'send_password_recover_email', email);
+  }
 }

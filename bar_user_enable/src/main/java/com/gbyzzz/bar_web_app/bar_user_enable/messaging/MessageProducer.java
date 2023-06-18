@@ -1,6 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_user_enable.messaging;
 
-import com.gbyzzz.bar_web_app.bar_user_enable.entity.Code;
+import com.gbyzzz.bar_web_app.bar_user_enable.messaging.entity.Message;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,8 @@ public class MessageProducer {
     private String emailRoutingkey;
 
 
-    public void sendToEmailService(Code code) {
-        rabbitTemplate.convertAndSend(exchange, emailRoutingkey, code);
+    public void sendToEmailService(Message message) {
+        rabbitTemplate.convertAndSend(exchange, emailRoutingkey, message);
     }
 
 }

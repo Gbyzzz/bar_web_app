@@ -8,12 +8,12 @@ public class Code {
 
     @Id
     private String email;
-    private Integer code;
+    private String code;
 
     public Code() {
     }
 
-    public Code(String email, Integer code) {
+    public Code(String email, String code) {
         this.email = email;
         this.code = code;
     }
@@ -26,11 +26,11 @@ public class Code {
         this.email = email;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -12,7 +12,7 @@ import {UserPageComponent} from "./view/main/user-page/user-page.component";
 import {EditCocktailDialogComponent} from "./view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
 import {ValidateComponent} from "./view/registration/validate/validate.component";
 import {EnabledGuard} from "./utils/enabled.guard";
-
+import {ChangePasswordDialogComponent} from "./view/dialog/change-password-dialog/change-password-dialog.component";
 const routes: Routes = [
   {path: '', component: MainComponent},
   {path: 'validate', component: ValidateComponent, canActivate: [AuthGuard, EnabledGuard],
@@ -27,6 +27,7 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'profile', component: UserPageComponent, canActivate: [AuthGuard, EnabledGuard],
     data: { roles: ["ROLE_ADMIN", "ROLE_BARTENDER", "ROLE_USER"], enabled: true}},
+  {path: 'recover_password', component: ChangePasswordDialogComponent},
   { path: '**', redirectTo: '' }
 ];
 

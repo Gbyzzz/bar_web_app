@@ -21,6 +21,8 @@
   "error password not unique": "Новый пароль совпадает со старым",
   "change password": "Изменить пароль",
   "sign in": "Войти",
+  "to sign in": "На страницу входа",
+  "send email": "Отправить email",
   "forgot password": "Забыл пароль",
   "not registered": "Не зарегистрированы?",
   "sign up here": "Зарегистрироваться здесь",

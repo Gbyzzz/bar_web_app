@@ -1,20 +1,21 @@
 package com.gbyzzz.bar_web_app.bar_email.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.Objects;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Code.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Code.class)
+@JsonTypeName("code")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = Code.class)
 public class Code {
-
     private String email;
-    private Integer code;
+    @JsonProperty("code")
+    private Object code;
 
     public Code() {
     }
 
-    public Code(String email, Integer code) {
+    public Code(String email, Object code) {
         this.email = email;
         this.code = code;
     }
@@ -27,11 +28,11 @@ public class Code {
         this.email = email;
     }
 
-    public Integer getCode() {
+    public Object getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(Object code) {
         this.code = code;
     }
 

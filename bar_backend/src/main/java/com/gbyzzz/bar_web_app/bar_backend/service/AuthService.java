@@ -15,4 +15,6 @@ public interface AuthService {
     boolean isPasswordValid(ChangePasswordRequest changePasswordRequest);
 
     boolean changePassword(ChangePasswordRequest changePasswordRequest);
+
+    void sendRecoverPasswordEmail(String email);
 }

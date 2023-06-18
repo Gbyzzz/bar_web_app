@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.messaging;
 
+import com.gbyzzz.bar_web_app.bar_backend.messaging.entity.Message;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,7 @@ public class MessageProducer {
     @Value("${gbyzzz.rabbitmq.output.routingkey}")
     private String routingkey;
 
-    public void generate(String email) {
-        rabbitTemplate.convertAndSend(exchange, routingkey, email);
+    public void generate(Message message) {
+        rabbitTemplate.convertAndSend(exchange, routingkey, message);
     }
-
 }

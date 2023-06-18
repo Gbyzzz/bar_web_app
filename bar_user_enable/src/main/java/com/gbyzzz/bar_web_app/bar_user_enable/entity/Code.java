@@ -1,21 +1,27 @@
 package com.gbyzzz.bar_web_app.bar_user_enable.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Objects;
 
 @RedisHash(timeToLive = 86400L, value = "Code")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Code.class)
+//@JsonTypeName("code")
+//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = Code.class)
 public class Code {
 
     @Id
     private String email;
-    private Integer code;
+    @JsonProperty("code")
+    private String code;
 
     public Code() {
     }
 
-    public Code(String email, Integer code) {
+    public Code(String email, String code) {
         this.email = email;
         this.code = code;
     }
@@ -28,11 +34,11 @@ public class Code {
         this.email = email;
     }
 
-    public Integer getCode() {
+    public Object getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

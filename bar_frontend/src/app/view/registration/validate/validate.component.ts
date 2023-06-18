@@ -156,8 +156,11 @@ export class ValidateComponent implements OnInit {
   #updateWiredValue() {
     setTimeout(() => this.onChange?.(this.inputs.value.join('')));
     if (this.isAllNumbers(this.inputs.value)) {
-      this.code.code = parseInt(this.inputs.getRawValue().join(''));
+      this.code.code = this.inputs.getRawValue().join('');
+      console.log(1);
       this.validateService.send(this.code).subscribe(valid => {
+        console.log(2);
+
         this.valid = valid;
         if (valid) {
           const user = this.tokenStorage.getUser();

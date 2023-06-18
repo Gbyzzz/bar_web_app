@@ -56,5 +56,10 @@ public class AuthController {
         return authService.isPasswordValid(changePasswordRequest);
     }
 
+    @PostMapping("/send_password_recover_email")
+    public void recoverPassword(@RequestBody String email) {
+        authService.sendRecoverPasswordEmail(email);
+    }
+
 }
 

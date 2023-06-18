@@ -6,6 +6,7 @@ import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.Code;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.JwtResponse;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.messaging.MessageProducer;
+import com.gbyzzz.bar_web_app.bar_backend.messaging.entity.Message;
 import com.gbyzzz.bar_web_app.bar_backend.security.jwt.JwtUtils;
 import com.gbyzzz.bar_web_app.bar_backend.security.services.UserDetailsImpl;
 import com.gbyzzz.bar_web_app.bar_backend.service.AuthService;
@@ -53,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
                 new Date(new java.util.Date().getTime()));
         userService.updateUser(user);
 
-        messageProducer.generate(user.getEmail());
+        messageProducer.generate(new Message(user.getEmail(), "generate"));
     }
 
     @Override
@@ -107,6 +108,11 @@ public class AuthServiceImpl implements AuthService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void sendRecoverPasswordEmail(String email) {
+        messageProducer.generate(new Message(email, "recover"));
     }
 
 }

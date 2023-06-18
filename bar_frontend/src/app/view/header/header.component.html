@@ -1,73 +1,124 @@
 <div *transloco="let t">
   <div class="offcanvas offcanvas-end" id="signin">
     <div class="offcanvas-header">
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" id="close_sign_in"></button>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+              id="close_sign_in"></button>
     </div>
     <div class="offcanvas-body">
 
-      <div>
-        <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-          {{t('username or email')}}:
-          <div>
-            <input class="form-control me-2" name="username" [(ngModel)]="form.username"
-                   required #username="ngModel" [placeholder]="t('username')" size="10">
-            <div
-              class="alert alert-danger"
-              role="alert"
-              *ngIf="username.errors && f.submitted">
-              {{t('username is required')}}
-            </div>
-          </div>
-          <br>
-          {{t('password')}}:
-          <div>
-            <input class="form-control me-2" type="password" name="pwd" [placeholder]="t('password')"
-                   [(ngModel)]="form.password" required minlength="6" #password="ngModel"/>
-            <div
-              class="alert alert-danger"
-              role="alert"
-              *ngIf="password.errors && f.submitted"
-            >
-              <div *ngIf="password.errors.required">
-                {{t('password is required')}}
-              </div>
-              <div *ngIf="password.errors.minlength">
-                {{t('password must be at least 6 characters')}}
+      <div class="tab-content">
+        <div #signInTab class="tab-pane in active">
+          <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            {{t('username or email')}}:
+            <div>
+              <input class="form-control me-2" name="username" [(ngModel)]="form.username"
+                     required #username="ngModel" [placeholder]="t('username')" size="10">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="username.errors && f.submitted">
+                {{t('username is required')}}
               </div>
             </div>
-          </div>
-          <br>
-          <div>
+            <br>
+            {{t('password')}}:
+            <div>
+              <input class="form-control me-2" type="password" name="pwd"
+                     [placeholder]="t('password')"
+                     [(ngModel)]="form.password" required minlength="6" #password="ngModel"/>
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="password.errors && f.submitted"
+              >
+                <div *ngIf="password.errors.required">
+                  {{t('password is required')}}
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  {{t('password must be at least 6 characters')}}
+                </div>
+              </div>
+            </div>
+            <br>
+            <div>
+              <p class="text-center">
+                <button class="btn btn-outline-dark me-2" name="command" value="sign_in"
+                        type="submit">
+                  {{t('sign in')}}
+                </button>
+                <button class="btn btn-outline-dark" type="button" (click)="changeTabToForgetPassword()">
+                  {{t('forgot password')}}
+                </button>
+              </p>
+            </div>
+            <div class="form-group">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="f.submitted && isLoginFailed">
+                {{t('login failed')}}: {{ errorMessage }}
+              </div>
+            </div>
+          </form>
+          <form>
             <p class="text-center">
-              <button class="btn btn-outline-dark me-2" name="command" value="sign_in"
-                      type="submit">
-                {{t('sign in')}}
-              </button>
-              <button class="btn btn-outline-dark" name="command" value="forgot" type="submit">
-                {{t('forgot password')}}
+              {{t('not registered')}}
+            </p>
+            <p class="text-center">
+              <button type="submit" class="btn btn-link btn-sm"
+                      [routerLink]="['/register']" data-bs-dismiss="offcanvas">
+                {{t('sign up here')}}
               </button>
             </p>
-          </div>
-          <div class="form-group">
-            <div
-              class="alert alert-danger"
-              role="alert"
-              *ngIf="f.submitted && isLoginFailed">
-              {{t('login failed')}}: {{ errorMessage }}
+          </form>
+        </div>
+
+        <div #recoverPasswordTab class="tab-pane fade">
+          <form (ngSubmit)="f.form.valid && onRecoverPassword()" #f="ngForm" novalidate>
+            {{t('email')}}:
+            <div>
+              <input class="form-control me-2" name="username" [(ngModel)]="form.username"
+                     required #username="ngModel" [placeholder]="t('email')" size="10">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="username.errors && f.submitted">
+                {{t('username is required')}}
+              </div>
             </div>
-          </div>
-        </form>
-        <form>
-          <p class="text-center">
-            {{t('not registered')}}
-          </p>
-          <p class="text-center">
-            <button type="submit" class="btn btn-link btn-sm"
-                    [routerLink]="['/register']" data-bs-dismiss="offcanvas">
-              {{t('sign up here')}}
-            </button>
-          </p>
-        </form>
+            <br>
+            <div>
+              <p class="text-center">
+                <button class="btn btn-outline-dark me-2" name="command" value="sign_in"
+                        type="button" (click)="toSignInTab()">
+                  {{t('to sign in')}}
+                </button>
+                <button class="btn btn-outline-dark" name="command" type="submit">
+                  {{t('send email')}}
+                </button>
+              </p>
+            </div>
+            <div class="form-group">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="f.submitted && isLoginFailed">
+                {{t('login failed')}}: {{ errorMessage }}
+              </div>
+            </div>
+          </form>
+          <form>
+            <p class="text-center">
+              {{t('not registered')}}
+            </p>
+            <p class="text-center">
+              <button type="submit" class="btn btn-link btn-sm"
+                      [routerLink]="['/register']" data-bs-dismiss="offcanvas">
+                {{t('sign up here')}}
+              </button>
+            </p>
+          </form>
+        </div>
       </div>
 
     </div>
@@ -90,7 +141,8 @@
     <div class="container-fluid">
       <input type="hidden" name="command" value="to_main"/>
       <a [routerLink]="['']" class="navbar-brand">BAR.com</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#mynavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mynavbar">
@@ -105,10 +157,12 @@
             <a href="#" class="nav-link" [routerLink]="['/contact']">{{t('contact')}}</a>
           </li>
         </ul>
-        <button type="button" *ngIf="role === 'ROLE_ADMIN'" class="btn btn-dark me-3" [routerLink]="['/admin']">
+        <button type="button" *ngIf="role === 'ROLE_ADMIN'" class="btn btn-dark me-3"
+                [routerLink]="['/admin']">
           {{t('admin')}}
         </button>
-        <button type="button" *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'" class="btn btn-dark me-3"
+        <button type="button" *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'"
+                class="btn btn-dark me-3"
                 [routerLink]="['/cocktails/add']">
           {{t('add cocktail')}}
         </button>

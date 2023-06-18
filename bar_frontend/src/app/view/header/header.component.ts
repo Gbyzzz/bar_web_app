@@ -1,6 +1,8 @@
-import {Component, EventEmitter, Injectable, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Injectable, OnInit, ViewChild} from '@angular/core';
 import {TranslocoService} from "@ngneat/transloco";
-import {EditCocktailDialogComponent} from "../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
+import {
+  EditCocktailDialogComponent
+} from "../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
 import {DialogAction} from "../dialog/DialogResult";
 import {Cocktail} from "../../model/Cocktail";
 import {MatDialog} from "@angular/material/dialog";
@@ -37,6 +39,12 @@ export class HeaderComponent implements OnInit {
     {code: 'ru', label: 'Русский'}
   ];
 
+  @ViewChild('signInTab', { static: false, read: ElementRef })
+  signInTab!: ElementRef<HTMLDivElement>;
+
+  @ViewChild('recoverPasswordTab', { static: false, read: ElementRef })
+  recoverPasswordInTab!: ElementRef<HTMLDivElement>;
+
   constructor(private dialog: MatDialog,
               private service: TranslocoService,
               private cocktailService: CocktailServiceImpl,
@@ -56,10 +64,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
-      if(this.isLoggedIn) {
+      if (this.isLoggedIn) {
         const button = document.getElementById('close_sign_in');
         button.click();
-      }    });
+      }
+    });
     this.sharedService.eventUsernameSubject.subscribe((username: string) => {
       this.targetUsername = username;
       // Perform any other necessary actions when userLoggedIn changes
@@ -111,6 +120,26 @@ export class HeaderComponent implements OnInit {
     this.reloadPage();
   }
 
+  changeTabToForgetPassword() {
+    this.signInTab.nativeElement.classList.remove('active');
+    this.signInTab.nativeElement.classList.add('fade');
+    this.recoverPasswordInTab.nativeElement.classList.remove('fade');
+    this.recoverPasswordInTab.nativeElement.classList.add('active');
+  }
+
+  toSignInTab(){
+    this.recoverPasswordInTab.nativeElement.classList.remove('active');
+    this.recoverPasswordInTab.nativeElement.classList.add('fade');
+    this.signInTab.nativeElement.classList.remove('fade');
+    this.signInTab.nativeElement.classList.add('active');
+  }
+
+  onRecoverPassword(){
+    console.log("recover");
+    console.log(this.form.username);
+
+    this.authService.recoverPassword(this.form.username).subscribe();
+  }
   reloadPage(): void {
     window.location.reload();
   }
