@@ -9,6 +9,15 @@ import Validation from "../../../utils/validation";
 import {PasswordChange} from "../../../model/registration/PasswordChange";
 import {AuthService} from "../../../service/auth/auth.service";
 import {delay} from "rxjs";
+import {Cocktail} from "../../../model/Cocktail";
+import {
+  EditCocktailDialogComponent
+} from "../../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
+import {DialogAction} from "../../dialog/DialogResult";
+import {MatDialog} from "@angular/material/dialog";
+import {
+  ChangePasswordDialogComponent
+} from "../../dialog/change-password-dialog/change-password-dialog.component";
 
 @Component({
   selector: 'app-userpage',
@@ -42,7 +51,8 @@ export class UserPageComponent implements OnInit {
   confirmPasswordValue: string = '';
   @ViewChild('closeAlertButton', { static: false, read: ElementRef })
   closeAlertButton!: ElementRef<HTMLButtonElement>;
-  constructor(private userService: UserServiceImpl,
+  constructor(private dialog: MatDialog,
+              private userService: UserServiceImpl,
               private authService: AuthService,
               private tokenStorage: TokenStorageService,
               private imageService: ImageServiceImpl,
@@ -108,8 +118,7 @@ export class UserPageComponent implements OnInit {
   }
 
   onSave() {
-
-    if (!this.userProfileForm.get('userImageFile').value.imageId) {
+    if (this.userProfileForm.get('userImageFile').value) {
       const formData = new FormData();
       formData.append('file', this.fileHolder, this.fileHolder.name);
       this.imageService.uploadImage(formData).subscribe(image => {
@@ -128,65 +137,25 @@ export class UserPageComponent implements OnInit {
     this.user.phone = this.newPhone;
     this.userService.update(this.user).subscribe(res => {});
   }
+  openChangePasswordDialog(){
 
-  onInputChange() {
-    this.newPasswordValue = this.changePasswordForm
-      .get('newPassword').value;
 
-    this.oldPasswordValue = this.changePasswordForm
-      .get('oldPassword').value;
+      const dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+        autoFocus: false
+      });
 
-    this.confirmPasswordValue = this.changePasswordForm
-      .get('confirmPassword').value;
+      dialogRef.afterClosed().subscribe(result => {
 
-    if(this.newPasswordValue.length >= 6 ) {
-      this.isPasswordValid = true;
-    } else {
-      this.isPasswordValid = false;
-    }
-    if(this.newPasswordValue != this.oldPasswordValue) {
-      this.isNewPasswordUniqueToOld = true
-    } else {
-      this.isNewPasswordUniqueToOld = false
-    }
+        if (!(result)) {
+          return;
+        }
 
-    if(this.confirmPasswordValue == this.newPasswordValue) {
-      this.isConfirmPasswordMatch = true;
-    } else {
-      this.isConfirmPasswordMatch = false;
-    }
-  }
-
-  onOldPasswordInputChange() {
-    console.log("oldPassChange")
-    console.log(this.oldPasswordValue);
-    this.onInputChange();
-    this.authService.checkPassword(
-      new PasswordChange(this.tokenStorage
-        .getUser().email, this.oldPasswordValue)).subscribe(res => {
-      this.isOldPasswordMatch = res;
-    });
-  }
-
-  delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  onSubmitChangePassword(): void {
-    console.log("change pass");
-    this.authService.changePassword(new PasswordChange(this.tokenStorage
-      .getUser().email, this.oldPasswordValue, this.newPasswordValue))
-      .subscribe(res => {
-        if(res){
-          this.isPasswordChanged = res;
-          const button = document.getElementById('close_modal');
-          button.click();
-          const buttonAlert = document.getElementById('close_alert');
-          console.log("1");
-          setTimeout(()=>{this.closeAlertButton.nativeElement.click()}, 5000);
-          console.log("2");
-          console.log(buttonAlert);
-          console.log(buttonAlert);
+        if (result.action === DialogAction.SAVE) {
+          this.isPasswordChanged = true;
+          setTimeout(() => {
+            this.closeAlertButton.nativeElement.click()
+          }, 5000);
+          return;
         }
       });
   }

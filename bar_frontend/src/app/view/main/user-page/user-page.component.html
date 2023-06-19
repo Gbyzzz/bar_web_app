@@ -1,6 +1,9 @@
 <div *ngIf="isPasswordChanged" class="alert alert-success alert-dismissible">
-  <button #closeAlertButton id="close_alert" type="button" class="btn-close" data-bs-dismiss="alert"></button>
-  <strong>Success!</strong> This alert box could indicate a successful or positive action.
+  <div *transloco="let t">
+    <button #closeAlertButton id="close_alert" type="button" class="btn-close"
+            data-bs-dismiss="alert"></button>
+    <strong>{{t('success')}}</strong> {{t('your password has been changed')}}
+  </div>
 </div>
 
 <form [formGroup]="userProfileForm" *transloco="let t">
@@ -32,7 +35,7 @@
         </div>
         <div class="text-center">
           <button class="btn btn-dark  profile-button" data-bs-toggle="modal"
-                  data-bs-target="#myModal">
+                  (click)="openChangePasswordDialog()" data-bs-target="#myModal">
             {{t('change password')}}
           </button>
         </div>
@@ -73,7 +76,8 @@
             </div>
           </div>
           <div class="mt-5 text-center">
-            <button class="btn btn-dark profile-button" type="submit">
+            <button class="btn btn-dark profile-button" type="submit"
+                    (click)="onSave()">
               {{t('save')}}
             </button>
           </div>
@@ -85,79 +89,79 @@
   </div>
 </form>
 
-<div class="modal" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+<!--<div class="modal" id="myModal">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
 
-      <!-- Modal Header -->
-      <div class="modal-header" *transloco="let t">
-        <h4 class="modal-title text-center"> {{t('change password')}}</h4>
-        <button id ="close_modal" type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+<!--      &lt;!&ndash; Modal Header &ndash;&gt;-->
+<!--      <div class="modal-header" *transloco="let t">-->
+<!--        <h4 class="modal-title text-center"> {{t('change password')}}</h4>-->
+<!--        <button id ="close_modal" type="button" class="btn-close" data-bs-dismiss="modal"></button>-->
+<!--      </div>-->
 
-      <!-- Modal body -->
-      <div class="modal-body" *transloco="let t">
-        <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitChangePassword()">
+<!--      &lt;!&ndash; Modal body &ndash;&gt;-->
+<!--      <div class="modal-body" *transloco="let t">-->
+<!--        <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitChangePassword()">-->
 
 
-          <div class="form-outline mt-2">
-            <label>{{t('old password')}}</label>
-            <input
-              type="password"
-              formControlName="oldPassword"
-              class="form-control form-control-lg"
-              [style.border-color]="oldPasswordValue != '' ?
-               (isOldPasswordMatch == true ? 'green' : 'red') : ''"
-              (change)="onOldPasswordInputChange()"/>
-            <div *ngIf="isOldPasswordMatch == false" class="text-danger">
-              {{t('old password not right')}}
-            </div>
-          </div>
+<!--          <div class="form-outline mt-2">-->
+<!--            <label>{{t('old password')}}</label>-->
+<!--            <input-->
+<!--              type="password"-->
+<!--              formControlName="oldPassword"-->
+<!--              class="form-control form-control-lg"-->
+<!--              [style.border-color]="oldPasswordValue != '' ?-->
+<!--               (isOldPasswordMatch == true ? 'green' : 'red') : ''"-->
+<!--              (change)="onOldPasswordInputChange()"/>-->
+<!--            <div *ngIf="isOldPasswordMatch == false" class="text-danger">-->
+<!--              {{t('old password not right')}}-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="form-outline mt-2">
-            <label>{{t('new password')}}</label>
-            <input type="password"
-                   formControlName="newPassword"
-                   class="form-control form-control-lg"
-                   (change)="onInputChange()"
-                   [style.border-color]="newPasswordValue != '' ? ((isPasswordValid == true &&
-               isNewPasswordUniqueToOld == true) ? 'green' :
-                      ((isPasswordValid == false ||
-                       isNewPasswordUniqueToOld == false) ? 'red' : '')):''"/>
-            <div *ngIf="isPasswordValid == false && newPasswordValue != ''" class="text-danger">
-              {{t('error password valid')}}
-            </div>
-            <div *ngIf="isNewPasswordUniqueToOld == false && newPasswordValue != ''" class="text-danger">
-            {{t('error password not unique')}}
-          </div>
-          </div>
+<!--          <div class="form-outline mt-2">-->
+<!--            <label>{{t('new password')}}</label>-->
+<!--            <input type="password"-->
+<!--                   formControlName="newPassword"-->
+<!--                   class="form-control form-control-lg"-->
+<!--                   (change)="onInputChange()"-->
+<!--                   [style.border-color]="newPasswordValue != '' ? ((isPasswordValid == true &&-->
+<!--               isNewPasswordUniqueToOld == true) ? 'green' :-->
+<!--                      ((isPasswordValid == false ||-->
+<!--                       isNewPasswordUniqueToOld == false) ? 'red' : '')):''"/>-->
+<!--            <div *ngIf="isPasswordValid == false && newPasswordValue != ''" class="text-danger">-->
+<!--              {{t('error password valid')}}-->
+<!--            </div>-->
+<!--            <div *ngIf="isNewPasswordUniqueToOld == false && newPasswordValue != ''" class="text-danger">-->
+<!--            {{t('error password not unique')}}-->
+<!--          </div>-->
+<!--          </div>-->
 
-          <div class="form-outline mt-2">
-            <div class="form-outline">
-              <label>{{t('confirm password')}}</label>
-              <input
-                type="password"
-                formControlName="confirmPassword"
-                class="form-control form-control-lg"
-                (change)="onInputChange()"
-                [style.border-color]="confirmPasswordValue != '' ? ((isConfirmPasswordMatch == true &&
-               isNewPasswordUniqueToOld == true) ? 'green' :
-                      ((isConfirmPasswordMatch == false ||
-                       isNewPasswordUniqueToOld == false) ? 'red' : '')) : ''"/>
-              <div *ngIf="isConfirmPasswordMatch == false && confirmPasswordValue != ''" class="text-danger">
-                {{t('error passwords match')}}
-              </div>
-            </div>
-          </div>
+<!--          <div class="form-outline mt-2">-->
+<!--            <div class="form-outline">-->
+<!--              <label>{{t('confirm password')}}</label>-->
+<!--              <input-->
+<!--                type="password"-->
+<!--                formControlName="confirmPassword"-->
+<!--                class="form-control form-control-lg"-->
+<!--                (change)="onInputChange()"-->
+<!--                [style.border-color]="confirmPasswordValue != '' ? ((isConfirmPasswordMatch == true &&-->
+<!--               isNewPasswordUniqueToOld == true) ? 'green' :-->
+<!--                      ((isConfirmPasswordMatch == false ||-->
+<!--                       isNewPasswordUniqueToOld == false) ? 'red' : '')) : ''"/>-->
+<!--              <div *ngIf="isConfirmPasswordMatch == false && confirmPasswordValue != ''" class="text-danger">-->
+<!--                {{t('error passwords match')}}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="mt-2 text-center">
-            <button class="btn btn-dark profile-button" type="submit">
-              {{t('change password')}}
-            </button>
-          </div>
-        </form>
-      </div>
+<!--          <div class="mt-2 text-center">-->
+<!--            <button class="btn btn-dark profile-button" type="submit">-->
+<!--              {{t('change password')}}-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
 
-    </div>
-  </div>
-</div>
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

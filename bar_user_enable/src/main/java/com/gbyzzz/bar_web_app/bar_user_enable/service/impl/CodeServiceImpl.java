@@ -76,9 +76,17 @@ public class CodeServiceImpl implements CodeService {
 
         String pass = codeBuilder.toString();
 //        String pass = pwdGenerator.generate(15);
-        Code code = new Code(email, pass);
+        Code code = new Code(pass, email);
         codeRepository.save(code);
+        code.setCode(pass);
+        code.setEmail(email);
         return new Message(code, "recover");
+    }
+
+    @Override
+    public String getEmailFromCode(String code) {
+        Code codeFromDb = codeRepository.findById(code).orElseThrow();
+        return (String) codeFromDb.getCode();
     }
 
     private Integer generateCode(){

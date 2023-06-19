@@ -10,4 +10,6 @@ public interface CodeService {
     Integer getCode(String a);
 
     Message addRecoverCode(String email);
+
+    String getEmailFromCode(String code);
 }

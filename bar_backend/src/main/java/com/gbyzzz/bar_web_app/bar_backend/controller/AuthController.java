@@ -50,6 +50,12 @@ public class AuthController {
         return authService.changePassword(changePasswordRequest);
     }
 
+    @PostMapping("/recover_password")
+    public boolean recoverPassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest)
+            throws Exception {
+        return authService.changePassword(changePasswordRequest);
+    }
+
     @PostMapping("/check_password")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     public boolean checkOldPassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
@@ -57,8 +63,8 @@ public class AuthController {
     }
 
     @PostMapping("/send_password_recover_email")
-    public void recoverPassword(@RequestBody String email) {
-        authService.sendRecoverPasswordEmail(email);
+    public boolean recoverPassword(@RequestBody String email) {
+       return authService.sendRecoverPasswordEmail(email);
     }
 
 }

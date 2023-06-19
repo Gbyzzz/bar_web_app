@@ -41,7 +41,12 @@ export class AuthService {
     return this.http.post<any>(AUTH_API + 'change_password', passwordChange);
   }
 
-  recoverPassword(email: String): Observable<any> {
+  sendRecoverPasswordEmail(email: String): Observable<any> {
     return this.http.post<any>(AUTH_API + 'send_password_recover_email', email);
   }
+
+  recoverPassword(passwordChange: PasswordChange): Observable<any> {
+    return this.http.post<any>(AUTH_API + 'recover_password', passwordChange);
+  }
+
 }

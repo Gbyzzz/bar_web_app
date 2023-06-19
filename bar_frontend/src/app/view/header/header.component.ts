@@ -22,15 +22,19 @@ export class HeaderComponent implements OnInit {
 
   loggedInEvent = new EventEmitter<boolean>();
 
-  form: any = {
+  signInForm: any = {
     username: null,
     password: null
+  };
+  recoverPasswordForm: any = {
+    email: null
   };
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   role: Role;
   targetUsername: string = '';
+  isEmailFound: boolean = undefined;
 
   cocktail: Cocktail = new Cocktail();
   siteLanguage = 'English';
@@ -82,7 +86,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const {username, password} = this.form;
+    const {username, password} = this.signInForm;
 
     this.authService.login(username, password).subscribe(
       data => {
@@ -136,9 +140,18 @@ export class HeaderComponent implements OnInit {
 
   onRecoverPassword(){
     console.log("recover");
-    console.log(this.form.username);
+    console.log(this.recoverPasswordForm.email);
 
-    this.authService.recoverPassword(this.form.username).subscribe();
+    this.authService.sendRecoverPasswordEmail(this.recoverPasswordForm.email).subscribe(res =>
+    {
+      console.log(res);
+      this.isEmailFound = res;
+      if(this.isEmailFound) {
+        const button = document.getElementById('close_sign_in');
+        button.click();
+      }
+
+    });
   }
   reloadPage(): void {
     window.location.reload();

@@ -77,9 +77,9 @@ public class AuthServiceImpl implements AuthService {
                 urlToValidate, code, Boolean.class);
         boolean valid = false;
 
-        if(response.hasBody()){
+        if (response.hasBody()) {
             valid = response.getBody();
-            if(valid){
+            if (valid) {
                 User user = userService.findByEmail(code.getEmail());
                 user.setEnabled(true);
                 userService.updateUser(user);
@@ -89,6 +89,7 @@ public class AuthServiceImpl implements AuthService {
 
         return valid;
     }
+
     @Override
     public boolean isPasswordValid(ChangePasswordRequest changePasswordRequest) {
         return encoder.matches(changePasswordRequest.getOldPassword(),
@@ -98,21 +99,36 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean changePassword(ChangePasswordRequest changePasswordRequest) {
-        if(!isPasswordValid(changePasswordRequest)){
-            return false;
-        }
+        User user;
+        boolean valid = false;
+        if(changePasswordRequest.getEmail().equals("")) {
 
-        User user = userService.findByEmail(changePasswordRequest.getEmail());
-        user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
-        if(userService.updateUser(user) != null){
-            return true;
+            ResponseEntity<String> response = new RestTemplate().postForEntity(
+                        urlToValidate + "/pass", changePasswordRequest.getOldPassword(), String.class);
+            valid = response.hasBody();
+
+            if (valid) {
+                user = userService.findByEmail(response.getBody());
+                user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
+                userService.updateUser(user);
+            }
+        } else {
+            if (!isPasswordValid(changePasswordRequest)) {
+                return false;
+            }
+            user = userService.findByEmail(changePasswordRequest.getEmail());
+            user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
+            valid = userService.updateUser(user) != null;
         }
-        return false;
+        return valid;
     }
 
-    @Override
-    public void sendRecoverPasswordEmail(String email) {
-        messageProducer.generate(new Message(email, "recover"));
+        @Override
+        public boolean sendRecoverPasswordEmail (String email) {
+            if(!userService.isEmailAvailable(email)) {
+                messageProducer.generate(new Message(email, "recover"));
+                return true;
+            }
+           return false;
+        }
     }
-
-}

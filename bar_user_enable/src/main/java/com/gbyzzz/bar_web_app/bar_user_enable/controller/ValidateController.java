@@ -22,4 +22,8 @@ public class ValidateController {
     boolean validateEmail(@RequestBody Code code){
         return codeService.validateCode(code);
     }
+    @PostMapping("/validate/pass")
+    String getEmailFromCode(@RequestBody String code){
+        return codeService.getEmailFromCode(code);
+    }
 }
