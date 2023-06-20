@@ -132,6 +132,8 @@ spec:
           env:
             - name: SPRING_RABBITMQ_HOST
               value: "bar-rabbitmq"
+            - name: GBYZZZ_RECOVER_URL
+              value: "http://localhost:7777/recover_password"
 
 ---
 

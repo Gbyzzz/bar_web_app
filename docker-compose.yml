@@ -78,6 +78,7 @@ services:
     working_dir: /app
     environment:
       - SPRING_RABBITMQ_HOST=bar_rabbitmq
+      - GBYZZZ_RECOVER_URL=http://localhost:7777/recover_password
 
 volumes:
   postgres-data:
