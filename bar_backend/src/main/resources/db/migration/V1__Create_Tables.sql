@@ -48,7 +48,7 @@ CREATE TABLE cocktails
 CREATE TABLE ingredients
 (
     ingredient_id                 bigserial PRIMARY KEY,
-    ingredient_name               varchar(50) DEFAULT NULL UNIQUE,
+    ingredient_name               varchar(50) NOT NULL UNIQUE,
     ingredient_alcohol_percentage smallint NOT NULL,
     unit_of_measurement           varchar(15)
 );

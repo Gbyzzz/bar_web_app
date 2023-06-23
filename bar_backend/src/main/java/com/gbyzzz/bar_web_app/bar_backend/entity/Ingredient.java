@@ -12,15 +12,15 @@ public class Ingredient {
     private Long ingredientId;
 
     @Basic
-    @Column(name = "ingredient_name")
+    @Column(name = "ingredient_name", length = 50, unique = true, nullable = false)
     private String ingredientName;
 
     @Basic
-    @Column(name = "ingredient_alcohol_percentage")
+    @Column(name = "ingredient_alcohol_percentage", nullable = false)
     private int ingredientAlcohol;
 
     @Basic
-    @Column(name = "unit_of_measurement")
+    @Column(name = "unit_of_measurement", length = 15)
     private String unitOfMeasurement;
 
     public Ingredient() {

@@ -24,7 +24,7 @@ import java.util.Optional;
 public class CocktailServiceImpl implements CocktailService {
 
 
-    private CocktailRepository cocktailRepository;
+    private final CocktailRepository cocktailRepository;
 
     public CocktailServiceImpl(CocktailRepository cocktailRepository) {
         this.cocktailRepository = cocktailRepository;

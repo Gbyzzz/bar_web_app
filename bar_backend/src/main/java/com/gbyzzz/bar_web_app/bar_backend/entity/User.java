@@ -17,27 +17,27 @@ public class User {
     private Long userId;
 
     @Basic
-    @Column(name = "username")
+    @Column(name = "username", length = 30, unique = true, nullable = false)
     private String username;
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "password", length = 100, nullable = false)
     private String password;
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", length = 15)
     private String name;
 
     @Basic
-    @Column(name = "surname")
+    @Column(name = "surname", length = 30)
     private String surname;
 
     @Basic
-    @Column(name = "phone")
+    @Column(name = "phone", length = 15, unique = true)
     private String phone;
 
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", length = 256, unique = true, nullable = false)
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -45,17 +45,17 @@ public class User {
     private Image userPic;
 
     @Basic
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     @Type(PGUserRoleType.class)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Basic
-    @Column(name = "enabled")
+    @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
     @Basic
-    @Column(name = "reg_date")
+    @Column(name = "reg_date", nullable = false)
     private Date regDate;
 
     public User() {

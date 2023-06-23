@@ -18,15 +18,15 @@ public class Vote {
     private Long voteId;
 
     @ManyToOne(cascade = {CascadeType.REFRESH})
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(cascade = {CascadeType.REFRESH})
-    @JoinColumn(name = "cocktail_id")
+    @JoinColumn(name = "cocktail_id", nullable = false)
     private Cocktail cocktail;
 
     @Basic
-    @Column(name = "vote_value")
+    @Column(name = "vote_value", nullable = false)
     private int voteValue;
 
     public Vote() {

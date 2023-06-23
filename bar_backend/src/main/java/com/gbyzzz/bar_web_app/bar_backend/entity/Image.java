@@ -20,24 +20,24 @@ public class Image {
     private Long imageId;
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", length = 45, nullable = false)
     private String name;
 
     @Basic
-    @Column(name = "filename")
+    @Column(name = "filename", length = 45, nullable = false)
     private String filename;
 
     @Basic
-    @Column(name = "content_type")
+    @Column(name = "content_type", length = 45, nullable = false)
     private String contentType;
 
     @Basic
-    @Column(name = "size")
+    @Column(name = "size", nullable = false)
     private Long size;
 
     @Lob
     @Type(PGByteArrayType.class)
-    @Column(name = "bytes")
+    @Column(name = "bytes", nullable = false)
     private byte[] bytes;
 
     public Image() {

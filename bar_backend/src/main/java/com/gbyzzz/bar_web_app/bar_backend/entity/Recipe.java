@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "recipes")
+@Table(name = "recipes",
+        uniqueConstraints=
+        @UniqueConstraint(
+                columnNames={"cocktail_id", "ingredient_id"}))
 public class Recipe {
 
     @Id
@@ -14,11 +17,11 @@ public class Recipe {
 
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "cocktail_id")
+    @JoinColumn(name = "cocktail_id", nullable = false)
     private Cocktail cocktail;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "ingredient_id")
+    @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;
 
     @Basic

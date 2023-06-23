@@ -1,7 +1,10 @@
 package com.gbyzzz.bar_web_app.bar_backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Formula;
+
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,19 +17,19 @@ public class Cocktail {
     private Long cocktailId;
 
     @Basic
-    @Column(name = "cocktail_name")
+    @Column(name = "cocktail_name", length = 50, unique = true, nullable = false)
     private String cocktailName;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "cocktail_author")
+    @JoinColumn(name = "cocktail_author", nullable = false)
     private User cocktailAuthor;
 
     @Basic
-    @Column(name = "cocktail_rating")
+    @Column(name = "cocktail_rating", nullable = false)
     private float cocktailRating;
 
     @Basic
-    @Column(name = "publication_date")
+    @Column(name = "publication_date", nullable = false)
     private Date publicationDate;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
@@ -34,17 +37,20 @@ public class Cocktail {
     private Image cocktailImage;
 
     @Basic
-    @Column(name = "cocktail_recipe")
+    @Column(name = "cocktail_recipe", nullable = false)
     private String cocktailRecipe;
 
     @Basic
-    @Column(name = "approx_alcohol_percentage")
+    @Column(name = "approx_alcohol_percentage", nullable = false)
     private int approxAlcoholPercentage;
+
 
     public Cocktail() {
     }
 
-    public Cocktail(Long cocktailId, String cocktailName, User cocktailAuthor,
+
+
+        public Cocktail(Long cocktailId, String cocktailName, User cocktailAuthor,
                     float cocktailRating, Date publicationDate, Image cocktailImage,
                     String cocktailRecipe, int approxAlcoholPercentage) {
         this.cocktailId = cocktailId;
