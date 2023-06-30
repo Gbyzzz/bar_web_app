@@ -1,8 +1,9 @@
 package com.gbyzzz.bar_web_app.bar_backend.service;
 
+import com.gbyzzz.bar_web_app.bar_backend.dto.CocktailDTO;
+import com.gbyzzz.bar_web_app.bar_backend.dto.CocktailRecipeDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.RestPage;
-import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 
 import java.util.List;
 
@@ -10,13 +11,15 @@ import java.util.List;
  * @author Anton Pinchuk
  */
 public interface CocktailService {
-    List<Cocktail> findAll();
+    List<CocktailDTO> findAll();
 
-    Cocktail findById(long id) throws Exception;
+    CocktailRecipeDTO findById(long id) throws Exception;
 
-    Cocktail addOrUpdate(Cocktail cocktail);
+    CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktail);
 
     RestPage findAllWithPages(Pagination pagination);
 
-    List<Cocktail> findForMainPage();
+    List<CocktailDTO> findForMainPage();
+
+    RestPage findAllWithPagesAdmin(Pagination pagination);
 }

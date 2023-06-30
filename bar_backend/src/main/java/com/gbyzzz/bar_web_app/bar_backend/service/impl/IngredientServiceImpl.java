@@ -1,5 +1,7 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
+import com.gbyzzz.bar_web_app.bar_backend.dto.IngredientDTO;
+import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.IngredientDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Ingredient;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.IngredientRepository;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Anton Pinchuk
@@ -18,20 +21,23 @@ import java.util.List;
 @Service
 public class IngredientServiceImpl implements IngredientService {
 
-    private IngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
+
+    private final IngredientDTOMapper mapper = IngredientDTOMapper.INSTANCE;
 
     public IngredientServiceImpl(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
     }
 
     @Override
-    public List<Ingredient> findAll() {
-        return ingredientRepository.findAll();
+    public List<IngredientDTO> findAll() {
+        return ingredientRepository.findAll().stream()
+                .map(mapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Ingredient addOrUpdate(Ingredient ingredient) {
-        return ingredientRepository.save(ingredient);
+    public IngredientDTO addOrUpdate(Ingredient ingredient) {
+        return mapper.toDTO(ingredientRepository.save(ingredient));
     }
 
     @Override

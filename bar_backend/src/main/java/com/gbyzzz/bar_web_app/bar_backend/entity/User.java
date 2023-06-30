@@ -21,7 +21,7 @@ public class User {
     private String username;
 
     @Basic
-    @Column(name = "password", length = 100, nullable = false)
+    @Column(name = "password", length = 100)
     private String password;
 
     @Basic
@@ -76,6 +76,21 @@ public class User {
         this.enabled = enabled;
         this.regDate = regDate;
     }
+    public User(Long userId, String username, String name,
+                String surname, String phone, String email, Image userPic,
+                Role role, boolean enabled, Date regDate) {
+        this.userId = userId;
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.email = email;
+        this.userPic = userPic;
+        this.role = role;
+        this.enabled = enabled;
+        this.regDate = regDate;
+    }
+
 
     public Long getUserId() {
         return userId;

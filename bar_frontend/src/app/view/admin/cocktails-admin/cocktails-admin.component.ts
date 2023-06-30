@@ -10,6 +10,7 @@ import {Pagination, SortDirection, SortDirectionUtil} from "../../../model/pagin
 import {PageEvent} from "@angular/material/paginator";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 import {Recipe} from "../../../model/Recipe";
+import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
 
 @Component({
   selector: 'app-cocktails-admin',
@@ -22,9 +23,9 @@ export class CocktailsAdminComponent implements OnInit {
   readonly defaultPageNumber = 0;
   readonly defaultSortDirection = SortDirection.DESC;
 
-  cocktails: Cocktail[];
-  sortedData: Cocktail[];
-  recipes: Recipe[];
+  cocktails: CocktailRecipeDTO[];
+  sortedData: CocktailRecipeDTO[];
+  // recipes: Recipe[];
   pagination: Pagination;
   totalCocktailsFound: number;
 
@@ -40,8 +41,8 @@ export class CocktailsAdminComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateCocktail(cocktail: Cocktail){
-    this.cocktailService.update(cocktail).subscribe();
+  updateCocktail(cocktail: CocktailRecipeDTO){
+    this.cocktailService.updateCocktail(cocktail).subscribe();
   }
 
   sortData(sort: Sort) {
@@ -67,17 +68,17 @@ export class CocktailsAdminComponent implements OnInit {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
           case 'cocktailId':
-            return compare(a.cocktailId, b.cocktailId, isAsc);
+            return compare(a.cocktailDTO.cocktailId, b.cocktailDTO.cocktailId, isAsc);
           case 'cocktailName':
-            return compare(a.cocktailName, b.cocktailName, isAsc);
+            return compare(a.cocktailDTO.cocktailName, b.cocktailDTO.cocktailName, isAsc);
           case 'cocktailAuthor':
-            return compare(a.cocktailAuthor.username, b.cocktailAuthor.username, isAsc);
+            return compare(a.cocktailDTO.cocktailAuthor.username, b.cocktailDTO.cocktailAuthor.username, isAsc);
           case 'cocktailRating':
-            return compare(a.cocktailRating, b.cocktailRating, isAsc);
+            return compare(a.cocktailDTO.cocktailRating, b.cocktailDTO.cocktailRating, isAsc);
           case 'publicationDate':
-            return compare(a.publicationDate, b.publicationDate, isAsc);
+            return compare(a.cocktailDTO.publicationDate, b.cocktailDTO.publicationDate, isAsc);
           case 'approxAlcoholPercentage':
-            return compare(a.approxAlcoholPercentage, b.approxAlcoholPercentage, isAsc);
+            return compare(a.cocktailDTO.approxAlcoholPercentage, b.cocktailDTO.approxAlcoholPercentage, isAsc);
           default:
             return 0;
         }
@@ -100,18 +101,18 @@ export class CocktailsAdminComponent implements OnInit {
   }
 
   getPage() {
-    this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
+    this.cocktailService.findAllWithPagesAndRecipes(this.pagination).subscribe(cocktails =>{
       this.cocktails = cocktails.content;
       this.sortedData = cocktails.content;
       this.totalCocktailsFound = cocktails.totalElements;
-      this.recipeService.findAllByCocktails(this.sortedData).subscribe(res => {
-        this.recipes = res;
-      });
+      // this.recipeService.findAllByCocktails(this.sortedData).subscribe(res => {
+      //   this.recipes = res;
+      // });
 
     });
   }
 
-  openEditDialog(cocktail: Cocktail): void {
+  openEditDialog(cocktail: CocktailRecipeDTO): void {
 
 
     const dialogRef = this.dialog.open(EditCocktailDialogComponent, {

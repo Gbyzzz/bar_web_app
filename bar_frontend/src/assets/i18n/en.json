@@ -22,6 +22,7 @@
   "password": "Password",
   "new password": "New password",
   "old password": "Old password",
+  "duplicated ingredients": "There is duplicated ingredients, please check again",
   "old password not right": "Wrong old password",
   "error password not unique": "New password is the same as old one",
   "change password": "Change password",

@@ -1,6 +1,7 @@
 package com.gbyzzz.bar_web_app.bar_backend.service;
 
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.ChangePasswordRequest;
+import com.gbyzzz.bar_web_app.bar_backend.dto.UserDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import org.springframework.data.domain.Page;
@@ -14,17 +15,19 @@ import java.util.Optional;
  */
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDTO> findAll();
 
-    User getUserById(long id) throws Exception;
+    UserDTO getUserById(long id) throws Exception;
 
-    User updateUser(User user);
+    UserDTO addUser(User user);
+
+    UserDTO updateUser(User user);
 
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
 
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username);
 
     boolean isUsernameAvailable(String username);
 
@@ -33,7 +36,4 @@ public interface UserService {
     Page findAllWithPages(Pagination pagination);
 
     User findByEmail(String email);
-
-    ResponseEntity<?> changePassword(ChangePasswordRequest changePasswordRequest);
-
 }

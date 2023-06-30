@@ -22,7 +22,7 @@ class RecipeServiceImplTest extends BarSpringApplicationTests {
     @ParameterizedTest
     @MethodSource("com.gbyzzz.bar_web_app.bar_backend.Source#provideRecipesByCocktail")
     void findRecipesByCocktail(List<Recipe> expected, Cocktail cocktail) {
-        assertEquals(expected, recipeService.findRecipesByCocktail(cocktail));
+        assertEquals(expected, recipeService.findRecipesByCocktailId(cocktail));
     }
 
     @ParameterizedTest

@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.controller;
 
+import com.gbyzzz.bar_web_app.bar_backend.dto.IngredientDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Ingredient;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
@@ -26,28 +27,27 @@ public class IngredientController {
     }
 
     @GetMapping("/all")
-    List<Ingredient> getIngredients(){
+    List<IngredientDTO> getIngredients(){
         System.out.println("all ingredients");
         return ingredientService.findAll();
     }
 
     @PostMapping("/all_pages")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Page<User>> getAllWithPages(@RequestBody Pagination pagination) {
-        Page result = ingredientService.findAllWithPages(pagination);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<Page<IngredientDTO>> getAllWithPages(@RequestBody Pagination pagination) {
+        return ResponseEntity.ok(ingredientService.findAllWithPages(pagination));
     }
 
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    Ingredient updateIngredient(@RequestBody Ingredient ingredient){
+    IngredientDTO updateIngredient(@RequestBody Ingredient ingredient){
         System.out.println("update ingredient");
         return ingredientService.addOrUpdate(ingredient);
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    Ingredient addIngredient(@RequestBody Ingredient ingredient){
+    IngredientDTO addIngredient(@RequestBody Ingredient ingredient){
         System.out.println("add ingredient");
         return ingredientService.addOrUpdate(ingredient);
     }

@@ -34,5 +34,13 @@ export class User {
     this.enabled = enabled;
     this.regDate = regDate;
   }
+
+  // toJSON(): any {
+  //   const { userId, ...rest } = this;
+  //   return {
+  //     '@class': 'com.gbyzzz.bar_web_app.bar_backend.dto.UserDTO',
+  //     ...rest
+  //   };
+  // }
 }
 

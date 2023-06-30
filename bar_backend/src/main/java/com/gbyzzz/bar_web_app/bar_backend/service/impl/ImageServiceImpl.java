@@ -11,7 +11,7 @@ import java.io.IOException;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
 
     public ImageServiceImpl(ImageRepository imageRepository) {

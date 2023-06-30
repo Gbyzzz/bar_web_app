@@ -24,8 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if(username.contains("@")){
 			user = userService.findByEmail(username);
 		} else {
-			user = userService.findByUsername(username)
-					.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+			user = userService.findByUsername(username);
 		}
 		return UserDetailsImpl.build(user);
 	}

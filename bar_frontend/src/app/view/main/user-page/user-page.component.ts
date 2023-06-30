@@ -6,13 +6,7 @@ import {Image} from "../../../model/Image";
 import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import Validation from "../../../utils/validation";
-import {PasswordChange} from "../../../model/registration/PasswordChange";
 import {AuthService} from "../../../service/auth/auth.service";
-import {delay} from "rxjs";
-import {Cocktail} from "../../../model/Cocktail";
-import {
-  EditCocktailDialogComponent
-} from "../../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
 import {DialogAction} from "../../dialog/DialogResult";
 import {MatDialog} from "@angular/material/dialog";
 import {
@@ -41,14 +35,7 @@ export class UserPageComponent implements OnInit {
   newUserImage: Image;
   userProfileForm: UntypedFormGroup;
   fileHolder: File | null;
-  isPasswordValid: boolean;
-  isOldPasswordMatch: boolean;
-  isConfirmPasswordMatch: boolean;
-  isNewPasswordUniqueToOld: boolean;
   isPasswordChanged: boolean;
-  oldPasswordValue: string = '';
-  newPasswordValue: string = '';
-  confirmPasswordValue: string = '';
   @ViewChild('closeAlertButton', { static: false, read: ElementRef })
   closeAlertButton!: ElementRef<HTMLButtonElement>;
   constructor(private dialog: MatDialog,
@@ -90,7 +77,9 @@ export class UserPageComponent implements OnInit {
     });
 
     this.role = tokenStorage.getUser().role;
+    console.log(tokenStorage.getUser());
     userService.findById(tokenStorage.getUser().userId).subscribe(user => {
+      console.log(user);
       this.user = user;
       this.newName = user.name;
       this.username = user.username;
@@ -132,6 +121,9 @@ export class UserPageComponent implements OnInit {
   }
 
   updateUserValues(){
+    // console.log(this.newName);
+    console.log(this.user.name);
+
     this.user.name = this.newName;
     this.user.surname = this.newSurname;
     this.user.phone = this.newPhone;
