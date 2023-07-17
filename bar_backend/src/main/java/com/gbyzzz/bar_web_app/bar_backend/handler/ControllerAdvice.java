@@ -1,4 +1,4 @@
-package com.gbyzzz.bar_web_app.bar_backend.exception;
+package com.gbyzzz.bar_web_app.bar_backend.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

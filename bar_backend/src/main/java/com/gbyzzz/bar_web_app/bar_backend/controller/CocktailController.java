@@ -9,6 +9,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import com.gbyzzz.bar_web_app.bar_backend.service.CocktailService;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
+import com.gbyzzz.bar_web_app.bar_backend.service.exception.ServiceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,19 +51,14 @@ public class CocktailController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public CocktailRecipeDTO addCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) {
-//        Cocktail cocktail = addCocktailRequest.getCocktail();
-//        List<Recipe> recipes = addCocktailRequest.getRecipes();
-//        cocktail.setApproxAlcoholPercentage(recipeService.calculateAlcohol(recipes));
-//        Cocktail cocktail1 = cocktailService.addOrUpdate(cocktail);
-//        recipeService.add(recipes, cocktail1);
+    public CocktailRecipeDTO addCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException {
         return cocktailService.addOrUpdate(cocktailRecipeDTO);
     }
 
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public CocktailRecipeDTO updateCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) {
+    public CocktailRecipeDTO updateCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException {
         return cocktailService.addOrUpdate(cocktailRecipeDTO);
     }
 

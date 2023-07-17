@@ -48,7 +48,7 @@ public class RecipeServiceImpl implements RecipeService {
                 totalAlcohol += recipe.getQuantity() * recipe.getIngredient().getIngredientAlcohol();
             }
         }
-        return totalAlcohol / totalMl;
+        return totalAlcohol != 0 ? totalAlcohol / totalMl : 0;
     }
 
     @Override
@@ -93,6 +93,4 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.saveAll(recipes).stream()
                 .map(mapper::toDTO).collect(Collectors.toList());
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
 import com.gbyzzz.bar_web_app.bar_backend.dto.CocktailDTO;
 import com.gbyzzz.bar_web_app.bar_backend.dto.CocktailRecipeDTO;
+import com.gbyzzz.bar_web_app.bar_backend.dto.IngredientDTO;
 import com.gbyzzz.bar_web_app.bar_backend.dto.RecipeDTO;
 import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.CocktailMapper;
 import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.RecipeDTOMapper;
@@ -12,6 +13,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.CocktailRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.CocktailService;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
+import com.gbyzzz.bar_web_app.bar_backend.service.exception.ServiceException;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,7 +25,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -63,17 +67,28 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     @CacheEvict(cacheNames = {"cs_pages", "cs"}, allEntries = true)
-    public CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktailRecipeDTO) {
-        Cocktail cocktail = cocktailMapper.toEntity(cocktailRecipeDTO.cocktailDTO());
-        List<Recipe> recipes = cocktailRecipeDTO.recipesDTO().stream().map(recipeMapper::toEntity)
-                .toList();
-        if(cocktail.getPublicationDate() == null) {
-            cocktail.setPublicationDate(new Date(new java.util.Date().getTime()));
+    public CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException {
+        if(checkRecipes(cocktailRecipeDTO.recipesDTO())) {
+            Cocktail cocktail = cocktailMapper.toEntity(cocktailRecipeDTO.cocktailDTO());
+            List<Recipe> recipes = cocktailRecipeDTO.recipesDTO().stream().map(recipeMapper::toEntity)
+                    .toList();
+            if (cocktail.getPublicationDate() == null) {
+                cocktail.setPublicationDate(new Date(new java.util.Date().getTime()));
+            }
+            cocktail = cocktailRepository.save(cocktail);
+            recipeService.addAll(recipes, cocktail);
+            return new CocktailRecipeDTO(cocktailMapper.toDTO(cocktailRepository.save(cocktail)),
+                    recipes.stream().map(recipeMapper::toDTO).collect(Collectors.toList()));
+        } else {
+            throw new ServiceException("Duplicates in ingredients");
         }
-        cocktail = cocktailRepository.save(cocktail);
-        recipeService.addAll(recipes, cocktail);
-        return new CocktailRecipeDTO(cocktailMapper.toDTO(cocktailRepository.save(cocktail)),
-                recipes.stream().map(recipeMapper::toDTO).collect(Collectors.toList()));
+    }
+
+    private boolean checkRecipes(List<RecipeDTO> recipeDTOS) {
+        List<IngredientDTO> ingredients = recipeDTOS.stream().map(recipeDTO ->
+                recipeDTO.ingredient()).collect(Collectors.toList());
+        Set<IngredientDTO> ingredientDTOSet = new HashSet<>(ingredients);
+        return ingredients.size() == ingredientDTOSet.size();
     }
 
     @Override
@@ -113,11 +128,5 @@ public class CocktailServiceImpl implements CocktailService {
         }
         return new RestPage(new PageImpl<>(cocktailDTOS));
     }
-
-//    private void setCocktailsToRecipes(List<Recipe> recipes, Cocktail cocktail){
-//        for(Recipe recipe : recipes){
-//            recipe.setCocktail(cocktail);
-//        }
-//    }
 
 }

@@ -105,9 +105,6 @@ export class CocktailsAdminComponent implements OnInit {
       this.cocktails = cocktails.content;
       this.sortedData = cocktails.content;
       this.totalCocktailsFound = cocktails.totalElements;
-      // this.recipeService.findAllByCocktails(this.sortedData).subscribe(res => {
-      //   this.recipes = res;
-      // });
 
     });
   }

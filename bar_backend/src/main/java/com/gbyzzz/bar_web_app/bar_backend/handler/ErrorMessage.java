@@ -1,4 +1,4 @@
-package com.gbyzzz.bar_web_app.bar_backend.exception;
+package com.gbyzzz.bar_web_app.bar_backend.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
