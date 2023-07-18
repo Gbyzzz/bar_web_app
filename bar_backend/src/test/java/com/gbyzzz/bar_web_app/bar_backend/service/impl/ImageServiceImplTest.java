@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 class ImageServiceImplTest extends BarSpringApplicationTests {
 
-    @Test
-    void saveImage() {
-    }
-
-    @Test
-    void getImageById() {
-    }
+//    @Test
+//    void saveImage() {
+//    }
+//
+//    @Test
+//    void getImageById() {
+//    }
 }

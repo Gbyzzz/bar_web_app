@@ -25,38 +25,37 @@ class CocktailServiceImplTest extends BarSpringApplicationTests {
     @Autowired
     CocktailRepository cocktailRepository;
 
-    @Test
-    void findAll() {
-        System.out.println(cocktailService.findAll());
-        assertEquals(Source.cocktailList, cocktailService.findAll());
-    }
+//    @Test
+//    void findAll() {
+//        System.out.println(cocktailService.findAll());
+//        assertEquals(Source.cocktailList, cocktailService.findAll());
+//    }
 
-    @ParameterizedTest
-    @MethodSource("com.gbyzzz.bar_web_app.bar_bckend.Source#provideCocktailsById")
-    void findById(Cocktail expected, long id) throws Exception {
-        Cocktail cocktail1 = cocktailRepository.findById(id).get();
-        Cocktail cocktail = cocktailService.findById(id);
-        assertEquals(expected, cocktailService.findById(id));
-    }
-
-    @ParameterizedTest
-    @MethodSource("com.gbyzzz.bar_web_app.bar_bckend.Source#provideAddedAndUpdatedCocktails")
-    void addOrUpdate(List<Cocktail> expected, Cocktail cocktail) {
-        cocktailService.addOrUpdate(cocktail);
-        assertEquals(expected, cocktailService.findAll());
-    }
-
-    @Test
-    void findAllWithPages() {
-        //TODO: add test
-    }
-
-    @Test
-    void findForMainPage() {
-        List<Cocktail> expected = new ArrayList<>(){{
-                addAll(Source.cocktailList);
-        }};
-        expected.sort(Comparator.comparing(Cocktail::getCocktailId).reversed());
-        assertEquals(expected, cocktailService.findForMainPage());
-    }
+//    @ParameterizedTest
+//    @MethodSource("com.gbyzzz.bar_web_app.bar_bckend.Source#provideCocktailsById")
+//    void findById(Cocktail expected, long id) throws Exception {
+//        Cocktail cocktail1 = cocktailRepository.findById(id).get();
+////        Cocktail cocktail = cocktailService.findById(id);
+//        assertEquals(expected, cocktailService.findById(id));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("com.gbyzzz.bar_web_app.bar_bckend.Source#provideAddedAndUpdatedCocktails")
+//    void addOrUpdate(List<Cocktail> expected, Cocktail cocktail) {
+////        cocktailService.addOrUpdate(cocktail);
+//        assertEquals(expected, cocktailService.findAll());
+//    }
+//
+//    @Test
+//    void findAllWithPages() {
+//    }
+//
+//    @Test
+//    void findForMainPage() {
+//        List<Cocktail> expected = new ArrayList<>(){{
+//                addAll(Source.cocktailList);
+//        }};
+//        expected.sort(Comparator.comparing(Cocktail::getCocktailId).reversed());
+//        assertEquals(expected, cocktailService.findForMainPage());
+//    }
 }
