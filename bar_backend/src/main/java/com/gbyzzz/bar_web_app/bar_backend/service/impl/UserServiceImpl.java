@@ -6,10 +6,10 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsernameIgnoreCase(username).orElseThrow(
-                ()-> new UsernameNotFoundException("User Not Found with username: " + username));
+                ()-> new ServiceException("User Not Found with username: " + username));
     }
 
     @Override
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findUserByEmailIgnoreCase(email).orElseThrow(
-                ()-> new UsernameNotFoundException("User Not Found with email: " + email));
+                ()-> new ServiceException("User Not Found with email: " + email));
     }
 
 }

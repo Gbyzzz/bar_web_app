@@ -99,7 +99,8 @@
                         type="button" (click)="toSignInTab()">
                   {{t('to sign in')}}
                 </button>
-                <button class="btn btn-outline-dark" name="command" type="submit">
+                <button class="btn btn-outline-dark" name="command" type="submit"
+                        (click)="onRecoverPassword()">
                   {{t('send email')}}
                 </button>
               </p>
