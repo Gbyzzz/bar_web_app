@@ -5,25 +5,25 @@
     <div class="row">
       <div class="col-6">
         <h3>{{t('ingredients')}}</h3>
-        <li *ngFor="let recipe of recipes">
+        <li *ngFor="let recipe of cocktailRecipeDTO.recipesDTO">
           {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{t(recipe.ingredient.unitOfMeasurement)}}
         </li>
-        {{t('Approx. alcohol')}}{{cocktail.approxAlcoholPercentage}}%
+        {{t('Approx. alcohol')}}{{cocktailRecipeDTO.cocktailDTO.approxAlcoholPercentage}}%
         <br>
         <br>
         <h3>{{t('recipe')}}</h3>
-        {{cocktail.cocktailRecipe}}
+        {{cocktailRecipeDTO.cocktailDTO.cocktailRecipe}}
       </div>
       <div class="col-6">
-        <img src="data:image/png;base64,{{image.bytes}}" class="mx-auto d-block img" alt="logo"/>
+        <img src="data:image/png;base64,{{cocktailRecipeDTO.cocktailDTO.cocktailImage.bytes}}" class="mx-auto d-block img" alt="logo"/>
       </div>
     </div>
   </div>
 
   <div class="p-5 bg-white text-black-50">
-    {{t('author')}}{{cocktail.cocktailAuthor.username}}
+    {{t('author')}}{{cocktailRecipeDTO.cocktailDTO.cocktailAuthor.username}}
     <br>
-    {{t('publication date')}} {{cocktail.publicationDate}}
+    {{t('publication date')}} {{cocktailRecipeDTO.cocktailDTO.publicationDate}}
   </div>
   <div class="container ml-5 mr-5">
   </div>
@@ -31,13 +31,15 @@
       <h3>Rate</h3>
     </div>
     <div class="text-center">
-      <star-rating [readOnly]="!isUserLoggedIn || this.tokenStorage.getUser() == null && !this.tokenStorage.getUser().enabled"
+      <star-rating [readOnly]="!isUserLoggedIn || this.tokenStorage.getUser() == null &&
+       !this.tokenStorage.getUser().enabled"
                    [hoverEnabled]="true" (starClickChange)="onRate($event)"
-                   [rating]="vote.voteValue != 0 ? vote.voteValue : cocktail.cocktailRating"
+                   [rating]="vote.voteValue != 0 ?
+                    vote.voteValue : cocktailRecipeDTO.cocktailDTO.cocktailRating"
                    [showHalfStars]="true">
       </star-rating>
     </div>
     <div class="text-center mb-5">
-      Rating - {{cocktail.cocktailRating}} (Votes : {{voteCount == null ? 0 : voteCount}})
+      Rating - {{cocktailRecipeDTO.cocktailDTO.cocktailRating | number: '1.0-1'}} (Votes :   {{cocktailRecipeDTO.cocktailDTO.voteCount == null ?  0 : cocktailRecipeDTO.cocktailDTO.voteCount}})
     </div>
 </div>

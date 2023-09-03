@@ -3,6 +3,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {Pagination, SortDirection} from "../../../model/pagination/Pagination";
 import {Cocktail} from "../../../model/Cocktail";
+import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
 
 @Component({
   selector: 'app-cocktails',

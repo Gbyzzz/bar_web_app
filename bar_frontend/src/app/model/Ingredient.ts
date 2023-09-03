@@ -11,4 +11,12 @@ export class Ingredient {
     this.ingredientAlcohol = ingredientAlcohol;
     this.unitOfMeasurement = unitOfMeasurement;
   }
+
+  // toJSON(): any {
+  //   const { ingredientId, ...rest } = this;
+  //   return {
+  //     '@class': 'com.gbyzzz.bar_web_app.bar_backend.dto.IngredientDTO',
+  //     ...rest
+  //   };
+  // }
 }

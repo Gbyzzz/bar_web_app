@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.controller;
 
+import com.gbyzzz.bar_web_app.bar_backend.dto.RecipeDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
@@ -19,21 +20,21 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @PostMapping("/add_or_update")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public List<Recipe> addAll(@RequestBody List<Recipe> recipes) {
-        return recipeService.addAll(recipes);
-    }
+//    @PostMapping("/add_or_update")
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
+//    public List<RecipeDTO> addAll(@RequestBody List<Recipe> recipes) {
+//        return recipeService.addAll(recipes);
+//    }
 
-    @PostMapping("/find_by_cocktail")
-    public List<Recipe> findByCocktail(@RequestBody Cocktail cocktail) {
-        return recipeService.findRecipesByCocktail(cocktail);
-    }
-
-    @PostMapping("/find_all_by_cocktails")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public List<Recipe> findAllByCocktails(@RequestBody List<Cocktail>cocktails) {
-        System.out.println(recipeService.findAllRecipesByCocktails(cocktails));
-        return recipeService.findAllRecipesByCocktails(cocktails);
-    }
+//    @PostMapping("/find_by_cocktail")
+//    public List<RecipeDTO> findByCocktail(@RequestBody Cocktail cocktail) {
+//        return recipeService.findRecipesByCocktail(cocktail);
+//    }
+//
+//    @PostMapping("/find_all_by_cocktails")
+//    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
+//    public List<RecipeDTO> findAllByCocktails(@RequestBody List<Cocktail>cocktails) {
+//        System.out.println(recipeService.findAllRecipesByCocktails(cocktails));
+//        return recipeService.findAllRecipesByCocktails(cocktails);
+//    }
 }

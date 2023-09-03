@@ -20,6 +20,7 @@
   "success": "Готово!",
   "username or email" : "Пожалуйста введите ваше имя пользователя или адрес эл. почты",
   "password": "Пароль",
+  "duplicated ingredients": "Дубликаты в ингридиентах, пожалуйста, проверьте еще раз",
   "old password not right": "Неверный старый пароль",
   "error password not unique": "Новый пароль совпадает со старым",
   "change password": "Изменить пароль",

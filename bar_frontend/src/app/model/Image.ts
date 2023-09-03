@@ -15,4 +15,17 @@ export class Image {
     this.size = size;
     this.bytes = bytes;
   }
+  // toJSON(): any {
+  //   const { imageId, ...rest } = this;
+  //   return {
+  //     '@class': 'com.gbyzzz.bar_web_app.bar_backend.dto.ImageDTO',
+  //     ...rest
+  //   };
+  // }
+
+  // public toJSON(): Image {
+  //   return Object.assign({}, this, {
+  //     '@class': 'com.gbyzzz.bar_web_app.bar_backend.dto.ImageDTO'
+  //   });
+  // }
 }

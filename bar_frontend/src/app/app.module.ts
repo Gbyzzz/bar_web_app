@@ -44,11 +44,9 @@ import {UserPageComponent} from "./view/main/user-page/user-page.component";
 import {VOTE_URL_TOKEN} from "./service/entity/impl/VoteServiceImpl";
 import {RECIPE_URL_TOKEN} from "./service/entity/impl/RecipeServiceImpl";
 import {VALIDATE_URL_TOKEN} from "./service/auth/validate-email.service";
-import {RecipeFilterByCocktailPipe} from "./view/pipe/RecipeFilterByCocktailPipe";
 import {ValidateComponent} from "./view/registration/validate/validate.component";
 import {StarRatingModule} from "angular-star-rating";
 import {ChangePasswordDialogComponent} from "./view/dialog/change-password-dialog/change-password-dialog.component";
-
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -72,7 +70,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ContactComponent,
     RegistrationComponent,
     UserPageComponent,
-    RecipeFilterByCocktailPipe,
     ValidateComponent,
     ChangePasswordDialogComponent
 

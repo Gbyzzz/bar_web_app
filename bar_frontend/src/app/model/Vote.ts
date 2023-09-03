@@ -14,4 +14,12 @@ export class Vote{
     this.cocktail = cocktail;
     this.voteValue = voteValue;
   }
+
+  // toJSON(): any {
+  //   const { voteId, ...rest } = this;
+  //   return {
+  //     '@class': 'com.gbyzzz.bar_web_app.bar_backend.dto.VoteDTO',
+  //     ...rest
+  //   };
+  // }
 }

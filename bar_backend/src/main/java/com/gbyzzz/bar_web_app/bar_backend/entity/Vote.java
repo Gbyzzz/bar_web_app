@@ -17,11 +17,11 @@ public class Vote {
     @Column(name = "vote_id")
     private Long voteId;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH})
+    @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH})
+    @ManyToOne()
     @JoinColumn(name = "cocktail_id", nullable = false)
     private Cocktail cocktail;
 
@@ -32,6 +32,12 @@ public class Vote {
     public Vote() {
     }
 
+    public Vote(Vote vote) {
+        this.voteId = vote.voteId;
+        this.user = vote.user;
+        this.cocktail = vote.cocktail;
+        this.voteValue = vote.voteValue;
+    }
     public Vote(Long voteId, User user, Cocktail cocktail, int voteValue) {
         this.voteId = voteId;
         this.user = user;

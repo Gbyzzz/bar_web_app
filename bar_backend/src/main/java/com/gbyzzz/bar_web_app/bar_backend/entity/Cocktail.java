@@ -20,16 +20,16 @@ public class Cocktail {
     @Column(name = "cocktail_name", length = 50, unique = true, nullable = false)
     private String cocktailName;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "cocktail_author", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "cocktail_author")
     private User cocktailAuthor;
 
     @Basic
-    @Column(name = "cocktail_rating", nullable = false)
+    @Column(name = "cocktail_rating")
     private float cocktailRating;
 
     @Basic
-    @Column(name = "publication_date", nullable = false)
+    @Column(name = "publication_date")
     private Date publicationDate;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
@@ -37,22 +37,21 @@ public class Cocktail {
     private Image cocktailImage;
 
     @Basic
-    @Column(name = "cocktail_recipe", nullable = false)
+    @Column(name = "cocktail_recipe")
     private String cocktailRecipe;
 
     @Basic
-    @Column(name = "approx_alcohol_percentage", nullable = false)
+    @Column(name = "approx_alcohol_percentage")
     private int approxAlcoholPercentage;
+
+    @Formula(value = "(SELECT COUNT(*) FROM votes v WHERE v.cocktail_id=cocktail_id)")
+    private int voteCount;
 
 
     public Cocktail() {
     }
 
-
-
-        public Cocktail(Long cocktailId, String cocktailName, User cocktailAuthor,
-                    float cocktailRating, Date publicationDate, Image cocktailImage,
-                    String cocktailRecipe, int approxAlcoholPercentage) {
+    public Cocktail(Long cocktailId, String cocktailName, User cocktailAuthor, float cocktailRating, Date publicationDate, Image cocktailImage, String cocktailRecipe, int approxAlcoholPercentage, int voteCount) {
         this.cocktailId = cocktailId;
         this.cocktailName = cocktailName;
         this.cocktailAuthor = cocktailAuthor;
@@ -61,6 +60,7 @@ public class Cocktail {
         this.cocktailImage = cocktailImage;
         this.cocktailRecipe = cocktailRecipe;
         this.approxAlcoholPercentage = approxAlcoholPercentage;
+        this.voteCount = voteCount;
     }
 
     public Long getCocktailId() {
@@ -127,25 +127,25 @@ public class Cocktail {
         this.approxAlcoholPercentage = approxAlcoholPercentage;
     }
 
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cocktail cocktail = (Cocktail) o;
-        return
-                Double.compare(cocktail.cocktailRating, cocktailRating) == 0 &&
-                approxAlcoholPercentage == cocktail.approxAlcoholPercentage &&
-                Objects.equals(cocktailId, cocktail.cocktailId) &&
-                Objects.equals(cocktailName, cocktail.cocktailName) &&
-                Objects.equals(cocktailAuthor, cocktail.cocktailAuthor) &&
-//                Objects.equals(publicationDate, cocktail.publicationDate) &&
-                Objects.equals(cocktailImage, cocktail.cocktailImage) &&
-                Objects.equals(cocktailRecipe, cocktail.cocktailRecipe);
+        return Float.compare(cocktail.cocktailRating, cocktailRating) == 0 && approxAlcoholPercentage == cocktail.approxAlcoholPercentage && voteCount == cocktail.voteCount && Objects.equals(cocktailId, cocktail.cocktailId) && Objects.equals(cocktailName, cocktail.cocktailName) && Objects.equals(cocktailAuthor, cocktail.cocktailAuthor) && Objects.equals(publicationDate, cocktail.publicationDate) && Objects.equals(cocktailImage, cocktail.cocktailImage) && Objects.equals(cocktailRecipe, cocktail.cocktailRecipe);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cocktailId, cocktailName, cocktailAuthor, cocktailRating, publicationDate, cocktailImage, cocktailRecipe, approxAlcoholPercentage);
+        return Objects.hash(cocktailId, cocktailName, cocktailAuthor, cocktailRating, publicationDate, cocktailImage, cocktailRecipe, approxAlcoholPercentage, voteCount);
     }
 
     @Override
@@ -159,6 +159,7 @@ public class Cocktail {
                 ", cocktailImage=" + cocktailImage +
                 ", cocktailRecipe='" + cocktailRecipe + '\'' +
                 ", approxAlcoholPercentage=" + approxAlcoholPercentage +
+                ", voteCount=" + voteCount +
                 '}';
     }
 }

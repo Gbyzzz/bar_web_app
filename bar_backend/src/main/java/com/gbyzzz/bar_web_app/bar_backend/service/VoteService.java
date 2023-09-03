@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.service;
 
+import com.gbyzzz.bar_web_app.bar_backend.dto.VoteDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Vote;
 
@@ -8,9 +9,9 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.Vote;
  */
 public interface VoteService {
 
-    Vote addOrUpdateVote (Vote vote);
+    VoteDTO addOrUpdateVote (Vote vote);
 
-    Vote findVoteByCocktailAndUser(Vote vote);
+    VoteDTO findVoteByCocktailAndUser(Vote vote) throws Exception;
 
     void updateRating(Cocktail cocktail);
 

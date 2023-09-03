@@ -18,22 +18,22 @@
     </thead>
 
     <tr *ngFor="let cocktail of sortedData; let i=index">
-      <td class="border-1">{{cocktail.cocktailId}}</td>
+      <td class="border-1">{{cocktail.cocktailDTO.cocktailId}}</td>
       <td class="border-1">
-        <img src="data:image/png;base64,{{cocktail.cocktailImage.bytes}}" width="150"/>
+        <img src="data:image/png;base64,{{cocktail.cocktailDTO.cocktailImage.bytes}}" width="150"/>
       </td>
-      <td class="border-1">{{cocktail.cocktailName}}</td>
-      <td class="border-1">{{cocktail.cocktailAuthor.username}}</td>
-      <td class="border-1">{{cocktail.cocktailRating}}</td>
-      <td class="border-1">{{cocktail.publicationDate}}</td>
-      <td class="border-1">{{cocktail.cocktailRecipe}}</td>
+      <td class="border-1">{{cocktail.cocktailDTO.cocktailName}}</td>
+      <td class="border-1">{{cocktail.cocktailDTO.cocktailAuthor.username}}</td>
+      <td class="border-1">{{cocktail.cocktailDTO.cocktailRating | number: '1.0-1'}}</td>
+      <td class="border-1">{{cocktail.cocktailDTO.publicationDate}}</td>
+      <td class="border-1">{{cocktail.cocktailDTO.cocktailRecipe}}</td>
       <td class="border-1">
-        <div *ngFor="let recipe of recipes | recipeFilterByCocktailPipe: cocktail">
+        <div *ngFor="let recipe of cocktail.recipesDTO">
           {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{recipe.ingredient.unitOfMeasurement}}
           <br>
         </div>
       </td>
-      <td class="border-1">{{cocktail.approxAlcoholPercentage}}</td>
+      <td class="border-1">{{cocktail.cocktailDTO.approxAlcoholPercentage}}</td>
 
       <td class="border-1">
         <button type="button" class="btn" (click)="openEditDialog(cocktail)"

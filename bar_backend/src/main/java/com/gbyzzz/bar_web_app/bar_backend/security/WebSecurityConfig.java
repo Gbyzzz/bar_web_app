@@ -8,12 +8,13 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -34,36 +35,21 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors().and()
-				.csrf()
-				.disable()
-				.authorizeHttpRequests()
-				.requestMatchers( "/**").permitAll()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
+		http.cors(withDefaults())
+				.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests((authorizeHttpRequests) ->
+						authorizeHttpRequests.requestMatchers("/**")
+								.permitAll())
+				.sessionManagement((sessionManagement) ->
+						sessionManagement
+								.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)
 				.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class)
-				.logout()
-				.logoutUrl("/logout")
-				.addLogoutHandler(authService)
-				.logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-		;
+				.logout((logout) ->
+						logout.logoutUrl("/logout")
+								.addLogoutHandler(authService)
+								.logoutSuccessHandler((request, response, authentication) ->
+										SecurityContextHolder.clearContext()));
 		return http.build();
-	}
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry
-						.addMapping("/**")
-						.allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
-			}
-		};
 	}
 }

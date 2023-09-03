@@ -4,9 +4,11 @@ import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.ChangePassw
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupRequest;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.Code;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.JwtResponse;
+import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.UserDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.messaging.MessageProducer;
 import com.gbyzzz.bar_web_app.bar_backend.messaging.entity.Message;
+import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
 import com.gbyzzz.bar_web_app.bar_backend.security.jwt.JwtUtils;
 import com.gbyzzz.bar_web_app.bar_backend.security.services.UserDetailsImpl;
 import com.gbyzzz.bar_web_app.bar_backend.service.AuthService;
@@ -31,15 +33,18 @@ public class AuthServiceImpl implements AuthService {
     private final MessageProducer messageProducer;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final UserDTOMapper mapper = UserDTOMapper.INSTANCE;
 
     public AuthServiceImpl(PasswordEncoder encoder, UserService userService,
                            MessageProducer messageProducer, JwtUtils jwtUtils,
-                           AuthenticationManager authenticationManager) {
+                           AuthenticationManager authenticationManager, UserRepository userRepository) {
         this.encoder = encoder;
         this.userService = userService;
         this.messageProducer = messageProducer;
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
     }
 
     @Value("${gbyzzz.url.to.validate}")
@@ -52,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
                 null, null, signUpRequest.getEmail(), null,
                 User.Role.ROLE_USER, false,
                 new Date(new java.util.Date().getTime()));
-        userService.updateUser(user);
+        userService.addUser(user);
 
         messageProducer.generate(new Message(user.getEmail(), "generate"));
     }
@@ -67,8 +72,10 @@ public class AuthServiceImpl implements AuthService {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        User user = userService.getUserById(userDetails.getId());
-        return ResponseEntity.ok(new JwtResponse(jwt, user));
+        User user = userRepository.findById(userDetails.getId()).orElseThrow(
+                ()-> new Exception("User with id " + userDetails.getId() + "haven't bee found")
+        );
+        return ResponseEntity.ok(new JwtResponse(jwt, mapper.toDTO(user)));
     }
 
     @Override

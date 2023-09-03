@@ -1,16 +1,17 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
+import com.gbyzzz.bar_web_app.bar_backend.dto.VoteDTO;
+import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.VoteDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Vote;
 import com.gbyzzz.bar_web_app.bar_backend.repository.CocktailRepository;
+import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
 import com.gbyzzz.bar_web_app.bar_backend.repository.VoteRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.VoteService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Anton Pinchuk
@@ -18,30 +19,37 @@ import java.util.Optional;
 
 @Service
 public class VoteServiceImpl implements VoteService {
-    VoteRepository voteRepository;
-    CocktailRepository cocktailRepository;
+    private final VoteRepository voteRepository;
+    private final CocktailRepository cocktailRepository;
 
-    public VoteServiceImpl(VoteRepository voteRepository, CocktailRepository cocktailRepository) {
+    private final VoteDTOMapper mapper = VoteDTOMapper.INSTANCE;
+    private final UserRepository userRepository;
+
+    public VoteServiceImpl(VoteRepository voteRepository, CocktailRepository cocktailRepository,
+                           UserRepository userRepository) {
         this.voteRepository = voteRepository;
         this.cocktailRepository = cocktailRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     @CacheEvict(cacheNames = "cs", key = "#vote.cocktail.cocktailId")
-    public Vote addOrUpdateVote(Vote vote) {
-
-
-        return voteRepository.save(vote);
+    public VoteDTO addOrUpdateVote(Vote vote) {
+        Vote savedVote;
+        if(vote.getVoteId()==null) {
+            savedVote = voteRepository.save(vote);
+        } else {
+            voteRepository.updateRating(vote.getVoteId(), vote.getVoteValue());
+            savedVote = vote;
+        }
+        updateRating(savedVote.getCocktail());
+        return mapper.toDTO(savedVote);
     }
 
     @Override
-    public Vote findVoteByCocktailAndUser(Vote vote) {
-        Vote targetVote = vote;
-        Optional<Vote> optionalVote = voteRepository.findByCocktailAndUser(vote.getCocktail(), vote.getUser());
-        if (optionalVote.isPresent()) {
-            targetVote = optionalVote.get();
-        }
-        return targetVote;
+    public VoteDTO findVoteByCocktailAndUser(Vote vote) throws Exception {
+        return mapper.toDTO(voteRepository.findByCocktailAndUser(vote.getCocktail(), vote.getUser())
+                .orElseThrow(()-> new Exception("Vote by cocktail and user not found")));
     }
 
     @Override
@@ -52,8 +60,7 @@ public class VoteServiceImpl implements VoteService {
             rating += cocktailVote.getVoteValue();
         }
         rating /= cocktailVotes.size();
-        cocktail.setCocktailRating((float) Math.round(rating * 10) /10);
-        cocktailRepository.save(cocktail);
+        cocktailRepository.updateRating(cocktail.getCocktailId(), rating);
     }
 
     @Override

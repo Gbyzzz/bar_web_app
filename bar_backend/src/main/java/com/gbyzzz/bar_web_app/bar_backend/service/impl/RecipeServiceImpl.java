@@ -1,5 +1,7 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
+import com.gbyzzz.bar_web_app.bar_backend.dto.RecipeDTO;
+import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.RecipeDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import com.gbyzzz.bar_web_app.bar_backend.repository.RecipeRepository;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeDTOMapper mapper = RecipeDTOMapper.INSTANCE;
 
     public RecipeServiceImpl(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
@@ -29,8 +32,9 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Cacheable(key = "#cocktail.cocktailId")
-    public List<Recipe> findRecipesByCocktail(Cocktail cocktail) {
-        return recipeRepository.findRecipesByCocktailOrderByRecipeIdAsc(cocktail);
+    public List<RecipeDTO> findRecipesByCocktail(Cocktail cocktail) {
+        return recipeRepository.findRecipesByCocktailOrderByRecipeIdAsc(cocktail)
+                .stream().map(mapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +48,7 @@ public class RecipeServiceImpl implements RecipeService {
                 totalAlcohol += recipe.getQuantity() * recipe.getIngredient().getIngredientAlcohol();
             }
         }
-        return totalAlcohol / totalMl;
+        return totalAlcohol != 0 ? totalAlcohol / totalMl : 0;
     }
 
     @Override
@@ -57,31 +61,36 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> findAllRecipesByCocktails(List<Cocktail> cocktails) {
+    public List<RecipeDTO> findAllRecipesByCocktails(List<Cocktail> cocktails) {
         List<Recipe> allRecipes = new ArrayList<>();
         for (Cocktail cocktail : cocktails) {
             allRecipes.addAll(recipeRepository.findRecipesByCocktailOrderByRecipeIdAsc(cocktail));
         }
-        return allRecipes;
+        return allRecipes.stream().map(mapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
     @CacheEvict(cacheNames = "rs", allEntries = true)
-    public List<Recipe> addAll(List<Recipe> recipes) {
+    public List<RecipeDTO> addAll(List<Recipe> recipes, Cocktail cocktail) {
+        for (Recipe recipe : recipes) {
+            recipe.setCocktail(cocktail);
+        }
         Map<Long, Recipe> recipeMap = findRecipesByCocktail(recipes.get(0).getCocktail())
-                .stream().collect(Collectors.toMap(s -> s.getIngredient().getIngredientId(), s -> s));
+                .stream()
+                .map(mapper::toEntity)
+                .collect(Collectors.toMap(s -> s.getIngredient().getIngredientId(), s -> s));
 
         for (Recipe recipe : recipes) {
             if (recipeMap.get(recipe.getIngredient().getIngredientId()) != null) {
-                recipe.setRecipeId(recipeMap.get(recipe.getIngredient().getIngredientId()).getRecipeId());
+                recipe.setRecipeId(recipeMap.get(recipe.getIngredient().getIngredientId())
+                        .getRecipeId());
                 recipeMap.remove(recipe.getIngredient().getIngredientId());
             }
         }
         if (recipeMap.size() > 0) {
             recipeRepository.deleteAllInBatch(new ArrayList<>(recipeMap.values()));
         }
-        return recipeRepository.saveAll(recipes);
+        return recipeRepository.saveAll(recipes).stream()
+                .map(mapper::toDTO).collect(Collectors.toList());
     }
-
-
 }

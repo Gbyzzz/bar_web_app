@@ -1,19 +1,18 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
-import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.ChangePasswordRequest;
+import com.gbyzzz.bar_web_app.bar_backend.dto.UserDTO;
+import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.UserDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Anton Pinchuk
@@ -22,6 +21,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserDTOMapper mapper = UserDTOMapper.INSTANCE;
 
 
     public UserServiceImpl(UserRepository userRepository) {
@@ -30,25 +30,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDTO> findAll() {
+//        return userRepository.findAll();
+        return null;
     }
 
     @Override
-    public User getUserById(long id) throws Exception {
-        User user = null;
-        Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()){
-            user = optionalUser.get();
-        } else {
-            throw new Exception("No user with id " + id + " found");
-        }
-        return user;
+    public UserDTO getUserById(long id) throws Exception {
+        return mapper.toDTO(userRepository.findById(id).orElseThrow(()->new Exception("No user with id " + id + " found")));
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserDTO addUser(User user) {
+        return mapper.toDTO(userRepository.save(user));
+    }
+
+    @Override
+    public UserDTO updateUser(User user) {
+        userRepository.updateUser(user.getUserId(), user.getName(),
+                user.getSurname(), user.getPhone(), user.getUserPic());
+        return mapper.toDTO(findByUsername(user.getUsername()));
     }
 
     @Override
@@ -62,8 +63,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsernameIgnoreCase(username);
+    public User findByUsername(String username) {
+        return userRepository.findByUsernameIgnoreCase(username).orElseThrow(
+                ()-> new ServiceException("User Not Found with username: " + username));
     }
 
     @Override
@@ -88,14 +90,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findUserByEmailIgnoreCase(email).orElseThrow();
+        return userRepository.findUserByEmailIgnoreCase(email).orElseThrow(
+                ()-> new ServiceException("User Not Found with email: " + email));
     }
-
-    @Override
-    public ResponseEntity<?> changePassword(ChangePasswordRequest changePasswordRequest) {
-
-        return null;
-    }
-
 
 }
