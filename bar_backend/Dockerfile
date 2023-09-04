@@ -12,7 +12,7 @@
 ##ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 FROM gradle:latest
-
+EXPOSE 8080
 WORKDIR /app
 COPY . /app
 RUN gradle build -x test

@@ -47,6 +47,7 @@ import {VALIDATE_URL_TOKEN} from "./service/auth/validate-email.service";
 import {ValidateComponent} from "./view/registration/validate/validate.component";
 import {StarRatingModule} from "angular-star-rating";
 import {ChangePasswordDialogComponent} from "./view/dialog/change-password-dialog/change-password-dialog.component";
+import { environment } from '../environments/environment';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -102,37 +103,37 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     {
       provide: COCKTAIL_URL_TOKEN,
-      useValue: 'http://localhost:8080/cocktail'
+      useValue: 'http://' + environment.API_URL + '/cocktail'
     },
 
     {
       provide: USER_URL_TOKEN,
-      useValue: 'http://localhost:8080/user'
+      useValue: 'http://' + environment.API_URL + '/user'
     },
 
     {
       provide: INGREDIENT_URL_TOKEN,
-      useValue: 'http://localhost:8080/ingredient'
+      useValue: 'http://' + environment.API_URL + '/ingredient'
     },
 
     {
       provide: IMAGE_URL_TOKEN,
-      useValue: 'http://localhost:8080/image'
+      useValue: 'http://' + environment.API_URL + '/image'
     },
 
     {
       provide: VOTE_URL_TOKEN,
-      useValue: 'http://localhost:8080/vote'
+      useValue: 'http://' + environment.API_URL + '/vote'
     },
 
     {
       provide: RECIPE_URL_TOKEN,
-      useValue: 'http://localhost:8080/recipe'
+      useValue: 'http://' + environment.API_URL + '/recipe'
     },
 
     {
       provide: VALIDATE_URL_TOKEN,
-      useValue: 'http://localhost:8080/validate'
+      useValue: 'http://' + environment.API_URL + '/validate'
     },
 
     {provide: MatDialogRef, useValue: {}},
