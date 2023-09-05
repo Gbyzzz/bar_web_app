@@ -34,3 +34,5 @@ Backend: Spring Boot, Spring Data JPA, Spring Security, Redis(cache)
 Frontend: Angular
 <br>
 Database: PostgreSQL
+
+Available here: http://185.219.80.190/
