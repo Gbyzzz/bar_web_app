@@ -103,37 +103,37 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     {
       provide: COCKTAIL_URL_TOKEN,
-      useValue: 'http://' + environment.API_URL + '/cocktail'
+      useValue: environment.API_URL + 'cocktail'
     },
 
     {
       provide: USER_URL_TOKEN,
-      useValue: 'http://' + environment.API_URL + '/user'
+      useValue: environment.API_URL + 'user'
     },
 
     {
       provide: INGREDIENT_URL_TOKEN,
-      useValue: 'http://' + environment.API_URL + '/ingredient'
+      useValue: environment.API_URL + 'ingredient'
     },
 
     {
       provide: IMAGE_URL_TOKEN,
-      useValue: 'http://' + environment.API_URL + '/image'
+      useValue: environment.API_URL + 'image'
     },
 
     {
       provide: VOTE_URL_TOKEN,
-      useValue: 'http://' + environment.API_URL + '/vote'
+      useValue: environment.API_URL + 'vote'
     },
 
     {
       provide: RECIPE_URL_TOKEN,
-      useValue: 'http://' + environment.API_URL + '/recipe'
+      useValue: environment.API_URL + 'recipe'
     },
 
     {
       provide: VALIDATE_URL_TOKEN,
-      useValue: 'http://' + environment.API_URL + '/validate'
+      useValue: environment.API_URL + 'validate'
     },
 
     {provide: MatDialogRef, useValue: {}},
