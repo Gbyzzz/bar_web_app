@@ -33,6 +33,7 @@
     "debug": "^4.3.4",
     "igniteui-webcomponents": "^4.4.0",
     "loader-utils": "^3.2.1",
+    "postcss": "^8.4.31",
     "rxjs": "~7.8.1",
     "tar": "^6.1.15",
     "terser": "^5.19.3",
