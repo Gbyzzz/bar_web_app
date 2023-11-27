@@ -21,7 +21,7 @@ USER: Jspm/123456
 
 How to run:
 1) Most convenient way is to run it in Docker, just run 'docker compose up' and wait until it will deploy.
-Then you can reach it by the default url: 'http://localhost:7777/'
+Then you can reach it by the default url: 'https://localhost:443/'
 2) As this app is using Redis as cache you should run Redis first (Default host/port - localhost:6379), configure
 database by installing PostgreSQL and then run backend by running 'gradle build; java -jar build/libs/bar_spring-0.0.1-SNAPSHOT.jar' command and frontend by running 'ng serve' command. Then you can reach it by the default url: 'http://localhost:4200/'
 
@@ -35,4 +35,5 @@ Frontend: Angular
 <br>
 Database: PostgreSQL
 
-Available here: http://185.219.80.190/
+Available here: https://185.219.80.190/ (it has selfsigned certificate, so browser may show a warning, just press Advanced->proceed)
+(Same may be with the content, go here https://185.219.80.190:8080 press Advanced->proceed)
