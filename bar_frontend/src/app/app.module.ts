@@ -48,6 +48,8 @@ import {ValidateComponent} from "./view/registration/validate/validate.component
 import {StarRatingModule} from "angular-star-rating";
 import {ChangePasswordDialogComponent} from "./view/dialog/change-password-dialog/change-password-dialog.component";
 import { environment } from '../environments/environment';
+import {NgOptimizedImage} from "@angular/common";
+import {ConditionalPreloadDirective} from "./conditional-preload.directive";
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -72,31 +74,36 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegistrationComponent,
     UserPageComponent,
     ValidateComponent,
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    ConditionalPreloadDirective
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    BrowserAnimationsModule,
-    MatTabsModule,
-    MatIconModule,
-    MatCheckboxModule,
-    FormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    TranslocoRootModule,
-    StarRatingModule
-  ],
+  exports:[ConditionalPreloadDirective],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        BrowserAnimationsModule,
+        MatTabsModule,
+        MatIconModule,
+        MatCheckboxModule,
+        FormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        TranslateModule,
+        TranslocoRootModule,
+        StarRatingModule,
+        NgOptimizedImage,
+      BrowserModule,
+      AppRoutingModule
+    ],
   providers: [
     HeaderComponent,
     authInterceptorProviders,

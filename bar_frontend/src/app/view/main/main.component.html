@@ -3,35 +3,92 @@
 
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="assets/1.jpg" alt="Los Angeles" class="d-block" style="width:100%">
+        <!--        <img ngSrc="assets/1.webp"  alt="Los Angeles" class="d-block" priority style="width:100%" width="1296" height="453">-->
+<!--        <img src="assets/1.webp" alt="Chicago" class="d-block" style="width:100%" width="1296" height="454">-->
+        <picture>
+          <img class="img-carousel"
+            sizes="(max-width: 1296px) 100vw, 1296px"
+            srcset="assets/1,w_200.webp 200w,
+                    assets/1,w_639.webp 639w,
+                    assets/1,w_902.webp 902w,
+                    assets/1,w_1148.webp 1148w,
+                    assets/1,w_1296.webp 1296w"
+            src="assets/1,w_1296.webp"
+            alt="Los Angeles" width="1296"
+               height="454">
+        </picture>
         <div class="carousel-caption">
           <h3>Los Angeles</h3>
           <p>We had such a great time in LA!</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="assets/2.jpg" alt="Chicago" class="d-block" style="width:100%">
+<!--        <img src="assets/2.webp" alt="Chicago" class="d-block" style="width:100%" width="1296" height="454">-->
+        <picture>
+          <img
+            sizes="(max-width: 1296px) 100vw, 1296px"
+            srcset="assets/2,w_200.webp 200w,
+                    assets/2,w_639.webp 639w,
+                    assets/2,w_902.webp 902w,
+                    assets/2,w_1148.webp 1148w,
+                    assets/2,w_1296.webp 1296w"
+            src="assets/2,w_1296.webp"
+            alt="Chicago">
+        </picture>
         <div class="carousel-caption">
           <h3>Chicago</h3>
           <p>Thank you, Chicago!</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="assets/3.jpg" alt="New York" class="d-block" style="width:100%">
+<!--        <img src="assets/3.webp" alt="New York" class="d-block" style="width:100%" width="1296" height="454">-->
+        <picture>
+          <img
+            sizes="(max-width: 1296px) 100vw, 1296px"
+            srcset="assets/3,w_200.webp 200w,
+                    assets/3,w_639.webp 639w,
+                    assets/3,w_902.webp 902w,
+                    assets/3,w_1148.webp 1148w,
+                    assets/3,w_1296.webp 1296w"
+            src="assets/3,w_1296.webp"
+            alt="New York">
+        </picture>
         <div class="carousel-caption">
           <h3>New York</h3>
           <p>We love the Big Apple!</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="assets/4.jpg" alt="New York" class="d-block" style="width:100%">
+<!--        <img src="assets/4.webp" alt="New York" class="d-block" style="width:100%" width="1296" height="454">-->
+        <picture>
+          <img
+            sizes="(max-width: 1296px) 100vw, 1296px"
+            srcset="assets/4,w_200.webp 200w,
+                    assets/4,w_639.webp 639w,
+                    assets/4,w_902.webp 902w,
+                    assets/4,w_1148.webp 1148w,
+                    assets/4,w_1296.webp 1296w"
+            src="assets/4,w_1296.webp"
+            alt="New York">
+        </picture>
         <div class="carousel-caption">
           <h3>New York</h3>
           <p>We love the Big Apple!</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="assets/5.jpg" alt="New York" class="d-block" style="width:100%">
+<!--        <img src="assets/5.webp" alt="New York" class="d-block" style="width:100%" width="1296" height="454">-->
+        <picture>
+          <img
+            sizes="(max-width: 1296px) 100vw, 1296px"
+            srcset="assets/5,w_200.webp 200w,
+                    assets/5,w_639.webp 639w,
+                    assets/5,w_902.webp 902w,
+                    assets/5,w_1148.webp 1148w,
+                    assets/5,w_1296.webp 1296w"
+            src="assets/5,w_1296.webp"
+            alt="New York">
+        </picture>
         <div class="carousel-caption">
           <h3>New York</h3>
           <p>We love the Big Apple!</p>
@@ -39,27 +96,28 @@
       </div>
     </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" id="carousel-prev">
       <span class="carousel-control-prev-icon"></span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" id="carousel-next">
       <span class="carousel-control-next-icon"></span>
     </button>
   </div>
 </div>
 <div class="container-fluid text-center" *transloco="let t">
-    <h2>{{t('new cocktails')}}</h2>
+  <h2>{{t('new cocktails')}}</h2>
 </div>
 
-<div class="line" >
+<div class="line">
   <div class="m-3" *ngFor="let cocktail of cocktails; ">
     <div class="post">
       <div class="bg-image hover-zoom container-img">
-        <a class="post-img" [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]">
-                      <img src="data:image/png;base64,{{cocktail.cocktailImage.bytes}}" width="423" height="255"
-                           [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]"/>
+        <a class="post-img" [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">
+          <img src="data:image/png;base64,{{cocktail.cocktailImage.bytes}}" width="423" height="255"
+               [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]" [alt]="cocktail.cocktailName"/>
           <div class="text-block">
-            <h4><a style="color:white" [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]">
+            <h4><a style="color:white"
+                   [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">
               {{cocktail.cocktailName}}
             </a></h4>
           </div>

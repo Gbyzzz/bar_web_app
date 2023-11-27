@@ -22,7 +22,7 @@ public class V2__Images_Adding extends BaseJavaMigration {
                 .prepareStatement("INSERT INTO images (name, filename, content_type, size, bytes)" +
                         " VALUES (?, ?, ?, ?, ?);")) {
             for (int i = FIRST_IMAGE_NAME; i <= LAST_IMAGE_NAME; i++) {
-                String filename = i + ".jpg";
+                String filename = i + ".webp";
 
                 InputStream inputStream = V2__Images_Adding.class.getClassLoader().getResourceAsStream("images/" + filename);
 
@@ -32,7 +32,7 @@ public class V2__Images_Adding extends BaseJavaMigration {
 
                     statement.setString(1, "file");
                     statement.setString(2, filename);
-                    statement.setString(3, "image/jpeg");
+                    statement.setString(3, "image/webp");
                     statement.setInt(4, size);
                     statement.setBytes(5, arr);
                     statement.executeUpdate();

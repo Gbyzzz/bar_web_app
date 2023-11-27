@@ -57,7 +57,7 @@ services:
     container_name: bar_frontend
     restart: always
     ports:
-      - "7777:7777"
+      - "443:443"
 #    volumes:
 #      - /app/node_modules
 #      - ./bar_frontend:/app

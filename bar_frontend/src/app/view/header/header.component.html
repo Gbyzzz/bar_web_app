@@ -132,7 +132,14 @@
   </div>
   <div class="container">
     <a [routerLink]="['']" class="logo">
-      <img src="assets/icon.jpg" width="60" class="mx-auto d-block" alt="logo"/>
+      <picture>
+        <img class="mx-auto d-block"
+          sizes="(max-width: 600px) 45px, (min-width: 601px) 60px"
+          srcset="assets/icon,w45.webp.webp 45w,
+                    assets/icon,w60.webp 60w"
+          src="icon,w60.webp"
+          alt="logo">
+      </picture>
     </a>
   </div>
 
