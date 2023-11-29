@@ -35,5 +35,4 @@ Frontend: Angular
 <br>
 Database: PostgreSQL
 
-Available here: https://185.219.80.190/ (it has selfsigned certificate, so browser may show a warning, just press Advanced->proceed)
-(Same may be with the content, go here https://185.219.80.190:8080 press Advanced->proceed)
+Available here: bar.gbyzzz.com
