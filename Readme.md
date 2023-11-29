@@ -35,4 +35,4 @@ Frontend: Angular
 <br>
 Database: PostgreSQL
 
-Available here: bar.gbyzzz.com
+Available here: [bar.gbyzzz.com](https://bar.gbyzzz.com/)https://bar.gbyzzz.com/
