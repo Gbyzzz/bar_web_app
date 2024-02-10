@@ -4,10 +4,10 @@ services:
   bar_postgres:
     build: ./db
     ports:
-      - "5433:5432"
+      - "5432:5432"
     restart: always
     environment:
-      POSTGRES_PASSWORD:
+      POSTGRES_PASSWORD: aa132435aa
       POSTGRES_DB: bar_db
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -17,7 +17,7 @@ services:
     ports:
       - "6380:6380"
     environment:
-      REDIS_PASSWORD:
+      REDIS_PASSWORD: aa132435aa
     restart: always
   bar_rabbitmq:
     container_name: bar_rabbitmq
@@ -27,7 +27,7 @@ services:
       - "15673:15672"
     environment:
       RABBITMQ_USER: gbyzzz
-      RABBITMQ_PASSWORD:
+      RABBITMQ_PASSWORD: aa132435aa
     restart: always
   bar_backend:
     build: ./bar_backend
@@ -44,13 +44,13 @@ services:
     working_dir: /app
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://bar_postgres:5432/bar_db?stringtype=unspecified
-      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_DATASOURCE_PASSWORD=aa132435aa
       - GBYZZZ_URL_TO_VALIDATE=http://baruserenable:8081/validate
-      - SPRING_DATA_REDIS_PASSWORD=
+      - SPRING_DATA_REDIS_PASSWORD=aa132435aa
       - SPRING_DATA_REDIS_HOST=bar_redis
       - SPRING_RABBITMQ_HOST=bar_rabbitmq
       - SPRING_RABBITMQ_STREAM_USER=gbyzzz
-      - SPRING_RABBITMQ_STREAM_PASSWORD=
+      - SPRING_RABBITMQ_STREAM_PASSWORD=aa132435aa
 
   bar_frontend:
     build: ./bar_frontend
@@ -74,10 +74,10 @@ services:
     working_dir: /app
     environment:
       - SPRING_DATA_REDIS_HOST=bar_redis
-      - SPRING_DATA_REDIS_PASSWORD=
+      - SPRING_DATA_REDIS_PASSWORD=aa132435aa
       - SPRING_RABBITMQ_HOST=bar_rabbitmq
       - SPRING_RABBITMQ_STREAM_USER=gbyzzz
-      - SPRING_RABBITMQ_STREAM_PASSWORD=
+      - SPRING_RABBITMQ_STREAM_PASSWORD=aa132435aa
 
   bar_email:
     build: ./bar_email
@@ -91,7 +91,7 @@ services:
     environment:
       - SPRING_RABBITMQ_HOST=bar_rabbitmq
       - SPRING_RABBITMQ_STREAM_USER=gbyzzz
-      - SPRING_RABBITMQ_STREAM_PASSWORD=
+      - SPRING_RABBITMQ_STREAM_PASSWORD=aa132435aa
       - GBYZZZ_RECOVER_URL=http://localhost:7777/recover_password
 
 volumes:

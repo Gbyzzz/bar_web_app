@@ -7,7 +7,11 @@ RUN npm run build
 FROM nginx:alpine
 COPY --from=builder /app/dist/bar_frontend /usr/share/nginx/html/
 COPY /nginx.conf /etc/nginx/conf.d/default.conf
-COPY /localhost.crt /etc/nginx/
-COPY /localhost.key /etc/nginx/
+COPY fullchain.pem /etc/nginx/
+COPY privkey.pem /etc/nginx/
+COPY fullchain1.pem /etc/nginx/
+COPY privkey1.pem /etc/nginx/
+COPY /certificate.crt /etc/nginx/
+COPY /private.key /etc/nginx/
 EXPOSE 7777
 ENTRYPOINT ["nginx","-g","daemon off;"]
