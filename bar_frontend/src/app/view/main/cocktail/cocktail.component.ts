@@ -79,16 +79,33 @@ export class CocktailComponent implements OnInit {
 
   }
 
+  // ngOnInit(): void {
+  //   this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
+  //     console.log(this.cocktailRecipeDTO);
+  //     this.isUserLoggedIn = loggedIn;
+  //     this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktailRecipeDTO.cocktailDTO, 0);
+  //     this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
+  //       this.vote = res;
+  //       // this.voteService.getVoteCountByCocktail(this.cocktail).subscribe(count =>{
+  //       //   this.voteCount = count;
+  //       // });
+  //     });
+  //   });
+  // }
+
   ngOnInit(): void {
     this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
       this.isUserLoggedIn = loggedIn;
-      this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktailRecipeDTO.cocktailDTO, 0);
-      this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
-        this.vote = res;
-        // this.voteService.getVoteCountByCocktail(this.cocktail).subscribe(count =>{
-        //   this.voteCount = count;
-        // });
-      });
+
+      if (this.cocktailRecipeDTO && this.cocktailRecipeDTO.cocktailDTO) {
+        this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktailRecipeDTO.cocktailDTO, 0);
+        this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
+          this.vote = res;
+          // this.voteService.getVoteCountByCocktail(this.cocktail).subscribe(count =>{
+          //   this.voteCount = count;
+          // });
+        });
+      }
     });
   }
 

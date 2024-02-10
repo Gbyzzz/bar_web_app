@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Injectable, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {TranslocoService} from "@ngneat/transloco";
 import {
   EditCocktailDialogComponent
@@ -12,6 +12,8 @@ import {AuthService} from "../../service/auth/auth.service";
 import {TokenStorageService} from "../../service/auth/token-storage.service";
 import {Router} from "@angular/router";
 import {LoginSharedService} from "../../service/auth/login-shared.service";
+import {Notification} from "../../model/notification/Notification";
+
 
 @Component({
   selector: 'app-header',
@@ -21,6 +23,7 @@ import {LoginSharedService} from "../../service/auth/login-shared.service";
 export class HeaderComponent implements OnInit {
 
   loggedInEvent = new EventEmitter<boolean>();
+  private webSocket: WebSocket;
 
   signInForm: any = {
     username: null,
@@ -35,6 +38,9 @@ export class HeaderComponent implements OnInit {
   role: Role;
   targetUsername: string = '';
   isEmailFound: boolean = undefined;
+
+  notification: Notification;
+  newNotification: boolean = false;
 
   cocktail: Cocktail = new Cocktail();
   siteLanguage = 'English';
@@ -56,6 +62,11 @@ export class HeaderComponent implements OnInit {
               private router: Router,
               private tokenStorage: TokenStorageService,
               private sharedService: LoginSharedService) {
+    this.webSocket = new WebSocket('ws://localhost:8080/notification');
+    this.webSocket.onmessage = (event) => {
+      this.notification = JSON.parse(event.data);
+      this.newNotification = true;
+    };
   }
 
   changeSiteLanguage(language: string): void {
@@ -97,6 +108,10 @@ export class HeaderComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
+  }
+
+  closeAlert() {
+    this.newNotification = false;
   }
 
   login(data) {

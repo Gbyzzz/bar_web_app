@@ -206,4 +206,9 @@
       </div>
     </div>
   </nav>
+  <div *ngIf="newNotification" class="alert alert-success alert-dismissible">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" (click)="closeAlert()"></button>
+    <strong>Hey!</strong> {{notification.message}}, you can check it
+    <a href="http://localhost:4200/cocktails/cocktail/{{notification.cocktailId}}">here</a>
+  </div>
 </div>
