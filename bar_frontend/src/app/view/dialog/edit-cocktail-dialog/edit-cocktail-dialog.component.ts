@@ -25,38 +25,28 @@ export class EditCocktailDialogComponent implements OnInit {
 
   imageSrc: string;
   addIndex: number = 0;
-  selectedIngredient: Ingredient[] = [];
-  selectedUnit: string[] = [];
-  selectedQuantity: number[] = [];
   cocktailForm: UntypedFormGroup;
   newIngredient: Ingredient;
 
   ingredients: Ingredient[];
   targetCocktail: CocktailRecipeDTO;
-  newCocktailName: string;
-  newCocktailImage: Image;
-  newCocktailRecipe: string;
-  newRecipes: Recipe[];
   dialogRef: MatDialogRef<any>;
   data: CocktailRecipeDTO[];
-  // recipes: Recipe[];
   fileHolder: File | null;
   hasDuplicates: boolean = false;
 
 
-  constructor(private httpClient: HttpClient,
-              private cdr: ChangeDetectorRef,
+  constructor(private cdr: ChangeDetectorRef,
               private dialog: MatDialog,
               private ingredientService: IngredientServiceImpl,
               private fb: UntypedFormBuilder,
               private injector: Injector,
               private router: Router,
               private tokenService: TokenStorageService,
-              private imageService: ImageServiceImpl,
-              private cocktailService: CocktailServiceImpl) {
+              protected imageService: ImageServiceImpl,
+              private cocktailService: CocktailServiceImpl,) {
     this.dialogRef = this.injector.get(MatDialogRef, null);
     this.data = this.injector.get(MAT_DIALOG_DATA, null);
-
     this.cocktailForm = this.fb.group({
       cocktailName: '',
       cocktailImageFile: '',
@@ -64,36 +54,27 @@ export class EditCocktailDialogComponent implements OnInit {
       ingredientsRecipe: this.fb.array([]),
     });
 
+
+
     ingredientService.findAll().subscribe(ingredients => {
       this.ingredients = ingredients;
     });
     if(this.data[0]) {
       this.targetCocktail = this.data[0];
+
+      this.cocktailForm.get('cocktailName').setValue(this.targetCocktail.cocktailDTO.cocktailName);
+      this.cocktailForm.get('cocktailImageFile').setValue(this.targetCocktail.cocktailDTO.cocktailImage);
+      this.cocktailForm.get('cocktailRecipe').setValue(this.targetCocktail.cocktailDTO.cocktailRecipe);
+
+      if (this.targetCocktail.recipesDTO) {
+        this.targetCocktail.recipesDTO.forEach(recipe => {
+          this.ingredientsRecipe().insert(this.addIndex, this.newIngredientsRecipe(recipe.ingredient, recipe.quantity));
+          this.addIndex++;
+        });
+      }
       this.dialogRef.updateSize('100%', '100%');
     } else {
       this.targetCocktail = new CocktailRecipeDTO(new Cocktail(), [new Recipe()]);
-    }
-    console.log(this.targetCocktail);
-
-
-
-    if(this.targetCocktail.cocktailDTO.cocktailId) {
-      this.newCocktailName = this.targetCocktail.cocktailDTO.cocktailName;
-      this.newCocktailImage = this.targetCocktail.cocktailDTO.cocktailImage;
-      this.newCocktailRecipe = this.targetCocktail.cocktailDTO.cocktailRecipe;
-      // this.recipeService.findByCocktail(this.targetCocktail).subscribe(res => {
-      //   this.recipes = res;
-      //   this.targetCocktail.recipes = res;
-        if (this.targetCocktail.recipesDTO) {
-          this.targetCocktail.recipesDTO.forEach(recipe => {
-            this.selectedIngredient.splice(this.selectedIngredient.length, 0, recipe.ingredient);
-            this.selectedUnit.splice(this.selectedUnit.length, 0, recipe.ingredient.unitOfMeasurement);
-            this.selectedQuantity.splice(this.selectedQuantity.length, 0, recipe.quantity);
-            this.ingredientsRecipe().insert(this.addIndex, this.newIngredientsRecipe());
-            this.addIndex++;
-          });
-        }
-      // });
     }
   }
 
@@ -104,32 +85,30 @@ export class EditCocktailDialogComponent implements OnInit {
     return this.cocktailForm.get("ingredientsRecipe") as UntypedFormArray
   }
 
-  newIngredientsRecipe(): UntypedFormGroup {
+  newIngredientsRecipe(ingredient, quantity): UntypedFormGroup {
     return this.fb.group({
-      ingredientSelect: '',
-      quantity: '',
+      ingredientSelect: [ingredient.ingredientName],
+      quantity: [quantity],
+      unitSelect: [ingredient.unitOfMeasurement]
     })
   }
 
   addIngredientsRecipe() {
-    this.selectedIngredient.splice(this.selectedIngredient.length, 0, this.ingredients[0]);
-    this.selectedUnit.splice(this.selectedUnit.length, 0, this.ingredients[0].unitOfMeasurement);
-    this.selectedQuantity.splice(this.selectedQuantity.length, 0, 0);
     this.cdr.detectChanges();
-    this.ingredientsRecipe().push(this.newIngredientsRecipe());
+    this.ingredientsRecipe().push(this.newIngredientsRecipe('', ''));
   }
 
   removeIngredientsRecipe(i: number) {
-    this.selectedIngredient.splice(i, 1);
-    this.selectedUnit.splice(i, 1);
-    this.selectedQuantity.splice(i, 1);
     this.ingredientsRecipe().removeAt(i);
   }
 
-  onSelectChange(event, i) {
-    this.selectedIngredient[i] = event;
-    this.selectedUnit[i] = this.selectedIngredient[i].unitOfMeasurement;
-  }
+    onSelectChange(event, i) {
+
+      const ingredientGroup = this.ingredientsRecipe().at(i) as UntypedFormGroup;
+      const selectedIngredient = this.ingredients.find(ingredient => ingredient.ingredientName === event.target.value);
+      ingredientGroup.get('ingredientSelect').setValue(event.target.value);
+      ingredientGroup.get('unitSelect').setValue(selectedIngredient.unitOfMeasurement);
+    }
 
   equals(o1: Ingredient, o2: Ingredient) {
     return o1.ingredientId === o2.ingredientId;
@@ -174,7 +153,6 @@ export class EditCocktailDialogComponent implements OnInit {
       }
     });
   }
-
   onSubmit(): void {
     this.checkDuplicates();
     if(!this.hasDuplicates) {
@@ -182,19 +160,11 @@ export class EditCocktailDialogComponent implements OnInit {
         const formData = new FormData();
         formData.append('file', this.fileHolder, this.fileHolder.name);
         this.imageService.uploadImage(formData).subscribe(image => {
-          this.newCocktailImage = image;
+          this.targetCocktail.cocktailDTO.cocktailImage = image;
           this.updateCocktailValues();
-          // this.recipes = this.newRecipes;
-          // this.recipeService.addAll(this.recipes)
-          //   .subscribe(res => {
-          // });
         });
       } else {
         this.updateCocktailValues();
-        // this.recipes = this.newRecipes;
-        // this.recipeService.addAll(this.recipes)
-        //   .subscribe(res => {
-        // });
       }
       this.dialogRef.close(new DialogResult(DialogAction.SAVE));
     }
@@ -203,23 +173,16 @@ export class EditCocktailDialogComponent implements OnInit {
   onAdd(): void {
     this.checkDuplicates();
     if(!this.hasDuplicates) {
-      console.log("1");
       const formData = new FormData();
       formData.append('file', this.fileHolder, this.fileHolder.name);
       this.imageService.uploadImage(formData).subscribe(image => {
-        console.log("2");
-
-        this.newCocktailImage = image;
+        this.targetCocktail.cocktailDTO.cocktailImage = image;
+        this.targetCocktail.cocktailDTO.cocktailName = this.cocktailForm.get('cocktailName').value;
+        this.targetCocktail.cocktailDTO.cocktailRecipe = this.cocktailForm.get('cocktailRecipe').value;
         this.updateCocktailValues();
-        console.log(this.targetCocktail);
-        console.log(this.targetCocktail.cocktailDTO);
-        console.log(this.targetCocktail.cocktailDTO.cocktailName);
-
         this.targetCocktail.cocktailDTO.cocktailAuthor = this.tokenService.getUser();
         console.log(this.targetCocktail);
-        console.log(JSON.stringify(this.targetCocktail));
         this.cocktailService.addCocktail(this.targetCocktail).subscribe(res => {
-          console.log("3");
           this.router.navigate(['/cocktails/cocktail/' + res.cocktailDTO.cocktailId]);
         });
       });
@@ -228,21 +191,18 @@ export class EditCocktailDialogComponent implements OnInit {
 
 
   updateCocktailValues() :void {
-    this.targetCocktail.cocktailDTO.cocktailName = this.newCocktailName;
-    this.targetCocktail.cocktailDTO.cocktailRecipe = this.newCocktailRecipe;
-    this.targetCocktail.cocktailDTO.cocktailImage = this.newCocktailImage;
-    console.log('recipes');
-    this.newRecipes = [];
-    for (let i = 0; i < this.selectedIngredient.length; i++) {
-      this.newRecipes.splice(i, 0, new Recipe(null,
-        this.selectedIngredient[i], Number(this.selectedQuantity[i])));
+    const ingredientsRecipe = this.cocktailForm.get('ingredientsRecipe') as UntypedFormArray;
+    this.targetCocktail.recipesDTO = [];
+    for (let i = 0; i < ingredientsRecipe.length; i++) {
+      this.targetCocktail.recipesDTO.splice(i, 0, new Recipe(null,
+        this.ingredients.find(ingredient => ingredient.ingredientName === ingredientsRecipe.value[i].ingredientSelect),
+        Number(ingredientsRecipe.value[i].quantity)));
     }
-    console.log(this.newRecipes);
-    this.targetCocktail.recipesDTO = this.newRecipes;
   }
 
   checkDuplicates(): void {
-    const duplicates = this.selectedIngredient.filter((value, index, self) => {
+    const ingredientsRecipe = this.cocktailForm.get('ingredientsRecipe') as UntypedFormArray;
+    const duplicates = ingredientsRecipe.value.filter((value, index, self) => {
       return self.indexOf(value) !== index;
     });
 

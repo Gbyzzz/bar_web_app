@@ -10,7 +10,7 @@
             <label class="labels">
               {{t('name')}}:
             </label>
-            <input type="text" required name="name" [(ngModel)]="newCocktailName" width="20%"
+            <input type="text" required name="name" width="20%"
                    class="form-control" formControlName="cocktailName"/>
           </div>
           <div class="col-sm-4">
@@ -23,7 +23,6 @@
                 type="file"
                 name="image"
                 class="form-control"
-                [(ngModel)]="newCocktailImage"
                 (change)="onFileChange($event)">
             </div>
 
@@ -33,7 +32,7 @@
         <div class="row mt-5 mb-5">
           <div class="col-sm-8">
             <label for="recipe">{{t('recipe')}}:</label>
-            <textarea [(ngModel)]="newCocktailRecipe" required class="form-control"
+            <textarea required class="form-control"
                       formControlName="cocktailRecipe"
                       rows="9" id="recipe" name="recipe"></textarea>
           </div>
@@ -59,18 +58,16 @@
                        *ngFor="let ingredientsRecipe of ingredientsRecipe().controls; let i = index"
                        [formGroupName]="i">
                     <select class="btn-light mr-0" [compareWith]="equals"
-                            [(ngModel)]="selectedIngredient[i]"
-                            (ngModelChange)="onSelectChange($event, i)"
+                            (change)="onSelectChange($event, i)"
                             formControlName="ingredientSelect">
-                      <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">
+                      <option *ngFor="let ingredient of ingredients" [value]="ingredient.ingredientName">
                         {{ingredient.ingredientName}}
                       </option>
                     </select>
                     <input type="text" name="quantity" class="form-control m-input"
-                           [(ngModel)]="selectedQuantity[i]"
                            formControlName="quantity">
                     <input type="text" class="form-control m-input" style="width:5px"
-                           [value]="selectedUnit[i]" disabled>
+                           formControlName="unitSelect" disabled>
                     <div class="input-group-prepend">
                       <button class="btn btn-danger" (click)="removeIngredientsRecipe(i)"
                               type="button">

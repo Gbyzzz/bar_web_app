@@ -12,8 +12,8 @@ import {DialogAction, DialogResult} from "../DialogResult";
 export class EditUserDialogComponent implements OnInit {
 
   constructor(
-    private dialogRef: MatDialogRef<EditUserDialogComponent>, // // для возможности работы с текущим диалог. окном
-    @Inject(MAT_DIALOG_DATA) private data: [User], // данные, которые передаем в текущее диалоговое окно
+    private dialogRef: MatDialogRef<EditUserDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: [User],
   ) { }
 
   roles = Object.values(Role);

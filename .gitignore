@@ -10,6 +10,8 @@ out/
 /.classpathqw
 !gradle/wrapper/gradle-wrapper.jar
 */node_modules
+.env
+application-dev.properties
 
 *.log
 *.ctxt

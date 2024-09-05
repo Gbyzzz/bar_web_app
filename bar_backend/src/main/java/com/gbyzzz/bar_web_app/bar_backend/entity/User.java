@@ -4,6 +4,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.type.PGUserRoleType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
 
+import javax.validation.constraints.Email;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -37,6 +38,7 @@ public class User {
     private String phone;
 
     @Basic
+    @Email
     @Column(name = "email", length = 256, unique = true, nullable = false)
     private String email;
 

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -51,14 +52,14 @@ public class CocktailController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public CocktailRecipeDTO addCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException {
+    public CocktailRecipeDTO addCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException, IOException {
         return cocktailService.addOrUpdate(cocktailRecipeDTO);
     }
 
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public CocktailRecipeDTO updateCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException {
+    public CocktailRecipeDTO updateCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException, IOException {
         return cocktailService.addOrUpdate(cocktailRecipeDTO);
     }
 
