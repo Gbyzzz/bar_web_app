@@ -50,7 +50,7 @@ CREATE TABLE cocktails
     cocktail_author           bigint             NOT NULL REFERENCES users (user_id),
     cocktail_rating           real               NOT NULL DEFAULT '0',
     publication_date          timestamp          NOT NULL,
-    image                     bigint REFERENCES images (image_id),
+    cocktailImage                     bigint REFERENCES images (image_id),
     cocktail_recipe           text               NOT NULL,
     approx_alcohol_percentage real               NOT NULL DEFAULT '0'
 );

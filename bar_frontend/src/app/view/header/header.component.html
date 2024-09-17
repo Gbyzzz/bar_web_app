@@ -74,7 +74,7 @@
         </div>
 
         <div #recoverPasswordTab class="tab-pane fade">
-          <form (ngSubmit)="f.form.valid && onRecoverPassword()" #a="ngForm" novalidate>
+          <form  #a="ngForm" novalidate>
             {{t('email')}}:
             <div>
               <input class="form-control me-2" name="email" [(ngModel)]="recoverPasswordForm.email"
@@ -99,7 +99,7 @@
                         type="button" (click)="toSignInTab()">
                   {{t('to sign in')}}
                 </button>
-                <button class="btn btn-outline-dark" name="command" type="submit"
+                <button class="btn btn-outline-dark" name="command"
                         (click)="onRecoverPassword()">
                   {{t('send email')}}
                 </button>
@@ -180,6 +180,10 @@
                 [routerLink]="['/cocktails/add']">
           {{t('add cocktail')}}
         </button>
+        <form class="d-flex">
+          <input class="form-control me-2" type="text" placeholder="{{t('search')}}">
+          <button class="btn btn-dark me-3" type="button">{{t('search')}}</button>
+        </form>
         <div class="dropdown">
           <button type="button" class="btn btn-dark me-3 dropdown-toggle" data-bs-toggle="dropdown">
             {{siteLanguage}}

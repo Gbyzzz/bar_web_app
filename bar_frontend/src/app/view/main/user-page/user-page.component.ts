@@ -2,8 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UserServiceImpl} from "../../../service/entity/impl/UserServiceImpl";
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
 import {User} from "../../../model/User";
-import {Image} from "../../../model/Image";
-import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import Validation from "../../../utils/validation";
 import {AuthService} from "../../../service/auth/auth.service";
@@ -31,8 +29,7 @@ export class UserPageComponent implements OnInit {
   newPhone: string;
   imageSrc: string;
   role: string;
-  newImageId: number;
-  newUserImage: Image;
+  newUserImage: string;
   userProfileForm: UntypedFormGroup;
   fileHolder: File | null;
   isPasswordChanged: boolean;
@@ -42,7 +39,6 @@ export class UserPageComponent implements OnInit {
               private userService: UserServiceImpl,
               private authService: AuthService,
               private tokenStorage: TokenStorageService,
-              private imageService: ImageServiceImpl,
               private fb: UntypedFormBuilder,) {
     this.changePasswordForm = this.fb.group(
       {
@@ -85,8 +81,7 @@ export class UserPageComponent implements OnInit {
       this.username = user.username;
       this.newSurname = user.surname;
       this.newPhone = user.phone;
-      this.newImageId = user.userPic.imageId;
-      this.imageSrc = imageService.getImage(this.newImageId);
+      this.imageSrc = user.userPic;
     });
   }
 
@@ -109,12 +104,11 @@ export class UserPageComponent implements OnInit {
   onSave() {
     if (this.userProfileForm.get('userImageFile').value) {
       const formData = new FormData();
-      formData.append('file', this.fileHolder, this.fileHolder.name);
-      this.imageService.uploadImage(formData).subscribe(image => {
-        this.newUserImage = image;
-        this.user.userPic = this.newUserImage;
-        this.updateUserValues();
-      });
+      this.updateUserValues();
+      formData.append('image', this.fileHolder, this.fileHolder.name);
+      formData.append('user', new Blob([JSON.stringify(this.user)], {
+        type: 'application/json'
+      }));
     } else {
       this.updateUserValues();
     }

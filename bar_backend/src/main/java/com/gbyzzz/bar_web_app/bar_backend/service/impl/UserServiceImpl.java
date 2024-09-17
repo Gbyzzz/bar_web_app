@@ -5,29 +5,36 @@ import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.UserDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
+import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
  * @author Anton Pinchuk
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserDTOMapper mapper = UserDTOMapper.INSTANCE;
+    private final ImageStorageService imageStorageService;
 
+    private static final int MAX_USER_PIC_SIZE = 80;
 
-    public UserServiceImpl(UserRepository userRepository) {
-
-        this.userRepository = userRepository;
-    }
+    @Value("${app.minio.userPicBucket}")
+    private String userPicBucket;
 
     @Override
     public List<UserDTO> findAll() {
@@ -46,9 +53,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(User user) {
+    public UserDTO updateUser(User user, MultipartFile image) throws IOException {
+        String imageUrl;
+        if(image != null) {
+            imageUrl = imageStorageService.saveImage(image, userPicBucket, MAX_USER_PIC_SIZE);
+        } else {
+            imageUrl = user.getUserPic();
+        }
         userRepository.updateUser(user.getUserId(), user.getName(),
-                user.getSurname(), user.getPhone(), user.getUserPic());
+                user.getSurname(), user.getPhone(), imageUrl);
         return mapper.toDTO(findByUsername(user.getUsername()));
     }
 

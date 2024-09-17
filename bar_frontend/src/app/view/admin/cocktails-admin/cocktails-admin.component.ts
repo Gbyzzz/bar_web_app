@@ -5,7 +5,6 @@ import {Sort} from "@angular/material/sort";
 import {DialogAction} from "../../dialog/DialogResult";
 import {Cocktail} from "../../../model/Cocktail";
 import {EditCocktailDialogComponent} from "../../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
-import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {Pagination, SortDirection, SortDirectionUtil} from "../../../model/pagination/Pagination";
 import {PageEvent} from "@angular/material/paginator";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
@@ -31,7 +30,6 @@ export class CocktailsAdminComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private cocktailService: CocktailServiceImpl,
-              private imageService: ImageServiceImpl,
               private recipeService: RecipeServiceImpl,
               private sortDirectionUtil: SortDirectionUtil) {
     this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
@@ -41,9 +39,6 @@ export class CocktailsAdminComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateCocktail(cocktail: CocktailRecipeDTO){
-    this.cocktailService.updateCocktail(cocktail).subscribe();
-  }
 
   sortData(sort: Sort) {
     if (this.totalCocktailsFound > this.pagination.pageSize && (sort.active == 'cocktailId'
@@ -124,7 +119,7 @@ export class CocktailsAdminComponent implements OnInit {
       }
 
       if (result.action === DialogAction.SAVE) {
-        this.updateCocktail(cocktail);
+        // this.cocktailService.updateCocktail(cocktail).subscribe();
         return;
       }
     });

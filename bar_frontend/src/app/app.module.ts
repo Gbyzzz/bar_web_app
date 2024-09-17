@@ -30,7 +30,6 @@ import {EditUserDialogComponent} from './view/dialog/edit-user-dialog/edit-user-
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {EditIngredientDialogComponent} from './view/dialog/edit-ingredient-dialog/edit-ingredient-dialog.component';
 import {EditCocktailDialogComponent} from './view/dialog/edit-cocktail-dialog/edit-cocktail-dialog.component';
-import {IMAGE_URL_TOKEN} from "./service/entity/impl/ImageServiceImpl";
 import {CocktailComponent} from './view/main/cocktail/cocktail.component';
 import {CocktailsComponent} from './view/main/cocktails/cocktails.component';
 import {TranslateModule} from '@ngx-translate/core';
@@ -121,11 +120,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     {
       provide: INGREDIENT_URL_TOKEN,
       useValue: environment.API_URL + 'ingredient'
-    },
-
-    {
-      provide: IMAGE_URL_TOKEN,
-      useValue: environment.API_URL + 'image'
     },
 
     {

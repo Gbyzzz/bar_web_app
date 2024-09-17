@@ -13,6 +13,7 @@ import com.gbyzzz.bar_web_app.bar_backend.service.exception.ServiceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,15 +53,17 @@ public class CocktailController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public CocktailRecipeDTO addCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException, IOException {
-        return cocktailService.addOrUpdate(cocktailRecipeDTO);
+    public CocktailRecipeDTO addCocktail(@RequestPart("cocktail") CocktailRecipeDTO cocktailRecipeDTO,
+                                         @RequestPart("image") MultipartFile image) throws ServiceException, IOException {
+        return cocktailService.addOrUpdate(cocktailRecipeDTO, image);
     }
 
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public CocktailRecipeDTO updateCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException, IOException {
-        return cocktailService.addOrUpdate(cocktailRecipeDTO);
+    public CocktailRecipeDTO updateCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO,
+                                            @RequestPart("image") MultipartFile image) throws ServiceException, IOException {
+        return cocktailService.addOrUpdate(cocktailRecipeDTO, image);
     }
 
     @PostMapping("/all_pages")

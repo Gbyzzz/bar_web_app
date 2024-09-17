@@ -165,7 +165,6 @@ export class HeaderComponent implements OnInit {
         const button = document.getElementById('close_sign_in');
         button.click();
       }
-
     });
   }
   reloadPage(): void {

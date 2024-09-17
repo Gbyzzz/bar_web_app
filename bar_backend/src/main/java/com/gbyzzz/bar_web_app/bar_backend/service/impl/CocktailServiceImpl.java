@@ -14,8 +14,11 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.RestPage;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.CocktailRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.CocktailService;
+import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
 import com.gbyzzz.bar_web_app.bar_backend.service.exception.ServiceException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,6 +27,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -38,21 +42,26 @@ import java.util.stream.Collectors;
  */
 @Service
 @CacheConfig(cacheNames = "cs")
+@RequiredArgsConstructor
 public class CocktailServiceImpl implements CocktailService {
 
-    CocktailDTOMapper cocktailDTOMapper = CocktailDTOMapper.INSTANCE;
+    private final CocktailDTOMapper cocktailDTOMapper;
     RecipeDTOMapper recipeMapper = RecipeDTOMapper.INSTANCE;
 
+    private static final int MAX_COCKTAIL_IMAGE_SIZE = 635;
+    private static final int MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE = 80;
+
+
+    @Value("${app.minio.cocktailImage}")
+    private String cocktailImage;
+
+    @Value("${app.minio.cocktailThumbnail}")
+    private String cocktailThumbnail;
 
     private final CocktailRepository cocktailRepository;
     private final RecipeService recipeService;
+    private final ImageStorageService imageStorageService;
     private final NotificationWebSocketHandler webSocketHandler;
-
-    public CocktailServiceImpl(CocktailRepository cocktailRepository, RecipeService recipeService, NotificationWebSocketHandler webSocketHandler) {
-        this.cocktailRepository = cocktailRepository;
-        this.recipeService = recipeService;
-        this.webSocketHandler = webSocketHandler;
-    }
 
     @Override
     public List<CocktailDTO> findAll() {
@@ -72,16 +81,20 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     @CacheEvict(cacheNames = {"cs_pages", "cs"}, allEntries = true)
-    public CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktailRecipeDTO) throws ServiceException, IOException {
+    public CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktailRecipeDTO, MultipartFile image) throws ServiceException, IOException {
         if(checkRecipes(cocktailRecipeDTO.recipesDTO())) {
             StringBuilder message = new StringBuilder();
             Cocktail cocktail = cocktailDTOMapper.toEntity(cocktailRecipeDTO.cocktailDTO());
+            cocktail.setCocktailImage(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_SIZE));
+            cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE));
             List<Recipe> recipes = cocktailRecipeDTO.recipesDTO().stream().map(recipeMapper::toEntity)
                     .toList();
             if (cocktail.getPublicationDate() == null) {
                 cocktail.setPublicationDate(new Date(new java.util.Date().getTime()));
                 message.append("New cocktail was just added by ").append(cocktail.getCocktailAuthor().getUsername());
             }
+            cocktail.setCocktailImage(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_SIZE));
+            cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(image, cocktailThumbnail, MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE));
             cocktail = cocktailRepository.save(cocktail);
             if(!message.isEmpty()){
                 webSocketHandler.sendNotification(new Notification(message.toString(), cocktail.getCocktailId()));

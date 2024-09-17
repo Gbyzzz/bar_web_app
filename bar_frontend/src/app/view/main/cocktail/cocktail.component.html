@@ -15,7 +15,7 @@
         {{cocktailRecipeDTO.cocktailDTO.cocktailRecipe}}
       </div>
       <div class="col-6">
-        <img src="data:image/png;base64,{{cocktailRecipeDTO.cocktailDTO.cocktailImage.bytes}}" class="mx-auto d-block img" alt="logo"/>
+        <img [src]="cocktailRecipeDTO.cocktailDTO.cocktailImage" class="mx-auto d-block img" alt="logo"/>
       </div>
     </div>
   </div>

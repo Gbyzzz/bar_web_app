@@ -7,16 +7,16 @@ DROP TABLE IF EXISTS votes;
 
 CREATE TYPE user_role AS ENUM ('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER');
 
-CREATE TABLE images
-(
-    image_id     bigserial PRIMARY KEY,
-    name         varchar(45) NOT NULL,
-    filename     varchar(45) NOT NULL,
-    content_type varchar(45) NOT NULL,
-    size         bigint      NOT NULL,
-    bytes        bytea       NOT NULL
-
-);
+-- CREATE TABLE images
+-- (
+--     image_id     bigserial PRIMARY KEY,
+--     name         varchar(45) NOT NULL,
+--     filename     varchar(45) NOT NULL,
+--     content_type varchar(45) NOT NULL,
+--     size         bigint      NOT NULL,
+--     bytes        bytea       NOT NULL
+--
+-- );
 
 CREATE TABLE users
 (
@@ -27,7 +27,8 @@ CREATE TABLE users
     surname  varchar(30)                  DEFAULT NULL,
     phone    varchar(15) UNIQUE           DEFAULT NULL,
     email    varchar(256) UNIQUE NOT NULL,
-    user_pic bigint REFERENCES images (image_id) ON DELETE CASCADE,
+--     user_pic bigint REFERENCES images (image_id) ON DELETE CASCADE,
+    image_url varchar(256),
     role     user_role           NOT NULL DEFAULT 'ROLE_USER',
     enabled  boolean             NOT NULL DEFAULT 'false',
     reg_date timestamp           NOT NULL
@@ -40,7 +41,10 @@ CREATE TABLE cocktails
     cocktail_author           bigint             NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
     cocktail_rating           real               NOT NULL DEFAULT '0',
     publication_date          timestamp          NOT NULL,
-    image                     bigint REFERENCES images (image_id) ON DELETE CASCADE,
+--     image                     bigint REFERENCES images (image_id) ON DELETE CASCADE,
+--     image_thumbnail           bigint REFERENCES images (image_id) ON DELETE CASCADE,
+    image_url varchar(256),
+    image_thumbnail_url varchar(256),
     cocktail_recipe           text               NOT NULL,
     approx_alcohol_percentage real               NOT NULL DEFAULT '0'
 );

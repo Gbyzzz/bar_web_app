@@ -21,7 +21,7 @@
     <tr *ngFor="let user of sortedData">
       <td class="border-1">{{user.userId}}</td>
       <td class="border-1">
-        <img *ngIf="user.userPic" src="data:image/png;base64,{{user.userPic.bytes}}" width="120"/>
+        <img *ngIf="user.userPic" [src]="user.userPic" width="120"/>
       </td>
       <td class="border-1">{{user.username}}</td>
       <td class="border-1">{{user.name}}</td>

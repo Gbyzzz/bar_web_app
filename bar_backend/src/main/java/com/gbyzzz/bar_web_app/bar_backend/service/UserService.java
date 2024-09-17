@@ -6,7 +6,10 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +24,7 @@ public interface UserService {
 
     UserDTO addUser(User user);
 
-    UserDTO updateUser(User user);
+    UserDTO updateUser(User user, MultipartFile image) throws IOException;
 
     boolean existsByUsername(String username);
 

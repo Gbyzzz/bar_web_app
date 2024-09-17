@@ -1,5 +1,4 @@
 import {User} from "./User";
-import {Image} from "./Image";
 
 export class Cocktail {
   cocktailId: number;
@@ -7,15 +6,16 @@ export class Cocktail {
   cocktailAuthor: User;
   cocktailRating: number;
   publicationDate: Date;
-  cocktailImage: Image;
+  cocktailImage: string;
+  cocktailImageThumbnail: string;
   cocktailRecipe: string;
   approxAlcoholPercentage: number;
   voteCount: number;
 
 
   constructor(cocktailId?: number, cocktailName?: string, cocktailAuthor?: User,
-              cocktailRating?: number, publicationDate?: Date, cocktailImage?: Image,
-              cocktailRecipe?: string, approxAlcoholPercentage?: number,
+              cocktailRating?: number, publicationDate?: Date, cocktailImage?: string,
+              cocktailImageThumbnail?: string, cocktailRecipe?: string, approxAlcoholPercentage?: number,
               voteCount?: number) {
     this.cocktailId = cocktailId;
     this.cocktailName = cocktailName;
@@ -23,6 +23,7 @@ export class Cocktail {
     this.cocktailRating = cocktailRating;
     this.publicationDate = publicationDate;
     this.cocktailImage = cocktailImage;
+    this.cocktailImageThumbnail = cocktailImageThumbnail;
     this.cocktailRecipe = cocktailRecipe;
     this.approxAlcoholPercentage = approxAlcoholPercentage;
     this.voteCount = voteCount;

@@ -15,7 +15,7 @@ public record UserDTO(
         String surname,
         String phone,
         String email,
-        ImageDTO userPic,
+        String userPic,
         String role,
         boolean enabled,
         Date regDate

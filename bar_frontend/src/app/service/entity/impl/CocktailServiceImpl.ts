@@ -43,12 +43,12 @@ export class CocktailServiceImpl implements CocktailService{
     return this.HttpClient.get<Cocktail[]>(this.url+'/main_page');
   }
 
-  addCocktail(cocktail: CocktailRecipeDTO): Observable<CocktailRecipeDTO> {
-    return this.HttpClient.post<CocktailRecipeDTO>(this.url+'/add', cocktail);
+  addCocktail(formData: FormData): Observable<CocktailRecipeDTO> {
+    return this.HttpClient.post<CocktailRecipeDTO>(this.url+'/add', formData);
   }
 
-  updateCocktail(cocktail: CocktailRecipeDTO): Observable<CocktailRecipeDTO> {
-    return this.HttpClient.put<CocktailRecipeDTO>(this.url+'/update', cocktail);
+  updateCocktail(formData: FormData): Observable<CocktailRecipeDTO> {
+    return this.HttpClient.put<CocktailRecipeDTO>(this.url+'/update', formData);
   }
 
   add(obj: Cocktail): Observable<Cocktail> {

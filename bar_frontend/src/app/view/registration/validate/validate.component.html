@@ -1,7 +1,7 @@
 <div class="container mt-5 mb-5">
 
   <div class="text-center">
-    <h3>Please input code, which was sent to your email</h3>
+    <h3>Please input message, which was sent to your email</h3>
   </div>
 
   <div class="text-center">
@@ -18,7 +18,7 @@
       (keydown)="handleKeyDown($event, i)"
       (paste)="handlePaste($event, i)"
       [formControl]="$any(input)"
-      [attr.autocomplete]="i === 0 ? 'one-time-code' : null"
+      [attr.autocomplete]="i === 0 ? 'one-time-message' : null"
       type="text"
       inputmode="numeric"
     />

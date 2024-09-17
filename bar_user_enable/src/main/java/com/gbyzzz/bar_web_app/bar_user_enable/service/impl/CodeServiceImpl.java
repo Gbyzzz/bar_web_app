@@ -1,15 +1,18 @@
 package com.gbyzzz.bar_web_app.bar_user_enable.service.impl;
 
-import com.gbyzzz.bar_web_app.bar_user_enable.entity.Code;
-import com.gbyzzz.bar_web_app.bar_user_enable.messaging.entity.Message;
+import com.gbyzzz.bar_web_app.bar_user_enable.entity.Message;
 import com.gbyzzz.bar_web_app.bar_user_enable.repository.CodeRepository;
 import com.gbyzzz.bar_web_app.bar_user_enable.service.CodeService;
+import com.gbyzzz.bar_web_app.bar_user_enable.service.KafkaService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.RandomStringGenerator;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class CodeServiceImpl implements CodeService {
 
     private final static Integer MIN = 100000;
@@ -17,26 +20,31 @@ public class CodeServiceImpl implements CodeService {
 
 
     private final CodeRepository codeRepository;
+    private final KafkaService kafkaService;
 
-    public CodeServiceImpl(CodeRepository codeRepository) {
-        this.codeRepository = codeRepository;
+    @KafkaListener(
+            topics = "${application.kafka.topic.to_generate}",
+            groupId = "groupId",
+            containerFactory = "kafkaListenerContainerFactory")
+    @Override
+    public void addCode(Message message) {
+        message.setCode(generateCode().toString());
+        codeRepository.save(message);
+        kafkaService.sendMessage("to_send_email", message);
     }
 
+    @KafkaListener(
+            topics = "${application.kafka.topic.to_validate}",
+            groupId = "groupId",
+            containerFactory = "kafkaListenerContainerFactory")
     @Override
-    public Message addCode(String email) {
-        Code code = new Code(email, generateCode().toString());
-        codeRepository.save(code);
-        return new Message(code, "send code");
-    }
-
-    @Override
-    public boolean validateCode(Code code) {
-        Code codeFromDb = codeRepository.findById(code.getEmail()).orElseThrow();
-        boolean valid = Objects.equals(codeFromDb.getCode(), code.getCode());
+    public boolean validateCode(Message message) {
+        Message messageFromDb = codeRepository.findById(message.getEmail()).orElseThrow();
+        boolean valid = Objects.equals(messageFromDb.getCode(), message.getCode());
         if(valid){
-            codeRepository.delete(code);
+            codeRepository.delete(message);
         }
-        return Objects.equals(codeFromDb.getCode(), code.getCode());
+        return Objects.equals(messageFromDb.getCode(), message.getCode());
     }
 
     @Override
@@ -44,8 +52,12 @@ public class CodeServiceImpl implements CodeService {
         return (Integer) codeRepository.findById(a).get().getCode();
     }
 
+    @KafkaListener(
+            topics = "${application.kafka.topic.to_recover}",
+            groupId = "groupId",
+            containerFactory = "kafkaListenerContainerFactory")
     @Override
-    public Message addRecoverCode(String email) {
+    public void addRecoverCode(Message message) {
         RandomStringGenerator digitGenerator = new RandomStringGenerator.Builder()
                 .withinRange('0', '9')
                 .build();
@@ -76,17 +88,17 @@ public class CodeServiceImpl implements CodeService {
 
         String pass = codeBuilder.toString();
 //        String pass = pwdGenerator.generate(15);
-        Code code = new Code(pass, email);
-        codeRepository.save(code);
-        code.setCode(pass);
-        code.setEmail(email);
-        return new Message(code, "recover");
+//        Message message = new Message(pass, email);
+        message.setCode(pass);
+        codeRepository.save(message);
+        message.setCode(pass);
+        kafkaService.sendMessage("to_send_email", message);
     }
 
     @Override
     public String getEmailFromCode(String code) {
-        Code codeFromDb = codeRepository.findById(code).orElseThrow();
-        return (String) codeFromDb.getCode();
+        Message messageFromDb = codeRepository.findById(code).orElseThrow();
+        return (String) messageFromDb.getCode();
     }
 
     private Integer generateCode(){

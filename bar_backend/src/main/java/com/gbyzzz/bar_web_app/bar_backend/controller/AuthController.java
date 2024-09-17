@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -39,20 +40,18 @@ public class AuthController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
     @PostMapping("/validate")
-    public boolean validate(@RequestBody Code code) {
+    public boolean validate(@RequestBody Code code) throws IOException {
         return authService.validate(code);
     }
 
     @PostMapping("/change_password")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
-    public boolean changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest)
-            throws Exception {
+    public boolean changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) throws IOException {
         return authService.changePassword(changePasswordRequest);
     }
 
     @PostMapping("/recover_password")
-    public boolean recoverPassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest)
-            throws Exception {
+    public boolean recoverPassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) throws IOException {
         return authService.changePassword(changePasswordRequest);
     }
 

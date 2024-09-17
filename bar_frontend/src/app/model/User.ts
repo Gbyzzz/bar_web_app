@@ -1,5 +1,3 @@
-import {Image} from "./Image";
-
 export enum Role {
   ADMIN = "ROLE_ADMIN",
   BARTENDER = "ROLE_BARTENDER",
@@ -15,14 +13,14 @@ export class User {
   surname?: string;
   phone?: string;
   email: string;
-  userPic?: Image;
+  userPic?: string;
   role: Role;
   enabled: boolean;
   regDate: Date;
 
 
   constructor(userId: number, username: string, email: string, role: Role, enabled: boolean, regDate: Date,
-              name?: string, surname?: string, phone?: string, userPic?: Image) {
+              name?: string, surname?: string, phone?: string, userPic?: string) {
     this.userId = userId;
     this.username = username;
     this.name = name;
@@ -34,13 +32,5 @@ export class User {
     this.enabled = enabled;
     this.regDate = regDate;
   }
-
-  // toJSON(): any {
-  //   const { userId, ...rest } = this;
-  //   return {
-  //     '@class': 'com.gbyzzz.bar_web_app.bar_backend.dto.UserDTO',
-  //     ...rest
-  //   };
-  // }
 }
 

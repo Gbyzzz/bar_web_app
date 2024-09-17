@@ -1,19 +1,19 @@
 package com.gbyzzz.bar_web_app.bar_backend.controller;
 
-import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.ChangePasswordRequest;
 import com.gbyzzz.bar_web_app.bar_backend.dto.UserDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupRequest;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
-import com.gbyzzz.bar_web_app.bar_backend.service.ImageService;
+import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,16 +23,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    private final ImageService imageService;
-
-    public UserController(UserService userService, ImageService imageService) {
-        this.userService = userService;
-        this.imageService = imageService;
-    }
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -55,11 +49,8 @@ public class UserController {
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BARTENDER', 'ROLE_USER')")
-    public UserDTO updateUser(@RequestBody User user) {
-        if(user.getUserPic() != null) {
-            user.setUserPic(imageService.getImageById(user.getUserPic().getImageId()));
-        }
-        return userService.updateUser(user);
+    public UserDTO updateUser(@RequestBody User user, @RequestPart("image") MultipartFile image) throws IOException {
+        return userService.updateUser(user, image);
     }
 
     @PostMapping("/is_username_available")

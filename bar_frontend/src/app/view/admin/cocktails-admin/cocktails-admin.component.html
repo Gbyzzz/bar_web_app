@@ -20,7 +20,7 @@
     <tr *ngFor="let cocktail of sortedData; let i=index">
       <td class="border-1">{{cocktail.cocktailDTO.cocktailId}}</td>
       <td class="border-1">
-        <img src="data:image/png;base64,{{cocktail.cocktailDTO.cocktailImage.bytes}}" width="150"/>
+        <img src="data:cocktailImage/png;base64,{{cocktail.cocktailDTO.cocktailImage.bytes}}" width="150"/>
       </td>
       <td class="border-1">{{cocktail.cocktailDTO.cocktailName}}</td>
       <td class="border-1">{{cocktail.cocktailDTO.cocktailAuthor.username}}</td>

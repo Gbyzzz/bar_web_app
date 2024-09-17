@@ -3,7 +3,6 @@ import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {UserServiceImpl} from "../../../service/entity/impl/UserServiceImpl";
 import {AuthService} from "../../../service/auth/auth.service";
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
-import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import Validation from "../../../utils/validation";
 import {PasswordChange} from "../../../model/registration/PasswordChange";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -40,7 +39,6 @@ export class ChangePasswordDialogComponent {
               private router: Router,
               private injector: Injector,
               private tokenStorage: TokenStorageService,
-              private imageService: ImageServiceImpl,
               private fb: UntypedFormBuilder,
               private route: ActivatedRoute) {
     this.dialogRef = this.injector.get(MatDialogRef, null);

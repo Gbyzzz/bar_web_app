@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface VoteDTOMapper {
     VoteDTOMapper INSTANCE = Mappers.getMapper(VoteDTOMapper.class );
 
+
     VoteDTO toDTO(Vote vote);
 
     Vote toEntity(Vote vote);

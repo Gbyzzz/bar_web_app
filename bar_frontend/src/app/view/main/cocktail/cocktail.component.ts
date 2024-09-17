@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component, InjectionToken, NgModule, OnInit} from '@angular/core';
 import {Cocktail} from "../../../model/Cocktail";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
-import {ImageServiceImpl} from "../../../service/entity/impl/ImageServiceImpl";
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {NavigationStart, Router} from "@angular/router";
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
@@ -9,7 +8,6 @@ import {Vote} from "../../../model/Vote";
 import {VoteServiceImpl} from "../../../service/entity/impl/VoteServiceImpl";
 import {Recipe} from "../../../model/Recipe";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
-import {Image} from "../../../model/Image";
 import {LoginSharedService} from "../../../service/auth/login-shared.service";
 import {ClickEvent, StarRatingConfigService, StarRatingModule} from 'angular-star-rating';
 import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
@@ -27,7 +25,6 @@ export class CocktailComponent implements OnInit {
 
   cocktailRecipeDTO: CocktailRecipeDTO;
 
-  image: Image;
   vote: Vote;
   ratingForm: UntypedFormGroup;
   cocktailId: number;
@@ -38,7 +35,6 @@ export class CocktailComponent implements OnInit {
   isUserLoggedIn: boolean;
 
   constructor(private cocktailService: CocktailServiceImpl,
-              private imageService: ImageServiceImpl,
               private voteService: VoteServiceImpl,
               private recipeService: RecipeServiceImpl,
               private fb: UntypedFormBuilder,
@@ -71,7 +67,6 @@ export class CocktailComponent implements OnInit {
      //  });
       this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktailRecipeDTO.cocktailDTO, 0);
      this.cocktailName = this.cocktailRecipeDTO.cocktailDTO.cocktailName;
-     this.image = this.cocktailRecipeDTO.cocktailDTO.cocktailImage;
      voteService.findByCocktailUserVote(this.vote).subscribe(res => {
         this.vote = res;
       });

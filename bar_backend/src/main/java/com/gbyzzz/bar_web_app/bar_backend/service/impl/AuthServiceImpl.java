@@ -5,14 +5,15 @@ import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupReque
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.Code;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.JwtResponse;
 import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.UserDTOMapper;
+import com.gbyzzz.bar_web_app.bar_backend.entity.Message;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
-import com.gbyzzz.bar_web_app.bar_backend.messaging.MessageProducer;
-import com.gbyzzz.bar_web_app.bar_backend.messaging.entity.Message;
 import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
 import com.gbyzzz.bar_web_app.bar_backend.security.jwt.JwtUtils;
 import com.gbyzzz.bar_web_app.bar_backend.security.services.UserDetailsImpl;
 import com.gbyzzz.bar_web_app.bar_backend.service.AuthService;
+import com.gbyzzz.bar_web_app.bar_backend.service.KafkaService;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,29 +24,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.sql.Date;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder encoder;
     private final UserService userService;
-    private final MessageProducer messageProducer;
+    private final KafkaService kafkaService;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final UserDTOMapper mapper = UserDTOMapper.INSTANCE;
-
-    public AuthServiceImpl(PasswordEncoder encoder, UserService userService,
-                           MessageProducer messageProducer, JwtUtils jwtUtils,
-                           AuthenticationManager authenticationManager, UserRepository userRepository) {
-        this.encoder = encoder;
-        this.userService = userService;
-        this.messageProducer = messageProducer;
-        this.jwtUtils = jwtUtils;
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-    }
 
     @Value("${gbyzzz.url.to.validate}")
     String urlToValidate;
@@ -59,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
                 new Date(new java.util.Date().getTime()));
         userService.addUser(user);
 
-        messageProducer.generate(new Message(user.getEmail(), "generate"));
+        kafkaService.sendMessage("to_generate", new Message(user.getEmail(), null));
     }
 
     @Override
@@ -79,7 +71,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean validate(Code code) {
+    public boolean validate(Code code) throws IOException {
         ResponseEntity<Boolean> response = new RestTemplate().postForEntity(
                 urlToValidate, code, Boolean.class);
         boolean valid = false;
@@ -89,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
             if (valid) {
                 User user = userService.findByEmail(code.getEmail());
                 user.setEnabled(true);
-                userService.updateUser(user);
+                userService.updateUser(user, null);
             }
 
         }
@@ -105,7 +97,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean changePassword(ChangePasswordRequest changePasswordRequest) {
+    public boolean changePassword(ChangePasswordRequest changePasswordRequest) throws IOException {
         User user;
         boolean valid = false;
         if(changePasswordRequest.getEmail().equals("")) {
@@ -117,7 +109,7 @@ public class AuthServiceImpl implements AuthService {
             if (valid) {
                 user = userService.findByEmail(response.getBody());
                 user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
-                userService.updateUser(user);
+                userService.updateUser(user, null);
             }
         } else {
             if (!isPasswordValid(changePasswordRequest)) {
@@ -125,7 +117,7 @@ public class AuthServiceImpl implements AuthService {
             }
             user = userService.findByEmail(changePasswordRequest.getEmail());
             user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
-            valid = userService.updateUser(user) != null;
+            valid = userService.updateUser(user, null) != null;
         }
         return valid;
     }
@@ -133,7 +125,7 @@ public class AuthServiceImpl implements AuthService {
         @Override
         public boolean sendRecoverPasswordEmail (String email) {
             if(!userService.isEmailAvailable(email)) {
-                messageProducer.generate(new Message(email, "recover"));
+                kafkaService.sendMessage("to_recover", new Message(email, null));
                 return true;
             }
            return false;

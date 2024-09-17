@@ -1,7 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_user_enable.controller;
 
-import com.gbyzzz.bar_web_app.bar_user_enable.entity.Code;
-import com.gbyzzz.bar_web_app.bar_user_enable.messaging.MessageProducer;
+import com.gbyzzz.bar_web_app.bar_user_enable.entity.Message;
 import com.gbyzzz.bar_web_app.bar_user_enable.service.CodeService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +18,8 @@ public class ValidateController {
     }
 
     @PostMapping("/validate")
-    boolean validateEmail(@RequestBody Code code){
-        return codeService.validateCode(code);
+    boolean validateEmail(@RequestBody Message message){
+        return codeService.validateCode(message);
     }
     @PostMapping("/validate/pass")
     String getEmailFromCode(@RequestBody String code){

@@ -21,7 +21,7 @@
                 formControlName="cocktailImageFile"
                 id="file"
                 type="file"
-                name="image"
+                name="cocktailImage"
                 class="form-control"
                 (change)="onFileChange($event)">
             </div>
@@ -41,7 +41,7 @@
                  style="height: 250px; width:400px">
             <img class="mx-auto d-block img-fluid"
                  *ngIf="!imageSrc && targetCocktail.cocktailDTO.cocktailImage"
-                 [src]="this.imageService.getImage(targetCocktail.cocktailDTO.cocktailImage.imageId)"
+                 [src]="targetCocktail.cocktailDTO.cocktailImage"
                  style="height: 250px; width:400px">
 
           </div>
