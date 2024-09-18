@@ -49,7 +49,7 @@ public class CocktailServiceImpl implements CocktailService {
     RecipeDTOMapper recipeMapper = RecipeDTOMapper.INSTANCE;
 
     private static final int MAX_COCKTAIL_IMAGE_SIZE = 635;
-    private static final int MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE = 80;
+    private static final int MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE = 150;
 
 
     @Value("${app.minio.cocktailImage}")
@@ -81,20 +81,28 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     @CacheEvict(cacheNames = {"cs_pages", "cs"}, allEntries = true)
-    public CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktailRecipeDTO, MultipartFile image) throws ServiceException, IOException {
+    public CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktailRecipeDTO, MultipartFile image) throws Exception {
         if(checkRecipes(cocktailRecipeDTO.recipesDTO())) {
             StringBuilder message = new StringBuilder();
             Cocktail cocktail = cocktailDTOMapper.toEntity(cocktailRecipeDTO.cocktailDTO());
-            cocktail.setCocktailImage(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_SIZE));
-            cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE));
+
+            if(image != null) {
+                if (cocktail.getCocktailImage() != null) {
+                    imageStorageService.removeImage(cocktail.getCocktailImage());
+                    imageStorageService.removeImage(cocktail.getCocktailImageThumbnail());
+                }
+                cocktail.setCocktailImage(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_SIZE));
+                cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(image, cocktailThumbnail, MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE));
+            }
+
             List<Recipe> recipes = cocktailRecipeDTO.recipesDTO().stream().map(recipeMapper::toEntity)
                     .toList();
+
             if (cocktail.getPublicationDate() == null) {
                 cocktail.setPublicationDate(new Date(new java.util.Date().getTime()));
                 message.append("New cocktail was just added by ").append(cocktail.getCocktailAuthor().getUsername());
             }
-            cocktail.setCocktailImage(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_SIZE));
-            cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(image, cocktailThumbnail, MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE));
+
             cocktail = cocktailRepository.save(cocktail);
             if(!message.isEmpty()){
                 webSocketHandler.sendNotification(new Notification(message.toString(), cocktail.getCocktailId()));

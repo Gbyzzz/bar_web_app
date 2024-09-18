@@ -6,4 +6,5 @@ import java.io.IOException;
 
 public interface ImageStorageService {
     String saveImage(MultipartFile file, String bucketName, int maxSize) throws IOException;
+    void removeImage(String imageURL) throws Exception;
 }

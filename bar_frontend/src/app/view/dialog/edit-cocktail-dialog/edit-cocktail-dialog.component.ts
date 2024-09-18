@@ -156,10 +156,13 @@ export class EditCocktailDialogComponent implements OnInit {
       if (!this.cocktailForm.get('cocktailImageFile').value.imageId) {
         const formData = new FormData();
         this.updateCocktailValues();
-        formData.append('image', this.fileHolder, this.fileHolder.name);
+        if(this.fileHolder){
+          formData.append('image', this.fileHolder, this.fileHolder.name);
+        }
         formData.append('cocktail', new Blob([JSON.stringify(this.targetCocktail)], {
           type: 'application/json'
         }));
+        this.cocktailService.updateCocktail(formData).subscribe(res => this.dialogRef.close(new DialogResult(DialogAction.SAVE)));
       } else {
         this.updateCocktailValues();
       }

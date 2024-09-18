@@ -97,7 +97,7 @@ public class AddingImages implements CommandLineRunner {
                         contentType,
                         inputStream);
                 cocktail.setCocktailImage(imageStorageService.saveImage(multipartFile, cocktailImage, 640));
-                cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(multipartFile, cocktailThumbnail, 80));
+                cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(multipartFile, cocktailThumbnail, 150));
                 cocktailRepository.save(cocktail);
                 log.info("Successfully added image: {}", filename);
             }

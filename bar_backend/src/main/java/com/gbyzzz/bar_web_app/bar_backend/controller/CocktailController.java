@@ -54,15 +54,15 @@ public class CocktailController {
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
     public CocktailRecipeDTO addCocktail(@RequestPart("cocktail") CocktailRecipeDTO cocktailRecipeDTO,
-                                         @RequestPart("image") MultipartFile image) throws ServiceException, IOException {
+                                         @RequestPart("image") MultipartFile image) throws Exception {
         return cocktailService.addOrUpdate(cocktailRecipeDTO, image);
     }
 
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")
-    public CocktailRecipeDTO updateCocktail(@RequestBody CocktailRecipeDTO cocktailRecipeDTO,
-                                            @RequestPart("image") MultipartFile image) throws ServiceException, IOException {
+    public CocktailRecipeDTO updateCocktail(@RequestPart("cocktail") CocktailRecipeDTO cocktailRecipeDTO,
+                                            @RequestPart(value = "image", required = false) MultipartFile image) throws Exception {
         return cocktailService.addOrUpdate(cocktailRecipeDTO, image);
     }
 

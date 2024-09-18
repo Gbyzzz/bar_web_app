@@ -18,7 +18,7 @@ public interface CocktailService {
 
     CocktailRecipeDTO findById(long id) throws Exception;
 
-    CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktail, MultipartFile image) throws ServiceException, IOException;
+    CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktail, MultipartFile image) throws Exception;
 
     RestPage findAllWithPages(Pagination pagination);
 

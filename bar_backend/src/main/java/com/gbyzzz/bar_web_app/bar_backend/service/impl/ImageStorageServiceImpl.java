@@ -3,6 +3,7 @@ package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.RemoveObjectArgs;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Objects;
@@ -28,7 +30,7 @@ public class ImageStorageServiceImpl implements ImageStorageService {
 
     @Override
     public String saveImage(MultipartFile file, String bucketName, int maxSize) {
-        String fileName = generateFileName(file);
+        String fileName = generateFileName(file, maxSize);
 
         try {
             BufferedImage originalImage = ImageIO.read(file.getInputStream());
@@ -55,8 +57,16 @@ public class ImageStorageServiceImpl implements ImageStorageService {
         }
     }
 
-    private String generateFileName(MultipartFile file) {
-        String fileName = new Date().getTime() + "-" + Objects.requireNonNull(file.getOriginalFilename()).replace(" ", "_");
+    @Override
+    public void removeImage(String imageName) throws Exception {
+        imageName = imageName.replace(endpoint, "");
+        String[] data = imageName.replaceAll("/", " ").trim().split(" ");
+        minioClient.removeObject(RemoveObjectArgs.builder().bucket(data[0]).object(data[1]).build());
+    }
+
+    private String generateFileName(MultipartFile file, int maxSize) {
+        String fileName = new Date().getTime() + "-" + maxSize + "-" + Objects.requireNonNull(file.getOriginalFilename())
+                .replace(" ", "_");
         return fileName.substring(0, fileName.lastIndexOf("."));
     }
 }
