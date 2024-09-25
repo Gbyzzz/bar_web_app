@@ -32,7 +32,7 @@ export class CocktailsComponent implements OnInit {
     this.loadSearchResults();
     this.subscription = this.cocktailService.data$.subscribe(data => {
       this.setResults(data);
-
+      this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
     });
   }
 
@@ -42,7 +42,6 @@ export class CocktailsComponent implements OnInit {
   setResults(results: any): void {
     this.cocktails = results.content;
     this.totalCocktailsFounded = results.totalElements;
-    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
   }
 
   loadSearchResults() {
