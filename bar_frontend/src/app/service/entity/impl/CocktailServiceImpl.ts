@@ -1,13 +1,15 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {CocktailService} from "../CocktailService";
 import {Cocktail} from "../../../model/Cocktail";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Pagination} from "../../../model/pagination/Pagination";
 import {Recipe} from "../../../model/Recipe";
 import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
 
 export const COCKTAIL_URL_TOKEN = new InjectionToken<string>('url');
+export const COCKTAIL_SEARCH_URL_TOKEN = new InjectionToken<string>('searchUrl');
+
 
 
 @Injectable({
@@ -16,9 +18,18 @@ export const COCKTAIL_URL_TOKEN = new InjectionToken<string>('url');
 export class CocktailServiceImpl implements CocktailService{
 
   private readonly url: string;
+  private readonly searchUrl: string;
+  private cocktails = new Subject<any>;
+  data$ = this.cocktails.asObservable();
 
-  constructor(@Inject(COCKTAIL_URL_TOKEN) private baseUrl: string, private HttpClient: HttpClient) {
+  constructor(@Inject(COCKTAIL_URL_TOKEN) private baseUrl: string, @Inject(COCKTAIL_SEARCH_URL_TOKEN) private baseSearchUrl: string,
+              private HttpClient: HttpClient) {
     this.url = baseUrl;
+    this.searchUrl = baseSearchUrl;
+  }
+
+  setCocktails(cocktails: Cocktail[]):void{
+    this.cocktails.next(cocktails);
   }
   delete(id: number): Observable<Cocktail> {
     return this.HttpClient.delete<Cocktail>(this.url+'/delete/'+ id);
@@ -61,5 +72,19 @@ export class CocktailServiceImpl implements CocktailService{
 
   update(odj: Cocktail): Observable<Cocktail> {
     return undefined;
+  }
+
+  search(query: string, pagination: Pagination): Observable<any>{
+    const requestBody = {
+      query: query, // or simply { query }
+      pagination: pagination // or simply { pagination }
+    };
+    console.log(pagination)
+
+    return this.HttpClient.post<any>(
+      this.searchUrl,
+      requestBody
+    );
+
   }
 }

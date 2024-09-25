@@ -5,7 +5,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface RecipeDTOMapper {
     RecipeDTOMapper INSTANCE = Mappers.getMapper(RecipeDTOMapper.class );
 

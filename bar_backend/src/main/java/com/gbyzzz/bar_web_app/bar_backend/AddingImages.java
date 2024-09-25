@@ -3,6 +3,7 @@ package com.gbyzzz.bar_web_app.bar_backend;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.repository.CocktailRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
+import com.gbyzzz.bar_web_app.bar_backend.service.KafkaService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +25,10 @@ public class AddingImages implements CommandLineRunner {
 
     private final ImageStorageService imageStorageService;
     private final CocktailRepository cocktailRepository;
+    private final KafkaService kafkaService;
 
-    @Value("${app.minio.userPicBucket}")
-    private String userPicBucket;
+    @Value("${application.kafka.topic.to_save_to_search}")
+    private String topic;
 
     @Value("${app.minio.cocktailImage}")
     private String cocktailImage;
@@ -99,7 +101,9 @@ public class AddingImages implements CommandLineRunner {
                 cocktail.setCocktailImage(imageStorageService.saveImage(multipartFile, cocktailImage, 640));
                 cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(multipartFile, cocktailThumbnail, 150));
                 cocktailRepository.save(cocktail);
+                kafkaService.sendMessage(topic, i);
                 log.info("Successfully added image: {}", filename);
+
             }
         }
     }

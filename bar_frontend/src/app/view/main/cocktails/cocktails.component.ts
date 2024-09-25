@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {Pagination, SortDirection} from "../../../model/pagination/Pagination";
 import {Cocktail} from "../../../model/Cocktail";
-import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {query} from "@angular/animations";
 
 @Component({
   selector: 'app-cocktails',
@@ -19,14 +21,40 @@ export class CocktailsComponent implements OnInit {
   cocktails: Cocktail[];
   pagination: Pagination;
   totalCocktailsFounded: number;
+  query: string;
+  subscription: Subscription;
 
-  constructor(private cocktailService: CocktailServiceImpl) {
+  constructor(private cocktailService: CocktailServiceImpl, private router: Router, private route: ActivatedRoute) {
+  //   if(router.url.includes()){
+  //   this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
+  //   this.getPage();
+  // }
+    this.loadSearchResults();
+    this.subscription = this.cocktailService.data$.subscribe(data => {
+      this.setResults(data);
 
-    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
-    this.getPage();
+    });
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(res => this.query = res['query'])
+  }
+  setResults(results: any): void {
+    this.cocktails = results.content;
+    this.totalCocktailsFounded = results.totalElements;
+    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
+  }
+
+  loadSearchResults() {
+    this.pagination = new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection);
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state) {
+      this.setResults(navigation.extras.state['results']);
+      this.query = navigation.extras.state['query'];
+      console.log("Passed data: ", this.cocktails);
+    } else {
+      this.getPage();
+    }
   }
 
   pageChanged(pageEvent: PageEvent) {
@@ -43,9 +71,11 @@ export class CocktailsComponent implements OnInit {
   }
 
   getPage() {
-    this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails =>{
-      this.cocktails = cocktails.content;
-      this.totalCocktailsFounded = cocktails.totalElements;
-    });
+    !this.router.url.includes('/search') ? this.cocktailService.findAllWithPages(this.pagination).subscribe(cocktails => {
+      this.setResults(cocktails);
+    }) :
+      this.cocktailService.search(this.query, this.pagination).subscribe(cocktails => {
+        this.setResults(cocktails);
+      });
   }
 }

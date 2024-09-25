@@ -13,6 +13,10 @@ import {TokenStorageService} from "../../service/auth/token-storage.service";
 import {Router} from "@angular/router";
 import {LoginSharedService} from "../../service/auth/login-shared.service";
 import {Notification} from "../../model/notification/Notification";
+import {FormControl} from "@angular/forms";
+import {Pagination, SortDirection} from "../../model/pagination/Pagination";
+
+// import * as console from "node:console";
 
 
 @Component({
@@ -24,6 +28,10 @@ export class HeaderComponent implements OnInit {
 
   loggedInEvent = new EventEmitter<boolean>();
   private webSocket: WebSocket;
+
+  readonly defaultPageSize = 6;
+  readonly defaultPageNumber = 0;
+  readonly defaultSortDirection = SortDirection.ASC;
 
   signInForm: any = {
     username: null,
@@ -38,9 +46,12 @@ export class HeaderComponent implements OnInit {
   role: Role;
   targetUsername: string = '';
   isEmailFound: boolean = undefined;
+  inputControl = new FormControl('');
 
   notification: Notification;
   newNotification: boolean = false;
+  cocktails: Cocktail[];
+  results: any;
 
   cocktail: Cocktail = new Cocktail();
   siteLanguage = 'English';
@@ -49,10 +60,14 @@ export class HeaderComponent implements OnInit {
     {code: 'ru', label: 'Русский'}
   ];
 
-  @ViewChild('signInTab', { static: false, read: ElementRef })
+  @ViewChild('signInTab', {static: false, read: ElementRef})
   signInTab!: ElementRef<HTMLDivElement>;
 
-  @ViewChild('recoverPasswordTab', { static: false, read: ElementRef })
+  @ViewChild('searchInput', {static: false}) searchInput: ElementRef;
+  @ViewChild('searchResults', {static: false}) searchResults: ElementRef;
+
+
+  @ViewChild('recoverPasswordTab', {static: false, read: ElementRef})
   recoverPasswordInTab!: ElementRef<HTMLDivElement>;
 
   constructor(private dialog: MatDialog,
@@ -95,6 +110,42 @@ export class HeaderComponent implements OnInit {
         .getUser().username;
     }
   }
+
+  makeSearch(): void {
+    this.router.navigate(['/search'], {
+      queryParams: {query: this.inputControl.value},
+      state: {results: this.results}
+    });
+    this.cocktailService.setCocktails(this.results);
+    this.clearSearch();
+    console.log("search");
+  }
+
+  onTextChange(): void {
+    if (this.inputControl.value.length > 0) {
+      this.searchInput.nativeElement.style.borderRadius = '12px 12px 0 0';
+      this.searchResults.nativeElement.style.display = '';
+
+      this.cocktailService.search(this.inputControl.value,
+        new Pagination(this.defaultPageSize, this.defaultPageNumber, this.defaultSortDirection)).subscribe(
+        res => {
+          this.results = res;
+          this.cocktails = res.content;
+        });
+      console.log(this.inputControl.value);
+    }
+    if (this.inputControl.value.length == 0) {
+      this.clearSearch();
+    }
+  }
+
+  clearSearch(): void {
+    this.searchInput.nativeElement.value = '';
+    this.searchResults.nativeElement.style.display = 'none';
+    this.searchInput.nativeElement.style.borderRadius = '12px';
+    this.cocktails = undefined;
+  }
+
 
   onSubmit(): void {
     const {username, password} = this.signInForm;
@@ -139,6 +190,7 @@ export class HeaderComponent implements OnInit {
     this.reloadPage();
   }
 
+
   changeTabToForgetPassword() {
     this.signInTab.nativeElement.classList.remove('active');
     this.signInTab.nativeElement.classList.add('fade');
@@ -146,27 +198,27 @@ export class HeaderComponent implements OnInit {
     this.recoverPasswordInTab.nativeElement.classList.add('active');
   }
 
-  toSignInTab(){
+  toSignInTab() {
     this.recoverPasswordInTab.nativeElement.classList.remove('active');
     this.recoverPasswordInTab.nativeElement.classList.add('fade');
     this.signInTab.nativeElement.classList.remove('fade');
     this.signInTab.nativeElement.classList.add('active');
   }
 
-  onRecoverPassword(){
+  onRecoverPassword() {
     console.log("recover");
     console.log(this.recoverPasswordForm.email);
 
-    this.authService.sendRecoverPasswordEmail(this.recoverPasswordForm.email).subscribe(res =>
-    {
+    this.authService.sendRecoverPasswordEmail(this.recoverPasswordForm.email).subscribe(res => {
       console.log(res);
       this.isEmailFound = res;
-      if(this.isEmailFound) {
+      if (this.isEmailFound) {
         const button = document.getElementById('close_sign_in');
         button.click();
       }
     });
   }
+
   reloadPage(): void {
     window.location.reload();
   }

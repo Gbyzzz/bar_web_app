@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, InjectionToken, NgModule, OnInit} from '@a
 import {Cocktail} from "../../../model/Cocktail";
 import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceImpl";
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {NavigationStart, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
 import {Vote} from "../../../model/Vote";
 import {VoteServiceImpl} from "../../../service/entity/impl/VoteServiceImpl";
@@ -24,6 +24,7 @@ export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 export class CocktailComponent implements OnInit {
 
   cocktailRecipeDTO: CocktailRecipeDTO;
+  private route: ActivatedRoute;
 
   vote: Vote;
   ratingForm: UntypedFormGroup;
@@ -89,6 +90,28 @@ export class CocktailComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+    // this.route.queryParams.subscribe(params => {
+    //   // this.cocktailId = parseInt(params.get('cocktailId'));
+    //   console.log("load")
+    //   console.log(params)
+    //
+    //
+    //   if (this.cocktailId) {
+    //     this.loadCocktailData(this.cocktailId);
+    //   }
+    // });
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        // Only process this when navigation starts
+        const cocktailId = parseInt(event.url.split('/')[3], 10);
+
+        if (cocktailId && !isNaN(cocktailId)) {
+          this.cocktailId = cocktailId;
+          console.log("Cocktail ID: ", this.cocktailId);
+          this.loadCocktailData(this.cocktailId);  // Only load when the cocktailId is valid
+        }
+      }
+    });
     this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
       this.isUserLoggedIn = loggedIn;
 
@@ -101,6 +124,14 @@ export class CocktailComponent implements OnInit {
           // });
         });
       }
+    });
+  }
+
+  loadCocktailData(cocktailId: number): void {
+    this.cocktailService.findCocktailById(cocktailId).subscribe(data => {
+      this.cocktailRecipeDTO = data;
+      console.log("load")
+      console.log(this.cocktailRecipeDTO)
     });
   }
 

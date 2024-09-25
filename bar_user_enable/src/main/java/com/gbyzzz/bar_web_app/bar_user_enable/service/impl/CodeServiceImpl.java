@@ -1,15 +1,16 @@
 package com.gbyzzz.bar_web_app.bar_user_enable.service.impl;
 
 import com.gbyzzz.bar_web_app.bar_user_enable.entity.Message;
-import com.gbyzzz.bar_web_app.bar_user_enable.repository.CodeRepository;
 import com.gbyzzz.bar_web_app.bar_user_enable.service.CodeService;
 import com.gbyzzz.bar_web_app.bar_user_enable.service.KafkaService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.RandomStringGenerator;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -18,8 +19,7 @@ public class CodeServiceImpl implements CodeService {
     private final static Integer MIN = 100000;
     private final static Integer MAX = 999999;
 
-
-    private final CodeRepository codeRepository;
+    private final RedisTemplate<String, String> redisTemplate;
     private final KafkaService kafkaService;
 
     @KafkaListener(
@@ -29,7 +29,8 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public void addCode(Message message) {
         message.setCode(generateCode().toString());
-        codeRepository.save(message);
+        redisTemplate.opsForValue().set(message.getEmail(), message.getCode(), 86400L, TimeUnit.SECONDS);
+//        codeRepository.save(message);
         kafkaService.sendMessage("to_send_email", message);
     }
 
@@ -39,17 +40,16 @@ public class CodeServiceImpl implements CodeService {
             containerFactory = "kafkaListenerContainerFactory")
     @Override
     public boolean validateCode(Message message) {
-        Message messageFromDb = codeRepository.findById(message.getEmail()).orElseThrow();
-        boolean valid = Objects.equals(messageFromDb.getCode(), message.getCode());
+        boolean valid = Objects.equals(redisTemplate.opsForValue().get(message.getEmail()), message.getCode());
         if(valid){
-            codeRepository.delete(message);
+            redisTemplate.opsForValue().getAndDelete(message.getEmail());
         }
-        return Objects.equals(messageFromDb.getCode(), message.getCode());
+        return valid;
     }
 
     @Override
     public Integer getCode(String a) {
-        return (Integer) codeRepository.findById(a).get().getCode();
+        return Integer.parseInt(Objects.requireNonNull(redisTemplate.opsForValue().get(a)));
     }
 
     @KafkaListener(
@@ -90,15 +90,16 @@ public class CodeServiceImpl implements CodeService {
 //        String pass = pwdGenerator.generate(15);
 //        Message message = new Message(pass, email);
         message.setCode(pass);
-        codeRepository.save(message);
-        message.setCode(pass);
+        redisTemplate.opsForValue().set(message.getCode(), message.getEmail(), 86400L, TimeUnit.SECONDS);
+
+//        codeRepository.save(message);
         kafkaService.sendMessage("to_send_email", message);
     }
 
     @Override
     public String getEmailFromCode(String code) {
-        Message messageFromDb = codeRepository.findById(code).orElseThrow();
-        return (String) messageFromDb.getCode();
+//        Message messageFromDb = codeRepository.findById(code).orElseThrow();
+        return redisTemplate.opsForValue().get(code);
     }
 
     private Integer generateCode(){

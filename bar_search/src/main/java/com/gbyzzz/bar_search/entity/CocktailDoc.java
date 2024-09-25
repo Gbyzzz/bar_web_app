@@ -28,7 +28,7 @@ public class CocktailDoc {
     @Field(type = FieldType.Text, analyzer = "english_analyzer")
     private String cocktailAuthor;
 
-    private CocktailImage cocktailImage;
+//    private CocktailImage cocktailImage;
 
     @Field(type = FieldType.Text, analyzer = "russian_analyzer")
     private String cocktailRecipe;

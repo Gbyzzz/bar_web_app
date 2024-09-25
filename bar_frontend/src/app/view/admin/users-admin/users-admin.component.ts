@@ -114,13 +114,7 @@ export class UsersAdminComponent implements OnInit {
     }
   }
 
-    openEditDialog(user
-  :
-    User
-  ):
-    void {
-
-
+    openEditDialog(user:User):void {
       const dialogRef = this.dialog.open(EditUserDialogComponent, {
         data: [user],
         autoFocus: false

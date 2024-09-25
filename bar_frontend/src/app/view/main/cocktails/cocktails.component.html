@@ -1,21 +1,21 @@
 <div class="text-center font-weight-bold" *transloco="let t"><h1>{{t('cocktails')}}</h1></div>
 <div class="line">
-     <div class="m-3" *ngFor="let cocktail of cocktails; let i=index">
-      <div class="post">
-        <div class="bg-cocktailImage hover-zoom">
-          <a class="post-img" [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]">
-            <img [src]="cocktail.cocktailImage" width="423" height="255"
-                 [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]"/>
-            <div class="text-block">
-              <h4><a type="submit" style="color:white"
-                     [routerLink] = "['/cocktails/cocktail/' + cocktail.cocktailId]">
-                {{cocktail.cocktailName}}
-              </a></h4>
-            </div>
-          </a>
-        </div>
+  <div class="m-3" *ngFor="let cocktail of cocktails; ">
+    <div class="post">
+      <div class="bg-cocktailImage hover-zoom container-img">
+        <a class="post-img" [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">
+          <img [src]="cocktail.cocktailImage" width="423" height="255"
+               [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]"  [alt]="cocktail.cocktailName"/>
+          <div class="text-block">
+            <div style="font-size: 20px"><a style="color:white"
+                                            [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">
+              {{cocktail.cocktailName}}
+            </a></div>
+          </div>
+        </a>
       </div>
     </div>
+  </div>
 </div>
 
 <mat-paginator *ngIf="totalCocktailsFounded > 6" (page)="pageChanged($event)" [pageIndex]="pagination.pageNumber"

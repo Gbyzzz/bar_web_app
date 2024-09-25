@@ -15,6 +15,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.CocktailRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.CocktailService;
 import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
+import com.gbyzzz.bar_web_app.bar_backend.service.KafkaService;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
 import com.gbyzzz.bar_web_app.bar_backend.service.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
@@ -45,12 +46,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CocktailServiceImpl implements CocktailService {
 
-    private final CocktailDTOMapper cocktailDTOMapper;
-    RecipeDTOMapper recipeMapper = RecipeDTOMapper.INSTANCE;
-
-    private static final int MAX_COCKTAIL_IMAGE_SIZE = 635;
-    private static final int MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE = 150;
-
+    @Value("${application.kafka.topic.to_save_to_search}")
+    private String topic;
 
     @Value("${app.minio.cocktailImage}")
     private String cocktailImage;
@@ -62,6 +59,12 @@ public class CocktailServiceImpl implements CocktailService {
     private final RecipeService recipeService;
     private final ImageStorageService imageStorageService;
     private final NotificationWebSocketHandler webSocketHandler;
+    private final KafkaService kafkaService;
+    private final CocktailDTOMapper cocktailDTOMapper;
+    private final RecipeDTOMapper recipeMapper;
+
+    private static final int MAX_COCKTAIL_IMAGE_SIZE = 635;
+    private static final int MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE = 150;
 
     @Override
     public List<CocktailDTO> findAll() {
@@ -104,11 +107,12 @@ public class CocktailServiceImpl implements CocktailService {
             }
 
             cocktail = cocktailRepository.save(cocktail);
+            kafkaService.sendMessage(topic, cocktail.getCocktailId());
             if(!message.isEmpty()){
                 webSocketHandler.sendNotification(new Notification(message.toString(), cocktail.getCocktailId()));
             }
             recipeService.addAll(recipes, cocktail);
-            return new CocktailRecipeDTO(cocktailDTOMapper.toDTO(cocktailRepository.save(cocktail)),
+            return new CocktailRecipeDTO(cocktailDTOMapper.toDTO(cocktail),
                     recipes.stream().map(recipeMapper::toDTO).collect(Collectors.toList()));
         } else {
             throw new ServiceException("Duplicates in ingredients");

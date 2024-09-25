@@ -60,6 +60,7 @@
   "alcohol": "Алкоголь",
   "unit of measurement": "Единица измерения",
   "photo": "Фото",
+  "edit cocktail": "Редактирование коктейля",
   "cocktail name": "Название коктейля",
   "cocktail author": "Автор коктейля",
   "rating": "Рейтинг",
@@ -73,6 +74,8 @@
   "password must be at least 6 characters": "Пароль должен состоять из не менее 6 символов",
   "username is required": "Требуется имя пользователя!",
   "password is required": "Требуется пароль",
-  "login failed": "Ошибка входа"
+  "login failed": "Ошибка входа",
+  "nothing found": "Ничего не найдено"
+
 }
 

@@ -57,7 +57,7 @@
                   <div class="input-group m-3"
                        *ngFor="let ingredientsRecipe of ingredientsRecipe().controls; let i = index"
                        [formGroupName]="i">
-                    <select class="btn-light mr-0" [compareWith]="equals"
+                    <select class="btn-light mr-0 border-light-subtle" style="border-radius: 0.25rem 0 0 0.25rem" [compareWith]="equals"
                             (change)="onSelectChange($event, i)"
                             formControlName="ingredientSelect">
                       <option *ngFor="let ingredient of ingredients" [value]="ingredient.ingredientName">
@@ -69,7 +69,7 @@
                     <input type="text" class="form-control m-input" style="width:5px"
                            formControlName="unitSelect" disabled>
                     <div class="input-group-prepend">
-                      <button class="btn btn-danger" (click)="removeIngredientsRecipe(i)"
+                      <button class="btn btn-danger" style="border-radius: 0 0.25rem 0.25rem 0" (click)="removeIngredientsRecipe(i)"
                               type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                              fill="currentColor" class="bi bi-x"

@@ -18,6 +18,7 @@ const routes: Routes = [
   {path: 'validate', component: ValidateComponent, canActivate: [AuthGuard, EnabledGuard],
     data: { roles: ["ROLE_ADMIN", "ROLE_BARTENDER", "ROLE_USER"], enabled: false}},
   {path: 'cocktails', component: CocktailsComponent},
+  {path: 'search', component: CocktailsComponent},
   {path: 'cocktails/cocktail/:id', component: CocktailComponent},
   {path: 'cocktails/add', component: EditCocktailDialogComponent,  canActivate: [AuthGuard, EnabledGuard],
     data: { roles: ["ROLE_ADMIN", "ROLE_BARTENDER"], enabled: true}},
@@ -33,7 +34,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

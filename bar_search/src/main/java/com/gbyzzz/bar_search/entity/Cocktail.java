@@ -33,25 +33,34 @@ public class Cocktail {
     @Column(name = "cocktail_name", length = 50, unique = true, nullable = false)
     private String cocktailName;
 
-    @Formula("SELECT user.username FROM users WHERE users.user_id=cocktail_author")
+    @Formula("(SELECT users.username FROM users WHERE users.user_id=cocktail_author)")
     @Field(type = FieldType.Text, analyzer = "english_analyzer")
     private String cocktailAuthor;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "image")
-    private CocktailImage cocktailImage;
+    @Basic
+    @Column(name = "image_url")
+    private String cocktailImage;
+
+    @Basic
+    @Column(name = "image_thumbnail_url")
+    private String cocktailImageThumbnail;
 
     @Basic
     @Field(type = FieldType.Text, analyzer = "russian_analyzer")
     @Column(name = "cocktail_recipe")
     private String cocktailRecipe;
 
-    @ElementCollection
-    @CollectionTable(
+//    @ElementCollection
+//    @CollectionTable(
+//            name = "recipes",
+//            joinColumns = @JoinColumn(name = "cocktail_id")
+//    )
+    @Field(type = FieldType.Object, analyzer = "english_analyzer")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
             name = "recipes",
-            joinColumns = @JoinColumn(name = "cocktail_id")
+            joinColumns = @JoinColumn(name = "cocktail_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
-    @Field(type = FieldType.Text, analyzer = "english_analyzer")
-    @Column(name = "ingredient_name")
-    private Set<String> ingredients;
+    private Set<Ingredient> ingredients;
 }

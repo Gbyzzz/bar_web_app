@@ -110,9 +110,10 @@ export class CocktailsAdminComponent implements OnInit {
     const dialogRef = this.dialog.open(EditCocktailDialogComponent, {
       data: [cocktail],
       autoFocus: false,
-      width: '400px',  // Adjust the width as needed
-      maxHeight: '90vh',  // Limit the height, for example, to 90% of the viewport height
-      position: { top: '10vh', left: '50%' }
+      // width: '400px',
+      maxWidth: '100%',
+      maxHeight: '80vh',
+      position: { top: '10vh', bottom: '10vh' , left: '10%', right: '10%'}
     });
 
     dialogRef.afterClosed().subscribe(result => {

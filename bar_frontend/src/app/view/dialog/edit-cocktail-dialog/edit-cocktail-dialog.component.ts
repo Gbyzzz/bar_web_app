@@ -29,7 +29,7 @@ export class EditCocktailDialogComponent implements OnInit {
   ingredients: Ingredient[];
   targetCocktail: CocktailRecipeDTO;
   dialogRef: MatDialogRef<any>;
-  data: CocktailRecipeDTO[];
+  // data: CocktailRecipeDTO[];
   fileHolder: File | null;
   hasDuplicates: boolean = false;
 
@@ -41,9 +41,10 @@ export class EditCocktailDialogComponent implements OnInit {
               private injector: Injector,
               private router: Router,
               private tokenService: TokenStorageService,
-              private cocktailService: CocktailServiceImpl,) {
+              private cocktailService: CocktailServiceImpl,
+              @Inject(MAT_DIALOG_DATA) protected data: [CocktailRecipeDTO],) {
     this.dialogRef = this.injector.get(MatDialogRef, null);
-    this.data = this.injector.get(MAT_DIALOG_DATA, null);
+    // this.data = this.injector.get(MAT_DIALOG_DATA, null);
     this.cocktailForm = this.fb.group({
       cocktailName: '',
       cocktailImageFile: '',

@@ -48,7 +48,10 @@ export class AuthService {
   }
 
   recoverPassword(passwordChange: PasswordChange): Observable<any> {
-    return this.http.post<any>(environment.API_URL + 'recover_password', passwordChange);
+    return this.http.post<any>(environment.API_URL + 'recover_password', passwordChange,
+      {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
 }

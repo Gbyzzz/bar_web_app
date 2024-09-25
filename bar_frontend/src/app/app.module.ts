@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './view/header/header.component';
 import {FooterComponent} from './view/footer/footer.component';
-import {COCKTAIL_URL_TOKEN} from "./service/entity/impl/CocktailServiceImpl";
+import {COCKTAIL_SEARCH_URL_TOKEN, COCKTAIL_URL_TOKEN} from "./service/entity/impl/CocktailServiceImpl";
 import {USER_URL_TOKEN} from "./service/entity/impl/UserServiceImpl";
 import {MainComponent} from './view/main/main.component';
 import {AdminComponent} from './view/admin/admin.component';
@@ -110,6 +110,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     {
       provide: COCKTAIL_URL_TOKEN,
       useValue: environment.API_URL + 'cocktail'
+    },
+
+    {
+      provide: COCKTAIL_SEARCH_URL_TOKEN,
+      useValue: environment.SEARCH_API_URL + 'search'
     },
 
     {
