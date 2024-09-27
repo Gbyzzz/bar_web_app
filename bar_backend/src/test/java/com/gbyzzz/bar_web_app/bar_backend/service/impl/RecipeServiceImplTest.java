@@ -1,45 +1,74 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
-import com.gbyzzz.bar_web_app.bar_backend.BarSpringApplicationTests;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
-import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
+import com.gbyzzz.bar_web_app.bar_backend.repository.CocktailRepository;
+import com.gbyzzz.bar_web_app.bar_backend.repository.RecipeRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
-class RecipeServiceImplTest extends BarSpringApplicationTests {
+class RecipeServiceImplTest {
 
     @Autowired
-    private RecipeService recipeService;
+    private RecipeService service;
 
-//    @ParameterizedTest
-//    @MethodSource("com.gbyzzz.bar_web_app.bar_backend.Source#provideRecipesByCocktail")
-//    void findRecipesByCocktail(List<Recipe> expected, Cocktail cocktail) {
-//        assertEquals(expected, recipeService.findRecipesByCocktailId(cocktail));
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("com.gbyzzz.bar_web_app.bar_backend.Source#provideRecipesToCalcAlcohol")
-//    void calculateAlcohol(List<Recipe> recipes, int expected) {
-//        assertEquals(expected, recipeService.calculateAlcohol(recipes));
-//    }
-//
-//    @Test
-//    void setCocktail() {
-//    }
-//
-//    @Test
-//    void add() {
-//    }
-//
-//    @Test
-//    void findAllRecipesByCocktails() {
-//    }
+    @Autowired
+    private RecipeRepository repository;
+
+    @Autowired
+    private CocktailRepository cocktailRepository;
+
+    @Test
+    void findRecipesByCocktail() {
+    }
+
+    @Test
+    void calculateAlcohol() {
+    }
+
+    @Test
+    void add() {
+    }
+
+    @Test
+    void findAllRecipesByCocktails() {
+
+        int countServiceWin = 0;
+        int countRepositoryWin = 0;
+
+        for (int i = 0; i < 10000; i++) {
+            long timeServiceStart = System.currentTimeMillis();
+
+            List<Cocktail> cocktails = cocktailRepository.findAll();
+            service.findAllRecipesByCocktails(cocktails);
+
+            long timeServiceEnd = System.currentTimeMillis();
+            long timeServiceDuration = timeServiceEnd - timeServiceStart;
+
+            long timeRepositoryStart = System.currentTimeMillis();
+
+            long timeRepositoryEnd = System.currentTimeMillis();
+            long timeRepositoryDuration = timeRepositoryEnd - timeRepositoryStart;
+
+            if(timeServiceDuration<timeRepositoryDuration) {
+                countServiceWin++;
+            } else {
+                countRepositoryWin++;
+            }
+        }
+
+        System.out.println("Service win " + countServiceWin + " times");
+        System.out.println("Repository win " + countRepositoryWin + " times");
+
+
+
+    }
+
+    @Test
+    void addAll() {
+    }
 }

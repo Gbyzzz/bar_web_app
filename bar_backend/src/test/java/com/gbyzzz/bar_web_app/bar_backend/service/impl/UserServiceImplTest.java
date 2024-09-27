@@ -1,23 +1,14 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
-import com.gbyzzz.bar_web_app.bar_backend.BarSpringApplicationTests;
-import com.gbyzzz.bar_web_app.bar_backend.Source;
-import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-class UserServiceImplTest extends BarSpringApplicationTests {
+class UserServiceImplTest {
 
     @Autowired
     private UserService userService;

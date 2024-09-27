@@ -1,25 +1,14 @@
 package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
-import com.gbyzzz.bar_web_app.bar_backend.BarSpringApplicationTests;
-import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
-import com.gbyzzz.bar_web_app.bar_backend.entity.Vote;
-import com.gbyzzz.bar_web_app.bar_backend.service.CocktailService;
-import com.gbyzzz.bar_web_app.bar_backend.service.VoteService;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class VoteServiceImplTest extends BarSpringApplicationTests {
+class VoteServiceImplTest {
 
 //    @Autowired
 //    private VoteService voteService;

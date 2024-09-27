@@ -31,7 +31,7 @@ public class Source {
 //            null,"alcoholfan2010@gmail.com", null, User.Role.ROLE_USER,
 //            true, new Date(2022-1900, 10-1, 25));
 //    public static Cocktail cocktail1 = new Cocktail(1L, "Old Fashioned", users.get(0), 5,
-//            new Date(2022-1900, 10-1, 25), null,
+//            new Date(2022-1900, 10-1, 25), null, null,
 //            "В стакан олд фэшн кладём кусочек сахара, капаем на него Ангостуру и воду." +
 //                    "При помощи мадлера измельчаем сахар, превращая в некое подобие сиропа на дне бокала." +
 //                    "Наполняем стакан льдом и добавляем половину бурбона." +
@@ -39,26 +39,26 @@ public class Source {
 //                    "Добавляем ещё льда и наливаем оставшуюся половину бурбона." +
 //                    "Снова перемешиваем." +
 //                    "Сбрызгиваем цедрой апельсина." +
-//                    "Подаём без украшения.", 33);
+//                    "Подаём без украшения.", 33, 0);
 //
 //    public static Cocktail cocktail2 = new Cocktail(2L, "Long Island Ice Tea", users.get(1), 5,
-//            new Date(2022-1900, 10-1, 25), null,
+//            new Date(2022-1900, 10-1, 25), null, null,
 //            "Наполняем бокал льдом и до половины — колой." +
 //                    "Наполняем шейкер льдом и наливаем туда водку, джин, ром, текилу и трипл сек." +
 //                    "Взбиваем в шейкере.Добовляем в стакан с колой лимонный фреш." +
 //                    "Выливаем в стакан с колой содержимое шейкера, используя стрейнер, чтобы лишний " +
 //                    "лёд не попал.Стараемся, чтобы алкогольная смесь не перемешалась с колой." +
 //                    "Украшаем бокал зонтиком или чем угодно ещё — это же Лонг Айленд",
-//            20);
+//            20, 0);
 //    public static Cocktail cocktail2_1 = new Cocktail(2L, "Long Island Ice Tea", users.get(1), 0,
-//            new Date(new java.util.Date().getTime()), null,
+//            new Date(new java.util.Date().getTime()), null, null,
 //            "Наполняем бокал льдом и до половины — колой." +
 //                    "Наполняем шейкер льдом и наливаем туда водку, джин, ром, текилу и трипл сек." +
 //                    "Взбиваем в шейкере.Добовляем в стакан с колой лимонный фреш." +
 //                    "Выливаем в стакан с колой содержимое шейкера, используя стрейнер, чтобы лишний " +
 //                    "лёд не попал.Стараемся, чтобы алкогольная смесь не перемешалась с колой." +
 //                    "Украшаем бокал зонтиком или чем угодно ещё — это же Лонг Айленд",
-//            20);
+//            20, 0);
 //
 //    public static Vote vote1 = new Vote(1L, user1, cocktail2, 4);
 //    public static Vote vote1_2 = new Vote(1L, user1, cocktail2, 5);
@@ -99,10 +99,10 @@ public class Source {
 //
 //    public static Ingredient ingredientToUpdate = new Ingredient(5L, "Ice", 0, "g");
 //    public static Ingredient ingredientToAdd = new Ingredient(13L, "Campari", 25, "ml");
-//    static Cocktail cocktail3 = new Cocktail(3L, "Cola", users.get(1), 5.0d,
-//            new Date(new java.util.Date().getTime()), null,
+//    static Cocktail cocktail3 = new Cocktail(3L, "Cola", users.get(1), 5.0f,
+//            new Date(new java.util.Date().getTime()), null, null,
 //            "Наполняем бокал льдом и колой.",
-//            20);
+//            20, 0);
 //    public static List<Cocktail> cocktailList = new ArrayList<>(){{
 //        add(cocktail1);
 //        add(cocktail2);
@@ -211,8 +211,8 @@ public class Source {
 //
 //    public static Stream<Arguments> provideCocktailsToUpdateRating(){
 //        return Stream.of(
-//                Arguments.of(new Cocktail(1L, "Old Fashioned", users.get(0), 4.5d,
-//                        new Date(2022-1900, 10-1, 25), null,
+//                Arguments.of(new Cocktail(1L, "Old Fashioned", users.get(0), 4.5f,
+//                        new Date(2022-1900, 10-1, 25), null, null,
 //                        "В стакан олд фэшн кладём кусочек сахара, капаем на него Ангостуру и воду." +
 //                                "При помощи мадлера измельчаем сахар, превращая в некое подобие сиропа на дне бокала." +
 //                                "Наполняем стакан льдом и добавляем половину бурбона." +
@@ -220,17 +220,17 @@ public class Source {
 //                                "Добавляем ещё льда и наливаем оставшуюся половину бурбона." +
 //                                "Снова перемешиваем." +
 //                                "Сбрызгиваем цедрой апельсина." +
-//                                "Подаём без украшения.", 33),
+//                                "Подаём без украшения.", 33, 2),
 //                        cocktail1, vote3),
-//                Arguments.of(new Cocktail(2L, "Long Island Ice Tea", users.get(1), 5.0d,
-//                                new Date(2022-1900, 10-1, 25), null,
+//                Arguments.of(new Cocktail(2L, "Long Island Ice Tea", users.get(1), 5.0f,
+//                                new Date(2022-1900, 10-1, 25), null, null,
 //                                "Наполняем бокал льдом и до половины — колой." +
 //                                        "Наполняем шейкер льдом и наливаем туда водку, джин, ром, текилу и трипл сек." +
 //                                        "Взбиваем в шейкере.Добовляем в стакан с колой лимонный фреш." +
 //                                        "Выливаем в стакан с колой содержимое шейкера, используя стрейнер, чтобы лишний " +
 //                                        "лёд не попал.Стараемся, чтобы алкогольная смесь не перемешалась с колой." +
 //                                        "Украшаем бокал зонтиком или чем угодно ещё — это же Лонг Айленд",
-//                                20),
+//                                20, 1),
 //                        cocktail2, vote4)
 //        );
 //    }
