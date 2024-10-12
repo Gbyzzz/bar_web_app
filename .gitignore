@@ -12,6 +12,7 @@ out/
 */node_modules
 .env
 application-dev.properties
+.gradle
 
 *.log
 *.ctxt
@@ -23,3 +24,6 @@ application-dev.properties
 *.zip
 *.tar.gz
 *.rar
+*.pem
+*.crt
+*.key

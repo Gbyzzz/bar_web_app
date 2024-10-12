@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
 #  bar_postgres:
 #    build: ./db
@@ -34,31 +32,36 @@ services:
     build: ./bar_backend
     restart: always
     container_name: bar_backend
-    depends_on:
-      - "bar_postgres"
-      - "bar_redis"
-      - "bar_rabbitmq"
+    networks:
+      - app_network
     ports:
       - "8080:8080"
 #    volumes:
 #      - ./bar_backend:/app
     working_dir: /app
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/bar_db?stringtype=unspecified
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/bar_db
       - SPRING_DATASOURCE_PASSWORD=${PASSWORD}
       - GBYZZZ_URL_TO_VALIDATE=http://baruserenable:8081/validate
       - SPRING_DATA_REDIS_PASSWORD=${PASSWORD}
-      - SPRING_DATA_REDIS_HOST=localhost
-      - SPRING_RABBITMQ_HOST=localhost
-      - SPRING_RABBITMQ_STREAM_USER=${USERNAME}
-      - SPRING_RABBITMQ_STREAM_PASSWORD=${PASSWORD}
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
       - GBYZZZ_APP_JWT=${JWT_KEY}
       - GBYZZZ_APP_JWT_EXPIRATION=${JWT_EXPIRATION}
+      - APP_MINIO_ENDPOINT=http://minio:9000
+      - APP_MINIO_USERNAME=${USER}
+      - APP_MINIO_PASSWORD=${PASSWORD}
+      - APP_MINIO_USERPICBUCKET=user-pic-bucket
+      - APP_MINIO_COCKTAILIMAGE=cocktail-image
+      - APP_MINIO_COCKTAILTHUMBNAIL=cocktail-thumbnail
 
   bar_frontend:
     build: ./bar_frontend
     container_name: bar_frontend
     restart: always
+    networks:
+      - app_network
     ports:
       - "443:443"
 #    volumes:
@@ -69,37 +72,55 @@ services:
     build: ./bar_user_enable
     restart: always
     container_name: baruserenable
-    depends_on:
-      - "bar_redis"
-      - "bar_rabbitmq"
-    ports:
-      - "8081:8081"
+    networks:
+      - app_network
     working_dir: /app
     environment:
-      - SPRING_DATA_REDIS_HOST=localhost
+      - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PASSWORD=${PASSWORD}
-      - SPRING_RABBITMQ_HOST=localhost
-      - SPRING_RABBITMQ_STREAM_USER=${USERNAME}
-      - SPRING_RABBITMQ_STREAM_PASSWORD=${PASSWORD}
+      - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
 
   bar_email:
     build: ./bar_email
     restart: always
     container_name: bar_email
-    depends_on:
-      - "bar_rabbitmq"
+    networks:
+      - app_network
     ports:
       - "8082:8082"
     working_dir: /app
     environment:
-      - SPRING_RABBITMQ_HOST=localhost
-      - SPRING_RABBITMQ_STREAM_USER=${USERNAME}
-      - SPRING_RABBITMQ_STREAM_PASSWORD=${PASSWORD}
-      - GBYZZZ_RECOVER_URL=http://localhost:7777/recover_password
+      - GBYZZZ_RECOVER_URL=https://localhost:443/recover_password
       - SPRING_MAIL_HOST=${MAIL_HOST}
       - SPRING_MAIL_PORT=${MAIL_PORT}
       - SPRING_MAIL_USERNAME=${MAIL_USERNAME}
       - SPRING_MAIL_PASSWORD=${MAIL_PASSWORD}
+      - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
 
+  bar_search:
+    build: ./bar_search
+    restart: always
+    container_name: bar_search
+    networks:
+      - app_network
+    ports:
+      - "8083:8083"
+    working_dir: /app
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/bar_db?stringtype=unspecified
+      - SPRING_DATASOURCE_PASSWORD=${PASSWORD}
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PASSWORD=${PASSWORD}
+      - SPRING_ELASTICSEARCH_URIS=http://elasticsearch:9200
+      - SPRING_ELASTICSEARCH_USERNAME=${USER}
+      - SPRING_ELASTICSEARCH_PASSWORD=${PASSWORD}
+      - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
+
+networks:
+  app_network:
+    external: true
 #volumes:
 #  postgres-data:

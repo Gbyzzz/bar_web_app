@@ -40,7 +40,7 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.flywaydb:flyway-core'
-    implementation 'org.flywaydb:flyway-database-postgresql:10.0.0'
+    implementation 'org.flywaydb:flyway-database-postgresql:10.19.0'
     implementation "io.jsonwebtoken:jjwt-api:$jjwtVersion"
     implementation 'net.coobird:thumbnailator:0.4.20'
     implementation 'com.twelvemonkeys.imageio:imageio-core:3.11.0'
