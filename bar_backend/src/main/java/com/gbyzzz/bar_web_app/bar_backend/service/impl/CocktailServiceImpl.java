@@ -2,13 +2,11 @@ package com.gbyzzz.bar_web_app.bar_backend.service.impl;
 
 import com.gbyzzz.bar_web_app.bar_backend.config.NotificationWebSocketHandler;
 import com.gbyzzz.bar_web_app.bar_backend.dto.CocktailDTO;
-import com.gbyzzz.bar_web_app.bar_backend.dto.CocktailRecipeDTO;
 import com.gbyzzz.bar_web_app.bar_backend.dto.IngredientDTO;
 import com.gbyzzz.bar_web_app.bar_backend.dto.RecipeDTO;
 import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.CocktailDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.dto.mapper.RecipeDTOMapper;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
-import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import com.gbyzzz.bar_web_app.bar_backend.entity.notification.Notification;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.RestPage;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
@@ -30,7 +28,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -74,20 +71,17 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     @Cacheable(key = "#id")
-    public CocktailRecipeDTO findById(long id) throws Exception {
-        Cocktail cocktail = cocktailRepository.findById(id)
-                .orElseThrow(() -> new Exception("No cocktail with id " + id + " found"));
-        return new CocktailRecipeDTO(cocktailDTOMapper.toDTO(cocktail),
-                recipeService.findRecipesByCocktail(cocktail)
-                );
+    public CocktailDTO findById(long id) throws Exception {
+        return cocktailDTOMapper.toDTO(cocktailRepository.findById(id)
+                .orElseThrow(() -> new Exception("No cocktail with id " + id + " found")));
     }
 
     @Override
     @CacheEvict(cacheNames = {"cs_pages", "cs"}, allEntries = true)
-    public CocktailRecipeDTO addOrUpdate(CocktailRecipeDTO cocktailRecipeDTO, MultipartFile image) throws Exception {
-        if(checkRecipes(cocktailRecipeDTO.recipesDTO())) {
+    public CocktailDTO addOrUpdate(CocktailDTO cocktailDTO, MultipartFile image) throws Exception {
+        if(checkRecipes(cocktailDTO.recipes())) {
             StringBuilder message = new StringBuilder();
-            Cocktail cocktail = cocktailDTOMapper.toEntity(cocktailRecipeDTO.cocktailDTO());
+            Cocktail cocktail = cocktailDTOMapper.toEntity(cocktailDTO);
 
             if(image != null) {
                 if (cocktail.getCocktailImage() != null) {
@@ -97,9 +91,6 @@ public class CocktailServiceImpl implements CocktailService {
                 cocktail.setCocktailImage(imageStorageService.saveImage(image, cocktailImage, MAX_COCKTAIL_IMAGE_SIZE));
                 cocktail.setCocktailImageThumbnail(imageStorageService.saveImage(image, cocktailThumbnail, MAX_COCKTAIL_IMAGE_THUMBNAIL_SIZE));
             }
-
-            List<Recipe> recipes = cocktailRecipeDTO.recipesDTO().stream().map(recipeMapper::toEntity)
-                    .toList();
 
             if (cocktail.getPublicationDate() == null) {
                 cocktail.setPublicationDate(new Date(new java.util.Date().getTime()));
@@ -111,9 +102,7 @@ public class CocktailServiceImpl implements CocktailService {
             if(!message.isEmpty()){
                 webSocketHandler.sendNotification(new Notification(message.toString(), cocktail.getCocktailId()));
             }
-            recipeService.addAll(recipes, cocktail);
-            return new CocktailRecipeDTO(cocktailDTOMapper.toDTO(cocktail),
-                    recipes.stream().map(recipeMapper::toDTO).collect(Collectors.toList()));
+            return cocktailDTOMapper.toDTO(cocktail);
         } else {
             throw new ServiceException("Duplicates in ingredients");
         }
@@ -142,7 +131,8 @@ public class CocktailServiceImpl implements CocktailService {
     @Override
     @Cacheable(cacheNames = "cs_pages")
     public List<CocktailDTO> findForMainPage() {
-        return cocktailRepository.findTop3ByOrderByCocktailIdDesc().stream()
+        List <Cocktail> cocktails = cocktailRepository.findTop3ByOrderByCocktailIdDesc();
+        return cocktails.stream()
                 .map(cocktailDTOMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -155,13 +145,9 @@ public class CocktailServiceImpl implements CocktailService {
                 Sort.by(Sort.Direction.ASC, "cocktailId");
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
         Page<Cocktail> cocktails = cocktailRepository.findAll(pageRequest);
-        List<CocktailRecipeDTO> cocktailDTOS = new ArrayList<>();
 
-            for (Cocktail cocktail : cocktails.getContent()) {
-                cocktailDTOS.add(new CocktailRecipeDTO(cocktailDTOMapper.toDTO(cocktail),
-                        recipeService.findRecipesByCocktail(cocktail)));
-        }
-        return new RestPage(new PageImpl<>(cocktailDTOS));
+        return new RestPage(new PageImpl<>(cocktails.getContent().stream()
+                .map(cocktailDTOMapper::toDTO).collect(Collectors.toList())));
     }
 
 }

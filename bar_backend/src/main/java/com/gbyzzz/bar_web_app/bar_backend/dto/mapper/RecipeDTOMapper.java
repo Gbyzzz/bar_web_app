@@ -7,7 +7,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface RecipeDTOMapper {
-    RecipeDTOMapper INSTANCE = Mappers.getMapper(RecipeDTOMapper.class );
 
     RecipeDTO toDTO(Recipe recipe);
     Recipe toEntity(RecipeDTO recipeDTO);

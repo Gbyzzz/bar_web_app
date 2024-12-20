@@ -13,6 +13,7 @@ import com.gbyzzz.bar_web_app.bar_backend.security.services.UserDetailsImpl;
 import com.gbyzzz.bar_web_app.bar_backend.service.AuthService;
 import com.gbyzzz.bar_web_app.bar_backend.service.KafkaService;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final UserDTOMapper mapper = UserDTOMapper.INSTANCE;
+    private final UserDTOMapper mapper;
 
     @Value("${gbyzzz.url.to.validate}")
     String urlToValidate;

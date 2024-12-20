@@ -8,6 +8,7 @@ import com.gbyzzz.bar_web_app.bar_backend.repository.CocktailRepository;
 import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
 import com.gbyzzz.bar_web_app.bar_backend.repository.VoteRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.VoteService;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +19,13 @@ import java.util.List;
  */
 
 @Service
+@AllArgsConstructor
 public class VoteServiceImpl implements VoteService {
+
     private final VoteRepository voteRepository;
     private final CocktailRepository cocktailRepository;
-
-    private final VoteDTOMapper mapper = VoteDTOMapper.INSTANCE;
+    private final VoteDTOMapper mapper;
     private final UserRepository userRepository;
-
-    public VoteServiceImpl(VoteRepository voteRepository, CocktailRepository cocktailRepository,
-                           UserRepository userRepository) {
-        this.voteRepository = voteRepository;
-        this.cocktailRepository = cocktailRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     @CacheEvict(cacheNames = "cs", key = "#vote.cocktail.cocktailId")

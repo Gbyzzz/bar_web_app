@@ -1,29 +1,29 @@
 <div *transloco="let t">
-  <div class="text-center font-weight-bold"><h1>{{cocktailRecipeDTO.cocktailDTO.cocktailName}}</h1></div>
+  <div class="text-center font-weight-bold"><h1>{{cocktail.cocktailName}}</h1></div>
 
   <div class="container mt-5" >
     <div class="row">
       <div class="col-6">
         <h3>{{t('ingredients')}}</h3>
-        <li *ngFor="let recipe of cocktailRecipeDTO.recipesDTO">
+        <li *ngFor="let recipe of cocktail.recipes">
           {{recipe.ingredient.ingredientName}} - {{recipe.quantity}} {{t(recipe.ingredient.unitOfMeasurement)}}
         </li>
-        {{t('Approx. alcohol')}}{{cocktailRecipeDTO.cocktailDTO.approxAlcoholPercentage}}%
+        {{t('Approx. alcohol')}}{{cocktail.approxAlcoholPercentage}}%
         <br>
         <br>
         <h3>{{t('recipe')}}</h3>
-        {{cocktailRecipeDTO.cocktailDTO.cocktailRecipe}}
+        {{cocktail.cocktailRecipe}}
       </div>
       <div class="col-6">
-        <img [src]="cocktailRecipeDTO.cocktailDTO.cocktailImage" class="mx-auto d-block img" alt="logo"/>
+        <img [src]="cocktail.cocktailImage" class="mx-auto d-block img" alt="logo"/>
       </div>
     </div>
   </div>
 
   <div class="p-5 bg-white text-black-50">
-    {{t('author')}}{{cocktailRecipeDTO.cocktailDTO.cocktailAuthor.username}}
+    {{t('author')}}{{cocktail.cocktailAuthor.username}}
     <br>
-    {{t('publication date')}} {{cocktailRecipeDTO.cocktailDTO.publicationDate}}
+    {{t('publication date')}} {{cocktail.publicationDate}}
   </div>
   <div class="container ml-5 mr-5">
   </div>
@@ -35,11 +35,12 @@
        !this.tokenStorage.getUser().enabled"
                    [hoverEnabled]="true" (starClickChange)="onRate($event)"
                    [rating]="vote.voteValue != 0 ?
-                    vote.voteValue : cocktailRecipeDTO.cocktailDTO.cocktailRating"
+                    vote.voteValue : cocktail.cocktailRating"
                    [showHalfStars]="true">
       </star-rating>
     </div>
     <div class="text-center mb-5">
-      Rating - {{cocktailRecipeDTO.cocktailDTO.cocktailRating | number: '1.0-1'}} (Votes :   {{cocktailRecipeDTO.cocktailDTO.voteCount == null ?  0 : cocktailRecipeDTO.cocktailDTO.voteCount}})
+      Rating - {{cocktail.cocktailRating | number: '1.0-1'}} (Votes :   {{cocktail.voteCount == null ?  0 :
+      cocktail.voteCount}})
     </div>
 </div>

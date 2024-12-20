@@ -5,6 +5,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Ingredient;
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.service.IngredientService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,13 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/ingredient")
 @CrossOrigin(origins = "*")
+@AllArgsConstructor
 public class IngredientController {
 
     private final IngredientService ingredientService;
-
-    public IngredientController(IngredientService ingredientService) {
-        this.ingredientService = ingredientService;
-    }
 
     @GetMapping("/all")
     List<IngredientDTO> getIngredients(){

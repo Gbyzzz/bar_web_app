@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.Formula;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -54,7 +55,7 @@ public class Cocktail {
     private int approxAlcoholPercentage;
 
     @OneToMany(mappedBy = "cocktail")
-    private Set<Recipe> recipes;
+    private List<Recipe> recipes;
 
     @Formula(value = "(SELECT COUNT(*) FROM votes v WHERE v.cocktail_id=cocktail_id)")
     private int voteCount;

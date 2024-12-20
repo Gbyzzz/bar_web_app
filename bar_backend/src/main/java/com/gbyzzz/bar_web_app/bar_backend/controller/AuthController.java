@@ -6,6 +6,7 @@ import com.gbyzzz.bar_web_app.bar_backend.controller.payload.response.Code;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.LoginRequest;
 import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupRequest;
 import com.gbyzzz.bar_web_app.bar_backend.service.AuthService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,10 @@ import java.io.IOException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@AllArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
-
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @PostMapping("/sign_in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)

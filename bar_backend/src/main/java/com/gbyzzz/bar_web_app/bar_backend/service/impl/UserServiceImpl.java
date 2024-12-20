@@ -7,6 +7,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.UserRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +29,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserDTOMapper mapper = UserDTOMapper.INSTANCE;
+    private final UserDTOMapper mapper;
     private final ImageStorageService imageStorageService;
 
     private static final int MAX_USER_PIC_SIZE = 80;

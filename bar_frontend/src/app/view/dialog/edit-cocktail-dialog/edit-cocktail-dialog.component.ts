@@ -12,7 +12,6 @@ import {CocktailServiceImpl} from "../../../service/entity/impl/CocktailServiceI
 import {TokenStorageService} from "../../../service/auth/token-storage.service";
 import {Router} from "@angular/router";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
-import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
 
 @Component({
   selector: 'app-edit-cocktail-dialog',
@@ -27,7 +26,7 @@ export class EditCocktailDialogComponent implements OnInit {
   newIngredient: Ingredient;
 
   ingredients: Ingredient[];
-  targetCocktail: CocktailRecipeDTO;
+  targetCocktail: Cocktail;
   dialogRef: MatDialogRef<any>;
   // data: CocktailRecipeDTO[];
   fileHolder: File | null;
@@ -42,7 +41,7 @@ export class EditCocktailDialogComponent implements OnInit {
               private router: Router,
               private tokenService: TokenStorageService,
               private cocktailService: CocktailServiceImpl,
-              @Inject(MAT_DIALOG_DATA) protected data: [CocktailRecipeDTO],) {
+              @Inject(MAT_DIALOG_DATA) protected data: [Cocktail],) {
     this.dialogRef = this.injector.get(MatDialogRef, null);
     // this.data = this.injector.get(MAT_DIALOG_DATA, null);
     this.cocktailForm = this.fb.group({
@@ -60,19 +59,19 @@ export class EditCocktailDialogComponent implements OnInit {
     if(this.data[0]) {
       this.targetCocktail = this.data[0];
 
-      this.cocktailForm.get('cocktailName').setValue(this.targetCocktail.cocktailDTO.cocktailName);
-      this.cocktailForm.get('cocktailImageFile').setValue(this.targetCocktail.cocktailDTO.cocktailImage);
-      this.cocktailForm.get('cocktailRecipe').setValue(this.targetCocktail.cocktailDTO.cocktailRecipe);
+      this.cocktailForm.get('cocktailName').setValue(this.targetCocktail.cocktailName);
+      this.cocktailForm.get('cocktailImageFile').setValue(this.targetCocktail.cocktailImage);
+      this.cocktailForm.get('cocktailRecipe').setValue(this.targetCocktail.cocktailRecipe);
 
-      if (this.targetCocktail.recipesDTO) {
-        this.targetCocktail.recipesDTO.forEach(recipe => {
+      if (this.targetCocktail.recipes) {
+        this.targetCocktail.recipes.forEach(recipe => {
           this.ingredientsRecipe().insert(this.addIndex, this.newIngredientsRecipe(recipe.ingredient, recipe.quantity));
           this.addIndex++;
         });
       }
       this.dialogRef.updateSize('100%', '100%');
     } else {
-      this.targetCocktail = new CocktailRecipeDTO(new Cocktail(), [new Recipe()]);
+      this.targetCocktail = new Cocktail();
     }
   }
 
@@ -178,17 +177,17 @@ export class EditCocktailDialogComponent implements OnInit {
 
       // this.imageService.uploadImage(formData).subscribe(image => {
       //   this.targetCocktail.cocktailDTO.cocktailImage = image;
-        this.targetCocktail.cocktailDTO.cocktailName = this.cocktailForm.get('cocktailName').value;
-        this.targetCocktail.cocktailDTO.cocktailRecipe = this.cocktailForm.get('cocktailRecipe').value;
+        this.targetCocktail.cocktailName = this.cocktailForm.get('cocktailName').value;
+        this.targetCocktail.cocktailRecipe = this.cocktailForm.get('cocktailRecipe').value;
         this.updateCocktailValues();
-        this.targetCocktail.cocktailDTO.cocktailAuthor = this.tokenService.getUser();
+        this.targetCocktail.cocktailAuthor = this.tokenService.getUser();
         console.log(this.targetCocktail);
         formData.append('cocktail', new Blob([JSON.stringify(this.targetCocktail)], {
           type: 'application/json'
         }));
         formData.append('image', this.fileHolder, this.fileHolder.name);
         this.cocktailService.addCocktail(formData).subscribe(res => {
-          this.router.navigate(['/cocktails/cocktail/' + res.cocktailDTO.cocktailId]);
+          this.router.navigate(['/cocktails/cocktail/' + res.cocktailId]);
         });
       // });
     }
@@ -197,9 +196,9 @@ export class EditCocktailDialogComponent implements OnInit {
 
   updateCocktailValues() :void {
     const ingredientsRecipe = this.cocktailForm.get('ingredientsRecipe') as UntypedFormArray;
-    this.targetCocktail.recipesDTO = [];
+    this.targetCocktail.recipes = [];
     for (let i = 0; i < ingredientsRecipe.length; i++) {
-      this.targetCocktail.recipesDTO.splice(i, 0, new Recipe(null,
+      this.targetCocktail.recipes.splice(i, 0, new Recipe(null,
         this.ingredients.find(ingredient => ingredient.ingredientName === ingredientsRecipe.value[i].ingredientSelect),
         Number(ingredientsRecipe.value[i].quantity)));
     }

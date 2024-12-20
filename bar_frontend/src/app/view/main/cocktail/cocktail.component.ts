@@ -10,7 +10,6 @@ import {Recipe} from "../../../model/Recipe";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 import {LoginSharedService} from "../../../service/auth/login-shared.service";
 import {ClickEvent, StarRatingConfigService, StarRatingModule} from 'angular-star-rating';
-import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
 
 export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -23,7 +22,7 @@ export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 })
 export class CocktailComponent implements OnInit {
 
-  cocktailRecipeDTO: CocktailRecipeDTO;
+  cocktail: Cocktail;
   private route: ActivatedRoute;
 
   vote: Vote;
@@ -52,12 +51,8 @@ export class CocktailComponent implements OnInit {
     this.cocktailService.findCocktailById(this.cocktailId).subscribe(cocktail =>{
       console.log(cocktail);
       this.isUserLoggedIn = this.tokenStorage.getUser() == null ? false : true;
-      this.cocktailRecipeDTO = cocktail;
-      console.log(this.cocktailRecipeDTO);
-      console.log(this.cocktailRecipeDTO.recipesDTO);
-      console.log(cocktail.recipesDTO);
-
-      console.log(this.cocktailRecipeDTO.recipesDTO.values());
+      this.cocktail = cocktail;
+      console.log(this.cocktail);
 
 
       // this.recipeService.findByCocktail(cocktail).subscribe(res => {
@@ -66,8 +61,8 @@ export class CocktailComponent implements OnInit {
      //  this.voteService.getVoteCountByCocktail(cocktail).subscribe(count =>{
      //    this.voteCount = count;
      //  });
-      this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktailRecipeDTO.cocktailDTO, 0);
-     this.cocktailName = this.cocktailRecipeDTO.cocktailDTO.cocktailName;
+      this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktail, 0);
+     this.cocktailName = this.cocktail.cocktailName;
      voteService.findByCocktailUserVote(this.vote).subscribe(res => {
         this.vote = res;
       });
@@ -115,8 +110,8 @@ export class CocktailComponent implements OnInit {
     this.sharedService.eventLoggedSubject.subscribe((loggedIn: boolean) => {
       this.isUserLoggedIn = loggedIn;
 
-      if (this.cocktailRecipeDTO && this.cocktailRecipeDTO.cocktailDTO) {
-        this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktailRecipeDTO.cocktailDTO, 0);
+      if (this.cocktail) {
+        this.vote = new Vote(null, this.tokenStorage.getUser(), this.cocktail, 0);
         this.voteService.findByCocktailUserVote(this.vote).subscribe(res => {
           this.vote = res;
           // this.voteService.getVoteCountByCocktail(this.cocktail).subscribe(count =>{
@@ -129,9 +124,9 @@ export class CocktailComponent implements OnInit {
 
   loadCocktailData(cocktailId: number): void {
     this.cocktailService.findCocktailById(cocktailId).subscribe(data => {
-      this.cocktailRecipeDTO = data;
+      this.cocktail = data;
       console.log("load")
-      console.log(this.cocktailRecipeDTO)
+      console.log(this.cocktail)
     });
   }
 
@@ -143,7 +138,7 @@ export class CocktailComponent implements OnInit {
       this.vote = res;
       this.cdr.detectChanges();
     this.cocktailService.findCocktailById(this.cocktailId).subscribe(cocktail =>{
-      this.cocktailRecipeDTO = cocktail;
+      this.cocktail = cocktail;
       // this.voteService.getVoteCountByCocktail(cocktail).subscribe(count =>{
       //   this.voteCount = count;
       // });

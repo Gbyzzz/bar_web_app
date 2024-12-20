@@ -5,7 +5,6 @@ import {Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Pagination} from "../../../model/pagination/Pagination";
 import {Recipe} from "../../../model/Recipe";
-import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
 
 export const COCKTAIL_URL_TOKEN = new InjectionToken<string>('url');
 export const COCKTAIL_SEARCH_URL_TOKEN = new InjectionToken<string>('searchUrl');
@@ -35,8 +34,8 @@ export class CocktailServiceImpl implements CocktailService{
     return this.HttpClient.delete<Cocktail>(this.url+'/delete/'+ id);
   }
 
-  findCocktailById(id: number): Observable<CocktailRecipeDTO> {
-    return this.HttpClient.get<CocktailRecipeDTO>(this.url+'/' + id);
+  findCocktailById(id: number): Observable<Cocktail> {
+    return this.HttpClient.get<Cocktail>(this.url+'/' + id);
   }
 
   findAll(): Observable<Cocktail[]> {
@@ -54,12 +53,12 @@ export class CocktailServiceImpl implements CocktailService{
     return this.HttpClient.get<Cocktail[]>(this.url+'/main_page');
   }
 
-  addCocktail(formData: FormData): Observable<CocktailRecipeDTO> {
-    return this.HttpClient.post<CocktailRecipeDTO>(this.url+'/add', formData);
+  addCocktail(formData: FormData): Observable<Cocktail> {
+    return this.HttpClient.post<Cocktail>(this.url+'/add', formData);
   }
 
-  updateCocktail(formData: FormData): Observable<CocktailRecipeDTO> {
-    return this.HttpClient.put<CocktailRecipeDTO>(this.url+'/update', formData);
+  updateCocktail(formData: FormData): Observable<Cocktail> {
+    return this.HttpClient.put<Cocktail>(this.url+'/update', formData);
   }
 
   add(obj: Cocktail): Observable<Cocktail> {

@@ -1,4 +1,5 @@
 import {User} from "./User";
+import {Recipe} from "./Recipe";
 
 export class Cocktail {
   cocktailId: number;
@@ -11,12 +12,13 @@ export class Cocktail {
   cocktailRecipe: string;
   approxAlcoholPercentage: number;
   voteCount: number;
+  recipes: Recipe[];
 
 
   constructor(cocktailId?: number, cocktailName?: string, cocktailAuthor?: User,
               cocktailRating?: number, publicationDate?: Date, cocktailImage?: string,
               cocktailImageThumbnail?: string, cocktailRecipe?: string, approxAlcoholPercentage?: number,
-              voteCount?: number) {
+              voteCount?: number, recipes?: Recipe[]) {
     this.cocktailId = cocktailId;
     this.cocktailName = cocktailName;
     this.cocktailAuthor = cocktailAuthor;
@@ -27,6 +29,7 @@ export class Cocktail {
     this.cocktailRecipe = cocktailRecipe;
     this.approxAlcoholPercentage = approxAlcoholPercentage;
     this.voteCount = voteCount;
+    this.recipes = recipes;
   }
 
 

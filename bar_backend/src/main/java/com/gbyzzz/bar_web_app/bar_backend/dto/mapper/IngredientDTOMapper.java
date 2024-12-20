@@ -5,9 +5,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.Ingredient;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface IngredientDTOMapper {
-    IngredientDTOMapper INSTANCE = Mappers.getMapper(IngredientDTOMapper.class );
-
     IngredientDTO toDTO(Ingredient ingredient);
 }

@@ -6,6 +6,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import com.gbyzzz.bar_web_app.bar_backend.repository.RecipeRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,14 +22,11 @@ import java.util.stream.Collectors;
  */
 @Service
 @CacheConfig(cacheNames = "rs")
+@AllArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
-    private final RecipeDTOMapper mapper = RecipeDTOMapper.INSTANCE;
-
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
-    }
+    private final RecipeDTOMapper mapper;
 
     @Override
     @Cacheable(key = "#cocktail.cocktailId")

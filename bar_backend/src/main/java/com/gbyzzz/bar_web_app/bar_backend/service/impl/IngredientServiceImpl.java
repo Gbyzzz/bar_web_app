@@ -6,6 +6,7 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.Ingredient;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.repository.IngredientRepository;
 import com.gbyzzz.bar_web_app.bar_backend.service.IngredientService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,15 +20,12 @@ import java.util.stream.Collectors;
  */
 
 @Service
+@AllArgsConstructor
 public class IngredientServiceImpl implements IngredientService {
 
     private final IngredientRepository ingredientRepository;
 
-    private final IngredientDTOMapper mapper = IngredientDTOMapper.INSTANCE;
-
-    public IngredientServiceImpl(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
-    }
+    private final IngredientDTOMapper mapper;
 
     @Override
     public List<IngredientDTO> findAll() {

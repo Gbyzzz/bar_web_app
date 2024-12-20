@@ -5,11 +5,8 @@ import com.gbyzzz.bar_web_app.bar_backend.entity.Vote;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface VoteDTOMapper {
-    VoteDTOMapper INSTANCE = Mappers.getMapper(VoteDTOMapper.class );
-
-
     VoteDTO toDTO(Vote vote);
 
     Vote toEntity(Vote vote);

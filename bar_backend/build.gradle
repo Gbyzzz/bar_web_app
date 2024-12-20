@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.4'
-    id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 jar {
     enabled = false
@@ -9,7 +9,8 @@ jar {
 
 group = 'com.gbyzzz.bar_web_app'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+//sourceCompatibility = '17'
+//targetCompatibility = '17'
 
 configurations {
     compileOnly {
@@ -20,12 +21,13 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
+
     maven { url 'https://repo.spring.io/snapshot' }
 }
 
 ext {
-    set('testcontainersVersion', "1.18.0")
-    mapstructVersion = '1.5.5.Final'
+    set('testcontainersVersion', "1.20.4")
+    mapstructVersion = '1.6.3'
     jjwtVersion = '0.12.6'
 
 }
@@ -40,14 +42,14 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.flywaydb:flyway-core'
-    implementation 'org.flywaydb:flyway-database-postgresql:10.19.0'
+    implementation 'org.flywaydb:flyway-database-postgresql:11.1.0'
     implementation "io.jsonwebtoken:jjwt-api:$jjwtVersion"
     implementation 'net.coobird:thumbnailator:0.4.20'
-    implementation 'com.twelvemonkeys.imageio:imageio-core:3.11.0'
+    implementation 'com.twelvemonkeys.imageio:imageio-core:3.12.0'
 //    implementation 'com.twelvemonkeys.imageio:imageio-webp:3.11.0'
-    implementation 'io.minio:minio:8.5.12'
+    implementation 'io.minio:minio:8.5.14'
     implementation 'org.sejda.imageio:webp-imageio:0.1.6'
-    testImplementation 'org.projectlombok:lombok:1.18.34'
+    testImplementation 'org.projectlombok:lombok:1.18.36'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation "org.mapstruct:mapstruct:$mapstructVersion"
@@ -55,7 +57,6 @@ dependencies {
     runtimeOnly "io.jsonwebtoken:jjwt-impl:$jjwtVersion"
     runtimeOnly "io.jsonwebtoken:jjwt-jackson:$jjwtVersion"
     implementation 'javax.validation:validation-api:2.0.1.Final'
-    implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
     runtimeOnly 'org.postgresql:postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

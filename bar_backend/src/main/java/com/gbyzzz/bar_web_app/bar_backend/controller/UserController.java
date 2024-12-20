@@ -6,6 +6,7 @@ import com.gbyzzz.bar_web_app.bar_backend.controller.payload.request.SignupReque
 import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
 import com.gbyzzz.bar_web_app.bar_backend.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserController {
 
     private final UserService userService;

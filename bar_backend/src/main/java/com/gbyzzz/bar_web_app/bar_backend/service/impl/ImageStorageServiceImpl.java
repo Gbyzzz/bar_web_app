@@ -4,6 +4,7 @@ import com.gbyzzz.bar_web_app.bar_backend.service.ImageStorageService;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;

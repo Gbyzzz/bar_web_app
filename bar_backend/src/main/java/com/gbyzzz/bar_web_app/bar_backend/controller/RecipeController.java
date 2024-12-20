@@ -4,6 +4,7 @@ import com.gbyzzz.bar_web_app.bar_backend.dto.RecipeDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Cocktail;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Recipe;
 import com.gbyzzz.bar_web_app.bar_backend.service.RecipeService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,10 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/recipe")
+@AllArgsConstructor
 public class RecipeController {
 
     private final RecipeService recipeService;
-
-    public RecipeController(RecipeService recipeService) {
-        this.recipeService = recipeService;
-    }
 
 //    @PostMapping("/add_or_update")
 //    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_BARTENDER')")

@@ -13,6 +13,7 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "recipes",
         uniqueConstraints=
         @UniqueConstraint(

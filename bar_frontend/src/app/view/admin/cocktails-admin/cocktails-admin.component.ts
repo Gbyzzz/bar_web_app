@@ -9,8 +9,6 @@ import {Pagination, SortDirection, SortDirectionUtil} from "../../../model/pagin
 import {PageEvent} from "@angular/material/paginator";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 import {Recipe} from "../../../model/Recipe";
-import {CocktailRecipeDTO} from "../../../model/dto/CocktailRecipeDTO";
-
 @Component({
   selector: 'app-cocktails-admin',
   templateUrl: './cocktails-admin.component.html',
@@ -22,8 +20,8 @@ export class CocktailsAdminComponent implements OnInit {
   readonly defaultPageNumber = 0;
   readonly defaultSortDirection = SortDirection.DESC;
 
-  cocktails: CocktailRecipeDTO[];
-  sortedData: CocktailRecipeDTO[];
+  cocktails: Cocktail[];
+  sortedData: Cocktail[];
   // recipes: Recipe[];
   pagination: Pagination;
   totalCocktailsFound: number;
@@ -63,17 +61,17 @@ export class CocktailsAdminComponent implements OnInit {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
           case 'cocktailId':
-            return compare(a.cocktailDTO.cocktailId, b.cocktailDTO.cocktailId, isAsc);
+            return compare(a.cocktailId, b.cocktailId, isAsc);
           case 'cocktailName':
-            return compare(a.cocktailDTO.cocktailName, b.cocktailDTO.cocktailName, isAsc);
+            return compare(a.cocktailName, b.cocktailName, isAsc);
           case 'cocktailAuthor':
-            return compare(a.cocktailDTO.cocktailAuthor.username, b.cocktailDTO.cocktailAuthor.username, isAsc);
+            return compare(a.cocktailAuthor.username, b.cocktailAuthor.username, isAsc);
           case 'cocktailRating':
-            return compare(a.cocktailDTO.cocktailRating, b.cocktailDTO.cocktailRating, isAsc);
+            return compare(a.cocktailRating, b.cocktailRating, isAsc);
           case 'publicationDate':
-            return compare(a.cocktailDTO.publicationDate, b.cocktailDTO.publicationDate, isAsc);
+            return compare(a.publicationDate, b.publicationDate, isAsc);
           case 'approxAlcoholPercentage':
-            return compare(a.cocktailDTO.approxAlcoholPercentage, b.cocktailDTO.approxAlcoholPercentage, isAsc);
+            return compare(a.approxAlcoholPercentage, b.approxAlcoholPercentage, isAsc);
           default:
             return 0;
         }
@@ -104,7 +102,7 @@ export class CocktailsAdminComponent implements OnInit {
     });
   }
 
-  openEditDialog(cocktail: CocktailRecipeDTO): void {
+  openEditDialog(cocktail: Cocktail): void {
 
 
     const dialogRef = this.dialog.open(EditCocktailDialogComponent, {
