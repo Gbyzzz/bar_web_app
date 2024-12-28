@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost:8080/',
-  SEARCH_API_URL: 'http://localhost:8083/'
+  API_URL: 'http://localhost:8080/api/v3/',
+  SEARCH_API_URL: 'http://localhost:8083/api/v3/'
 
 };
 

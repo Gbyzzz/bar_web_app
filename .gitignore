@@ -12,6 +12,7 @@ out/
 */node_modules
 .env
 application-dev.properties
+environment.dev.ts
 .gradle
 
 *.log
