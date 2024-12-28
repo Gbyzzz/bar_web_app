@@ -1,43 +1,16 @@
 services:
-#  bar_postgres:
-#    build: ./db
-#    ports:
-#      - "5432:5432"
-#    restart: always
-#    environment:
-#      POSTGRES_PASSWORD: ${PASSWORD}
-#      POSTGRES_DB: bar_db
-#    volumes:
-#      - postgres-data:/var/lib/postgresql/data
-#  bar_redis:
-#    container_name: bar_redis
-#    image: redis:latest
-#    ports:
-#      - "6380:6380"
-#    environment:
-#      REDIS_PASSWORD: ${PASSWORD}
-#    restart: always
-#  bar_rabbitmq:
-#    container_name: bar_rabbitmq
-#    image: rabbitmq:latest
-#    ports:
-#      - "5672:5672"
-#      - "15673:15672"
-#    environment:
-#      RABBITMQ_USER: ${USERNAME}
-#      RABBITMQ_PASSWORD: ${PASSWORD}
-#    restart: always
 
   bar_backend:
-    build: ./bar_backend
+    build:
+        context: ./bar_backend
+        args:
+          - KEYSTORE_PASSWORD=${PASSWORD}
     restart: always
     container_name: bar_backend
     networks:
       - app_network
     ports:
       - "8080:8080"
-#    volumes:
-#      - ./bar_backend:/app
     working_dir: /app
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/bar_db
@@ -46,7 +19,7 @@ services:
       - SPRING_DATA_REDIS_PASSWORD=${PASSWORD}
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
-      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=${KAFKA_SECURITY}
       - GBYZZZ_APP_JWT=${JWT_KEY}
       - GBYZZZ_APP_JWT_EXPIRATION=${JWT_EXPIRATION}
       - APP_MINIO_ENDPOINT=http://minio:9000
@@ -55,18 +28,19 @@ services:
       - APP_MINIO_USERPICBUCKET=user-pic-bucket
       - APP_MINIO_COCKTAILIMAGE=cocktail-image
       - APP_MINIO_COCKTAILTHUMBNAIL=cocktail-thumbnail
+      - SERVER_SSL_KEY_STORE_PASSWORD=${PASSWORD}
 
   bar_frontend:
     build: ./bar_frontend
     container_name: bar_frontend
     restart: always
+    environment:
+      # Set environment variables using docker-compose.yml or environment files
+      ENV: dev  # Pass "prod" during build to use environment.prod.ts
     networks:
       - app_network
     ports:
       - "443:443"
-#    volumes:
-#      - /app/node_modules
-#      - ./bar_frontend:/app
 
   bar_user_enable:
     build: ./bar_user_enable
@@ -79,7 +53,7 @@ services:
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PASSWORD=${PASSWORD}
       - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
-      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=${KAFKA_SECURITY}
 
   bar_email:
     build: ./bar_email
@@ -97,10 +71,13 @@ services:
       - SPRING_MAIL_USERNAME=${MAIL_USERNAME}
       - SPRING_MAIL_PASSWORD=${MAIL_PASSWORD}
       - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
-      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=${KAFKA_SECURITY}
 
   bar_search:
-    build: ./bar_search
+    build:
+      context: ./bar_search
+      args:
+      - KEYSTORE_PASSWORD=${PASSWORD}
     restart: always
     container_name: bar_search
     networks:
@@ -117,10 +94,10 @@ services:
       - SPRING_ELASTICSEARCH_USERNAME=${USER}
       - SPRING_ELASTICSEARCH_PASSWORD=${PASSWORD}
       - SPRING_KAFKA_BOOTSTRAPSERVERS=kafka:29092
-      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="admin" password="aa132435aa";
+      - SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG=${KAFKA_SECURITY}
+      - SERVER_SSL_KEY_STORE_PASSWORD=${PASSWORD}
+
 
 networks:
   app_network:
     external: true
-#volumes:
-#  postgres-data:
