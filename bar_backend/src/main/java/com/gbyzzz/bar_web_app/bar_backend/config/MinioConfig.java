@@ -4,6 +4,8 @@ import io.minio.*;
 import io.minio.errors.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,10 +14,13 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 @Configuration
-public class MinioConfig {
+public class MinioConfig implements ApplicationListener<ApplicationReadyEvent> {
 
     @Value("${app.minio.endpoint}")
     private String endpoint;
+
+    @Value("${app.minio.url}")
+    private String url;
 
     @Value("${app.minio.username}")
     private String username;
@@ -31,6 +36,9 @@ public class MinioConfig {
 
     @Value("${app.minio.cocktailThumbnail}")
     private String cocktailThumbnail;
+
+    public static String minioUrl;
+
 
 
     @Bean
@@ -99,5 +107,10 @@ public class MinioConfig {
                 "       \"Resource\":[\"arn:aws:s3:::" + bucketName + "/*\"]\n" +
                 "   }]\n" +
                 "}";
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        minioUrl = url;
     }
 }

@@ -1,5 +1,6 @@
 package com.gbyzzz.bar_web_app.bar_backend.entity;
 
+import com.gbyzzz.bar_web_app.bar_backend.config.MinioConfig;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Formula;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
@@ -59,6 +59,22 @@ public class Cocktail {
 
     @Formula(value = "(SELECT COUNT(*) FROM votes v WHERE v.cocktail_id=cocktail_id)")
     private int voteCount;
+
+    public Cocktail(Long cocktailId, String cocktailName, User cocktailAuthor, float cocktailRating,
+                    Date publicationDate, String cocktailImage, String cocktailImageThumbnail,
+                    String cocktailRecipe, int approxAlcoholPercentage, List<Recipe> recipes, int voteCount) {
+        this.cocktailId = cocktailId;
+        this.cocktailName = cocktailName;
+        this.cocktailAuthor = cocktailAuthor;
+        this.cocktailRating = cocktailRating;
+        this.publicationDate = publicationDate;
+        this.cocktailImage = MinioConfig.minioUrl + cocktailImage;
+        this.cocktailImageThumbnail = MinioConfig.minioUrl + cocktailImageThumbnail;
+        this.cocktailRecipe = cocktailRecipe;
+        this.approxAlcoholPercentage = approxAlcoholPercentage;
+        this.recipes = recipes;
+        this.voteCount = voteCount;
+    }
 
     @Override
     public String toString() {

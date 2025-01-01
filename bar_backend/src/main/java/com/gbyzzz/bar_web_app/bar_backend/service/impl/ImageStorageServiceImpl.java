@@ -52,7 +52,7 @@ public class ImageStorageServiceImpl implements ImageStorageService {
                             .contentType("image/webp")
                             .build());
 
-            return endpoint + "/" + bucketName + "/" + fileName + ".webp";
+            return "/" + bucketName + "/" + fileName + ".webp";
         } catch (Exception e) {
             throw new RuntimeException("Failed to store image file.", e);
         }
