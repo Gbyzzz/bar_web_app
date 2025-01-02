@@ -23,6 +23,7 @@ services:
       - GBYZZZ_APP_JWT=${JWT_KEY}
       - GBYZZZ_APP_JWT_EXPIRATION=${JWT_EXPIRATION}
       - APP_MINIO_ENDPOINT=http://minio:9000
+      - APP_MINIO_URL=http://minio:9000
       - APP_MINIO_USERNAME=${USER}
       - APP_MINIO_PASSWORD=${PASSWORD}
       - APP_MINIO_USERPICBUCKET=user-pic-bucket
@@ -34,14 +35,11 @@ services:
     build:
       context: ./bar_frontend
       args:
-        - ENV = ${ENV}
+        - ENV=${ENV}
     container_name: bar_frontend
     restart: always
-    environment:
-      # Set environment variables using docker-compose.yml or environment files
-      ENV: dev  # Pass "prod" during build to use environment.prod.ts
     volumes:
-      - ./certbot/www/:/var/www/certbot/:ro
+      - ./certbot/conf/:/var/www/certbot/:ro
     networks:
       - app_network
     ports:

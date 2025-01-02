@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Builder
+@AllArgsConstructor
 @EqualsAndHashCode
 @Table(name = "cocktails", schema = "public", catalog = "bar_db")
 public class Cocktail {
@@ -59,22 +60,6 @@ public class Cocktail {
 
     @Formula(value = "(SELECT COUNT(*) FROM votes v WHERE v.cocktail_id=cocktail_id)")
     private int voteCount;
-
-    public Cocktail(Long cocktailId, String cocktailName, User cocktailAuthor, float cocktailRating,
-                    Date publicationDate, String cocktailImage, String cocktailImageThumbnail,
-                    String cocktailRecipe, int approxAlcoholPercentage, List<Recipe> recipes, int voteCount) {
-        this.cocktailId = cocktailId;
-        this.cocktailName = cocktailName;
-        this.cocktailAuthor = cocktailAuthor;
-        this.cocktailRating = cocktailRating;
-        this.publicationDate = publicationDate;
-        this.cocktailImage = MinioConfig.minioUrl + cocktailImage;
-        this.cocktailImageThumbnail = MinioConfig.minioUrl + cocktailImageThumbnail;
-        this.cocktailRecipe = cocktailRecipe;
-        this.approxAlcoholPercentage = approxAlcoholPercentage;
-        this.recipes = recipes;
-        this.voteCount = voteCount;
-    }
 
     @Override
     public String toString() {
