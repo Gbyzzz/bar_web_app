@@ -3,7 +3,7 @@ package com.gbyzzz.bar_web_app.bar_backend.controller.payload.request;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @Setter

@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   API_URL: 'http://localhost:8080/api/v3/',
+  WEB_SOCKET_URL: 'ws://localhost:8080/api/v3/notification',
+  IMAGE_URL: 'http://localhost:9000',
   SEARCH_API_URL: 'http://localhost:8083/api/v3/'
 
 };

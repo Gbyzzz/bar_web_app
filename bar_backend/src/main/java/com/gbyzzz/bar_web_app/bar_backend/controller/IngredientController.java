@@ -3,8 +3,12 @@ package com.gbyzzz.bar_web_app.bar_backend.controller;
 import com.gbyzzz.bar_web_app.bar_backend.dto.IngredientDTO;
 import com.gbyzzz.bar_web_app.bar_backend.entity.pagination.Pagination;
 import com.gbyzzz.bar_web_app.bar_backend.entity.Ingredient;
-import com.gbyzzz.bar_web_app.bar_backend.entity.User;
 import com.gbyzzz.bar_web_app.bar_backend.service.IngredientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +29,12 @@ public class IngredientController {
     private final IngredientService ingredientService;
 
     @GetMapping("/all")
+    @Operation(summary = "Get all ingredients", description = "Get all ingredients from db")
+    @ApiResponse(responseCode = "200",
+            content = @Content(mediaType = "application/json",
+                    array = @ArraySchema(
+                            schema = @Schema(implementation = IngredientDTO.class))))
     List<IngredientDTO> getIngredients(){
-        System.out.println("all ingredients");
         return ingredientService.findAll();
     }
 

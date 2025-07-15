@@ -4,8 +4,8 @@
     <div class="post">
       <div class="bg-cocktailImage hover-zoom container-img">
         <a class="post-img" [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">
-          <img [src]="cocktail.cocktailImage" width="423" height="255"
-               [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]"  [alt]="cocktail.cocktailName"/>
+          <img src="{{cocktail.cocktailImage}}" width="423" height="255"
+               [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]" [alt]="cocktail.cocktailName"/>
           <div class="text-block">
             <div style="font-size: 20px"><a style="color:white"
                                             [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">

@@ -2,10 +2,7 @@ FROM node:alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install && npm install -g gzipper
-# Pass the desired environment (e.g., "prod" for production) as a build argument
 ARG ENV
-
-# Conditionally copy the appropriate environment file based on the argument
 COPY . ./
 COPY src/environments/environment.$ENV.ts ./src/environments/environment.ts
 

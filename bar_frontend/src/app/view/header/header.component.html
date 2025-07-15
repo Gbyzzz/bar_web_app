@@ -152,7 +152,7 @@
   <br>
   <div class="header-container bg-light">
     <!-- Navbar on the left -->
-    <nav class="navbar navbar-expand-sm navbar-light" style="width: max-content" *transloco="let t">
+    <nav class="navbar navbar-expand-lg navbar-light" style="max-width: max-content" *transloco="let t">
       <div class="container-fluid">
         <input type="hidden" name="command" value="to_main"/>
         <a [routerLink]="['']" class="navbar-brand">BAR.com</a>
@@ -161,6 +161,16 @@
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
           <ul class="navbar-nav me-auto">
+            <li class="nav-item d-lg-none">
+
+              <div class="presearch_wrapper_nav">
+                <input class="presearch__input_nav bg-white" #searchInput name="q" type="search" enterkeyhint="search"
+                       placeholder="{{ t('search') }}" autocomplete="off" data-input="input-in-focus">
+                <div>
+                </div>
+              </div>
+
+            </li>
             <li class="nav-item">
               <a class="nav-link" [routerLink]="['/cocktails']">{{ t('cocktails') }}</a>
             </li>
@@ -170,26 +180,18 @@
             <li class="nav-item">
               <a href="#" class="nav-link" [routerLink]="['/contact']">{{ t('contact') }}</a>
             </li>
-            <li class="nav-item d-sm-none ">
+            <li class="nav-item d-lg-none ">
               <a href="#" class="nav-link" *ngIf="role === 'ROLE_ADMIN'" [routerLink]="['/admin']">
                 {{ t('admin') }}
               </a>
-              <!--              <button type="button" *ngIf="role === 'ROLE_ADMIN'" class="btn btn-gray-text btn-light me-3"-->
-              <!--                      [routerLink]="['/admin']">-->
-              <!--                {{ t('admin') }}-->
-              <!--              </button>-->
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-lg-none">
               <a href="#" class="nav-link" *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'"
                  [routerLink]="['/cocktails/add']">
                 {{ t('add cocktail') }}
               </a>
-              <!--              <button type="button" *ngIf="role === 'ROLE_ADMIN' || role === 'ROLE_BARTENDER'" class="btn btn-gray-text btn-light me-3"-->
-              <!--                      [routerLink]="['/cocktails/add']">-->
-              <!--                {{ t('add cocktail') }}-->
-              <!--              </button>-->
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-lg-none">
               <div class="dropdown">
                 <a href="#" class="nav-link" data-bs-toggle="dropdown">
                   {{ siteLanguage }}
@@ -199,9 +201,6 @@
                       d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
                   </svg>
                 </a>
-                <!--                <button type="button" class="btn btn-gray-text btn-light me-3 dropdown-toggle" data-bs-toggle="dropdown">-->
-                <!--                  {{ siteLanguage }}-->
-                <!--                </button>-->
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <button class="dropdown-item btn-gray-text" type="submit" name="language" value="en_US"
                           (click)="changeSiteLanguage('en')">
@@ -215,25 +214,17 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-lg-none">
               <a href="#" class="nav-link" *ngIf="!isLoggedIn" data-bs-target="#signin" data-bs-toggle="offcanvas">
                 {{ t('sign in') }}
               </a>
-              <!--              <button *ngIf="!isLoggedIn" class="btn btn-gray-text btn-light me-3" type="button" data-bs-target="#signin"-->
-              <!--                      data-bs-toggle="offcanvas">-->
-              <!--                {{ t('sign in') }}-->
-              <!--              </button>-->
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-lg-none">
               <a href="#" class="nav-link" *ngIf="isLoggedIn" (click)="logout()" data-bs-toggle="offcanvas">
                 {{ t('logout') }}
               </a>
-              <!--              <button *ngIf="isLoggedIn" class="btn btn-gray-text btn-light me-3" type="button" (click)="logout()"-->
-              <!--                      data-bs-toggle="offcanvas">-->
-              <!--                {{ t('logout') }}-->
-              <!--              </button>-->
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-lg-none">
               <div *ngIf="newNotification" class="alert alert-success alert-dismissible">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" (click)="closeAlert()"></button>
                 <strong>Hey!</strong> {{ notification.message }}, you can check it
@@ -246,9 +237,9 @@
     </nav>
 
     <!-- Search bar in the center -->
-    <div class="presearch header-presearch header-bottom__presearch-wrapper"
+    <div class="presearch header-presearch d-none d-lg-grid"
          data-cy="test-desktop-search-bar">
-      <div class="presearch__wrapper">
+      <div class="presearch__wrapper" style="min-width: 150px">
         <input class="presearch__input bg-white" #searchInput name="q" type="search" enterkeyhint="search"
                placeholder="{{ t('search') }}" autocomplete="off" data-input="input-in-focus"
                [formControl]="inputControl" (input)="onTextChange()" (keydown.enter)="makeSearch($event)">
@@ -272,11 +263,6 @@
                 <a class="presearch__suggest suggest mb-1" href="#"
                    [routerLink]="['/cocktails/cocktail/' + c.cocktailId]" (click)="clearSearch()">
             <span class="suggest__icon-search">
-<!--              <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-              <!--                              <path fill-rule="evenodd" clip-rule="evenodd"-->
-              <!--                                    d="M10.828 4.75a6.078 6.078 0 100 12.156 6.078 6.078 0 000-12.156zM3.25 10.828a7.578 7.578 0 1113.441 4.801l4.161 4.162a.75.75 0 11-1.06 1.06l-4.162-4.16a7.578 7.578 0 01-12.38-5.862z"-->
-              <!--                                    fill="#AFAFAF"></path>-->
-              <!--                            </svg>-->
               <img [src]="c.cocktailImageThumbnail" width="80"
                    [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]"/>
             </span>
@@ -309,11 +295,10 @@
           </span>
         </div>
       </div>
-      <!--      <div class="presearch__overlay" style="display: ;"></div>-->
     </div>
 
     <!-- Buttons and dropdown on the right -->
-    <div class="right-container d-none d-sm-flex ms-auto">
+    <div class="right-container d-none d-lg-flex ms-auto" style="min-width: max-content">
       <button type="button" *ngIf="role === 'ROLE_ADMIN'" class="btn btn-dark me-3" [routerLink]="['/admin']">
         {{ t('admin') }}
       </button>

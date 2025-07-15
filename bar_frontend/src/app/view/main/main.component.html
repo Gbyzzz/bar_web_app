@@ -13,7 +13,6 @@
                        assets/1,w_1296.webp 1296w,
                        assets/1,w_1920.webp 1920w"
 
-               src="assets/1,w_1920.webp"
             alt="Los Angeles" width="1296"
                height="454">
         </picture>
@@ -24,7 +23,7 @@
       </div>
       <div class="carousel-item">
         <picture>
-          <img
+          <img class="img-carousel"
             sizes="(max-width: 1920px) 100vw, 1920px"
             srcset="assets/2,w_200.webp 200w,
                     assets/2,w_639.webp 639w,
@@ -33,7 +32,6 @@
                     assets/2,w_1296.webp 1296w,
                     assets/2,w_1920.webp 1920w"
 
-            src="assets/2,w_1920.webp"
             alt="Chicago" width="1296"
                height="454">
         </picture>
@@ -44,7 +42,7 @@
       </div>
       <div class="carousel-item">
         <picture>
-          <img
+          <img class="img-carousel"
             sizes="(max-width: 1920px) 100vw, 1920px"
             srcset="assets/3,w_200.webp 200w,
                     assets/3,w_639.webp 639w,
@@ -53,7 +51,6 @@
                     assets/3,w_1296.webp 1296w,
                     assets/3,w_1920.webp 1920w"
 
-            src="assets/3,w_1920.webp"
             alt="New York" width="1296"
                height="454">
         </picture>
@@ -64,7 +61,7 @@
       </div>
       <div class="carousel-item">
         <picture>
-          <img
+          <img class="img-carousel"
             sizes="(max-width: 1920px) 100vw, 1920px"
             srcset="assets/4,w_200.webp 200w,
                     assets/4,w_639.webp 639w,
@@ -73,7 +70,6 @@
                     assets/4,w_1296.webp 1296w,
                     assets/4,w_1920.webp 1920w"
 
-            src="assets/4,w_1920.webp"
             alt="New York" width="1296"
                height="454">
         </picture>
@@ -84,7 +80,7 @@
       </div>
       <div class="carousel-item">
         <picture>
-          <img
+          <img class="img-carousel"
             sizes="(max-width: 1920px) 100vw, 1920px"
             srcset="assets/5,w_200.webp 200w,
                     assets/5,w_639.webp 639w,
@@ -93,7 +89,6 @@
                     assets/5,w_1296.webp 1296w,
                     assets/5,w_1920.webp 1920w"
 
-            src="assets/5,w_1920.webp"
             alt="New York" width="1296"
                height="454">
         </picture>        <div class="carousel-caption">
@@ -120,8 +115,8 @@
     <div class="post">
       <div class="bg-cocktailImage hover-zoom container-img">
         <a class="post-img" [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">
-          <img [src]="cocktail.cocktailImage" width="423" height="255"
-               [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]"  [alt]="cocktail.cocktailName"/>
+          <img ngSrc="{{cocktail.cocktailImage}}" width="423" height="255"
+               [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]" [alt]="cocktail.cocktailName"/>
           <div class="text-block">
             <div style="font-size: 20px"><a style="color:white"
                    [routerLink]="['/cocktails/cocktail/' + cocktail.cocktailId]">

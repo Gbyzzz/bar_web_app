@@ -125,7 +125,7 @@ public class CocktailServiceImpl implements CocktailService {
                 Sort.by(Sort.Direction.DESC, "cocktailId") :
                 Sort.by(Sort.Direction.ASC, "cocktailId");
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
-        return new RestPage(cocktailRepository.findAll(pageRequest));
+        return new RestPage(cocktailRepository.findAll(pageRequest).map(cocktailDTOMapper::toDTO));
     }
 
     @Override

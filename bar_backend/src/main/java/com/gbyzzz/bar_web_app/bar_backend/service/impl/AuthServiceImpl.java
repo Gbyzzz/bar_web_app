@@ -40,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final UserDTOMapper mapper;
 
+
     @Value("${gbyzzz.url.to.validate}")
     String urlToValidate;
 

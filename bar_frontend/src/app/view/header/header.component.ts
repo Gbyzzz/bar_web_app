@@ -15,6 +15,7 @@ import {LoginSharedService} from "../../service/auth/login-shared.service";
 import {Notification} from "../../model/notification/Notification";
 import {FormControl} from "@angular/forms";
 import {Pagination, SortDirection} from "../../model/pagination/Pagination";
+import {environment} from "../../../environments/environment";
 
 // import * as console from "node:console";
 
@@ -77,7 +78,7 @@ export class HeaderComponent implements OnInit {
               private router: Router,
               private tokenStorage: TokenStorageService,
               private sharedService: LoginSharedService) {
-    this.webSocket = new WebSocket('ws://localhost:8080/notification');
+    this.webSocket = new WebSocket(environment.WEB_SOCKET_URL);
     this.webSocket.onmessage = (event) => {
       this.notification = JSON.parse(event.data);
       this.newNotification = true;

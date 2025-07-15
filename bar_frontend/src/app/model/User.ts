@@ -1,8 +1,8 @@
-export enum Role {
-  ADMIN = "ROLE_ADMIN",
-  BARTENDER = "ROLE_BARTENDER",
-  USER = "ROLE_USER",
-}
+  export enum Role {
+    ADMIN = "ROLE_ADMIN",
+    BARTENDER = "ROLE_BARTENDER",
+    USER = "ROLE_USER",
+  }
 
 export class User {
 

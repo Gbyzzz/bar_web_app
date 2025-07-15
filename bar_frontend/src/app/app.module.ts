@@ -6,7 +6,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './view/header/header.component';
 import {FooterComponent} from './view/footer/footer.component';
 import {COCKTAIL_SEARCH_URL_TOKEN, COCKTAIL_URL_TOKEN} from "./service/entity/impl/CocktailServiceImpl";
@@ -49,6 +49,7 @@ import {ChangePasswordDialogComponent} from "./view/dialog/change-password-dialo
 import { environment } from '../environments/environment';
 import {NgOptimizedImage} from "@angular/common";
 import {ConditionalPreloadDirective} from "./conditional-preload.directive";
+import {HttpImageInterceptor} from "./utils/httpImageInterceptor";
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -106,6 +107,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     HeaderComponent,
     authInterceptorProviders,
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpImageInterceptor, multi: true
+    },
 
     {
       provide: COCKTAIL_URL_TOKEN,
