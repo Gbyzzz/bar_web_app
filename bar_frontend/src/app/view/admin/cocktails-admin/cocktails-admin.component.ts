@@ -10,9 +10,10 @@ import {PageEvent} from "@angular/material/paginator";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 import {Recipe} from "../../../model/Recipe";
 @Component({
-  selector: 'app-cocktails-admin',
-  templateUrl: './cocktails-admin.component.html',
-  styleUrls: ['./cocktails-admin.component.css']
+    selector: 'app-cocktails-admin',
+    templateUrl: './cocktails-admin.component.html',
+    styleUrls: ['./cocktails-admin.component.css'],
+    standalone: false
 })
 export class CocktailsAdminComponent implements OnInit {
 

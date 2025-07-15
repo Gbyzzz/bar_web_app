@@ -18,9 +18,10 @@ import {
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-validate',
-  templateUrl: './validate.component.html',
-  styleUrls: ['./validate.component.css']
+    selector: 'app-validate',
+    templateUrl: './validate.component.html',
+    styleUrls: ['./validate.component.css'],
+    standalone: false
 })
 export class ValidateComponent implements OnInit {
 

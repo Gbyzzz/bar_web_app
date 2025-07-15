@@ -8,9 +8,10 @@ import {TokenStorageService} from "../../service/auth/token-storage.service";
 import {HeaderComponent} from "../header/header.component";
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+    selector: 'app-registration',
+    templateUrl: './registration.component.html',
+    styleUrls: ['./registration.component.css'],
+    standalone: false
 })
 export class RegistrationComponent implements OnInit {
 

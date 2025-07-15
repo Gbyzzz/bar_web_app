@@ -14,9 +14,10 @@ import {Router} from "@angular/router";
 import {RecipeServiceImpl} from "../../../service/entity/impl/RecipeServiceImpl";
 
 @Component({
-  selector: 'app-edit-cocktail-dialog',
-  templateUrl: './edit-cocktail-dialog.component.html',
-  styleUrls: ['./edit-cocktail-dialog.component.css']
+    selector: 'app-edit-cocktail-dialog',
+    templateUrl: './edit-cocktail-dialog.component.html',
+    styleUrls: ['./edit-cocktail-dialog.component.css'],
+    standalone: false
 })
 export class EditCocktailDialogComponent implements OnInit {
 

@@ -8,7 +8,8 @@ interface PreloadLinkConfig {
 }
 
 @Directive({
-  selector: '[appConditionalPreload]'
+    selector: '[appConditionalPreload]',
+    standalone: false
 })
 export class ConditionalPreloadDirective implements OnInit {
 

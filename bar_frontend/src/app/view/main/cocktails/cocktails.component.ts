@@ -8,9 +8,10 @@ import {Subscription} from "rxjs";
 import {query} from "@angular/animations";
 
 @Component({
-  selector: 'app-cocktails',
-  templateUrl: './cocktails.component.html',
-  styleUrls: ['./cocktails.component.css']
+    selector: 'app-cocktails',
+    templateUrl: './cocktails.component.html',
+    styleUrls: ['./cocktails.component.css'],
+    standalone: false
 })
 export class CocktailsComponent implements OnInit {
 

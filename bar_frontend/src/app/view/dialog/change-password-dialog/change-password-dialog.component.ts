@@ -10,9 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogAction, DialogResult} from "../DialogResult";
 
 @Component({
-  selector: 'app-change-password-dialog',
-  templateUrl: './change-password-dialog.component.html',
-  styleUrls: ['./change-password-dialog.component.css']
+    selector: 'app-change-password-dialog',
+    templateUrl: './change-password-dialog.component.html',
+    styleUrls: ['./change-password-dialog.component.css'],
+    standalone: false
 })
 export class ChangePasswordDialogComponent {
   changePasswordForm: any = {

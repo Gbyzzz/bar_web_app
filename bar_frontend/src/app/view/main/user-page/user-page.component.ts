@@ -12,9 +12,10 @@ import {
 } from "../../dialog/change-password-dialog/change-password-dialog.component";
 
 @Component({
-  selector: 'app-userpage',
-  templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css']
+    selector: 'app-userpage',
+    templateUrl: './user-page.component.html',
+    styleUrls: ['./user-page.component.css'],
+    standalone: false
 })
 export class UserPageComponent implements OnInit {
 

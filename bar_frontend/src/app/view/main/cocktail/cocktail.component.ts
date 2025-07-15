@@ -15,10 +15,11 @@ export const IMAGE_URL_TOKEN = new InjectionToken<string>('url');
 
 
 @Component({
-  selector: 'app-cocktail',
-  templateUrl: './cocktail.component.html',
-  styleUrls: ['./cocktail.component.css'],
-  providers: [StarRatingConfigService]
+    selector: 'app-cocktail',
+    templateUrl: './cocktail.component.html',
+    styleUrls: ['./cocktail.component.css'],
+    providers: [StarRatingConfigService],
+    standalone: false
 })
 export class CocktailComponent implements OnInit {
 

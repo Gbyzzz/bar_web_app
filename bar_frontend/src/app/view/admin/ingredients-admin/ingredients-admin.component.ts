@@ -10,9 +10,10 @@ import {User} from "../../../model/User";
 import {PageEvent} from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-ingredients-admin',
-  templateUrl: './ingredients-admin.component.html',
-  styleUrls: ['./ingredients-admin.component.css']
+    selector: 'app-ingredients-admin',
+    templateUrl: './ingredients-admin.component.html',
+    styleUrls: ['./ingredients-admin.component.css'],
+    standalone: false
 })
 export class IngredientsAdminComponent implements OnInit {
 

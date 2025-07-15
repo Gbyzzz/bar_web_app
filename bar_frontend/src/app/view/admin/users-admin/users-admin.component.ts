@@ -10,9 +10,10 @@ import {Cocktail} from "../../../model/Cocktail";
 import {PageEvent} from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-users-admin',
-  templateUrl: './users-admin.component.html',
-  styleUrls: ['./users-admin.component.css']
+    selector: 'app-users-admin',
+    templateUrl: './users-admin.component.html',
+    styleUrls: ['./users-admin.component.css'],
+    standalone: false
 })
 export class UsersAdminComponent implements OnInit {
 

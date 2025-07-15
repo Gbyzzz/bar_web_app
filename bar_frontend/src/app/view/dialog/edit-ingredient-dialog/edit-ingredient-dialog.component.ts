@@ -4,9 +4,10 @@ import {DialogAction, DialogResult} from "../DialogResult";
 import {Ingredient} from "../../../model/Ingredient";
 
 @Component({
-  selector: 'app-edit-ingredient-dialog',
-  templateUrl: './edit-ingredient-dialog.component.html',
-  styleUrls: ['./edit-ingredient-dialog.component.css']
+    selector: 'app-edit-ingredient-dialog',
+    templateUrl: './edit-ingredient-dialog.component.html',
+    styleUrls: ['./edit-ingredient-dialog.component.css'],
+    standalone: false
 })
 export class EditIngredientDialogComponent implements OnInit {
 

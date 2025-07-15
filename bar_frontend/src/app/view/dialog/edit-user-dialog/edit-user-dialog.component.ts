@@ -5,9 +5,10 @@ import {Role, User} from "../../../model/User";
 import {DialogAction, DialogResult} from "../DialogResult";
 
 @Component({
-  selector: 'app-edit-user-dialog',
-  templateUrl: './edit-user-dialog.component.html',
-  styleUrls: ['./edit-user-dialog.component.css']
+    selector: 'app-edit-user-dialog',
+    templateUrl: './edit-user-dialog.component.html',
+    styleUrls: ['./edit-user-dialog.component.css'],
+    standalone: false
 })
 export class EditUserDialogComponent implements OnInit {
 
