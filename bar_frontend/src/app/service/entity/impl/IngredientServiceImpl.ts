@@ -2,7 +2,7 @@ import {Inject, Injectable, InjectionToken} from "@angular/core";
 import {Observable} from "rxjs";
 import {IngredientService} from "../IngredientService";
 import {Ingredient} from "../../../model/Ingredient";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Pagination} from "../../../model/pagination/Pagination";
 
 export const INGREDIENT_URL_TOKEN = new InjectionToken<string>('url');

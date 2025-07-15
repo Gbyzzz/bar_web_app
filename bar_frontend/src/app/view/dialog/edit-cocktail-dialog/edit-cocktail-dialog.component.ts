@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Inject, Injector, OnInit} from '@angular/core';
 import {UntypedFormArray, UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Ingredient} from "../../../model/Ingredient";
 import {IngredientServiceImpl} from "../../../service/entity/impl/IngredientServiceImpl";
 import {EditIngredientDialogComponent} from "../edit-ingredient-dialog/edit-ingredient-dialog.component";

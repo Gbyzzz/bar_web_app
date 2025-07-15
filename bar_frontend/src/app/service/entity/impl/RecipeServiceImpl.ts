@@ -3,7 +3,7 @@ import {RecipeService} from "../RecipeService";
 import {Recipe} from "../../../model/Recipe";
 import {Observable} from "rxjs";
 import {Cocktail} from "../../../model/Cocktail";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 export const RECIPE_URL_TOKEN = new InjectionToken<string>('url');
 

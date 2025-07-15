@@ -6,7 +6,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {HeaderComponent} from './view/header/header.component';
 import {FooterComponent} from './view/footer/footer.component';
 import {COCKTAIL_SEARCH_URL_TOKEN, COCKTAIL_URL_TOKEN} from "./service/entity/impl/CocktailServiceImpl";
@@ -54,35 +54,31 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    MainComponent,
-    AdminComponent,
-    UsersAdminComponent,
-    CocktailsAdminComponent,
-    IngredientsAdminComponent,
-    EditUserDialogComponent,
-    EditIngredientDialogComponent,
-    EditCocktailDialogComponent,
-    CocktailComponent,
-    CocktailsComponent,
-    AboutComponent,
-    ContactComponent,
-    RegistrationComponent,
-    UserPageComponent,
-    ValidateComponent,
-    ChangePasswordDialogComponent,
-    ConditionalPreloadDirective
-
-  ],
-  exports:[ConditionalPreloadDirective],
-    imports: [
-        BrowserModule,
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        MainComponent,
+        AdminComponent,
+        UsersAdminComponent,
+        CocktailsAdminComponent,
+        IngredientsAdminComponent,
+        EditUserDialogComponent,
+        EditIngredientDialogComponent,
+        EditCocktailDialogComponent,
+        CocktailComponent,
+        CocktailsComponent,
+        AboutComponent,
+        ContactComponent,
+        RegistrationComponent,
+        UserPageComponent,
+        ValidateComponent,
+        ChangePasswordDialogComponent,
+        ConditionalPreloadDirective
+    ],
+    exports: [ConditionalPreloadDirective],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
-        HttpClientModule,
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,
@@ -101,58 +97,45 @@ export function HttpLoaderFactory(http: HttpClient) {
         TranslocoRootModule,
         StarRatingModule,
         NgOptimizedImage,
-      BrowserModule,
-      AppRoutingModule
-    ],
-  providers: [
-    HeaderComponent,
-    authInterceptorProviders,
-
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpImageInterceptor, multi: true
-    },
-
-    {
-      provide: COCKTAIL_URL_TOKEN,
-      useValue: environment.API_URL + 'cocktail'
-    },
-
-    {
-      provide: COCKTAIL_SEARCH_URL_TOKEN,
-      useValue: environment.SEARCH_API_URL + 'search'
-    },
-
-    {
-      provide: USER_URL_TOKEN,
-      useValue: environment.API_URL + 'user'
-    },
-
-    {
-      provide: INGREDIENT_URL_TOKEN,
-      useValue: environment.API_URL + 'ingredient'
-    },
-
-    {
-      provide: VOTE_URL_TOKEN,
-      useValue: environment.API_URL + 'vote'
-    },
-
-    {
-      provide: RECIPE_URL_TOKEN,
-      useValue: environment.API_URL + 'recipe'
-    },
-
-    {
-      provide: VALIDATE_URL_TOKEN,
-      useValue: environment.API_URL + 'validate'
-    },
-
-    {provide: MatDialogRef, useValue: {}},
-    {provide: MAT_DIALOG_DATA, useValue: []}
-
-  ],
-  bootstrap: [AppComponent]
-})
+        BrowserModule,
+        AppRoutingModule], providers: [
+        HeaderComponent,
+        authInterceptorProviders,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpImageInterceptor, multi: true
+        },
+        {
+            provide: COCKTAIL_URL_TOKEN,
+            useValue: environment.API_URL + 'cocktail'
+        },
+        {
+            provide: COCKTAIL_SEARCH_URL_TOKEN,
+            useValue: environment.SEARCH_API_URL + 'search'
+        },
+        {
+            provide: USER_URL_TOKEN,
+            useValue: environment.API_URL + 'user'
+        },
+        {
+            provide: INGREDIENT_URL_TOKEN,
+            useValue: environment.API_URL + 'ingredient'
+        },
+        {
+            provide: VOTE_URL_TOKEN,
+            useValue: environment.API_URL + 'vote'
+        },
+        {
+            provide: RECIPE_URL_TOKEN,
+            useValue: environment.API_URL + 'recipe'
+        },
+        {
+            provide: VALIDATE_URL_TOKEN,
+            useValue: environment.API_URL + 'validate'
+        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

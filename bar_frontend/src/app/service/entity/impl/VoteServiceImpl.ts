@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {VoteService} from "../VoteService";
 import {Vote} from "../../../model/Vote";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Cocktail} from "../../../model/Cocktail";
 

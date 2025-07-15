@@ -1,6 +1,6 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {Code} from "../../model/registration/Code";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
 
 

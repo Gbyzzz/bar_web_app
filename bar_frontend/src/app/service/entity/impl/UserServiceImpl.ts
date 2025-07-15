@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {UserService} from "../UserService";
 import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {User} from "../../../model/User";
 import {Pagination} from "../../../model/pagination/Pagination";
 import {PasswordChange} from "../../../model/registration/PasswordChange";

@@ -2,7 +2,7 @@ import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {CocktailService} from "../CocktailService";
 import {Cocktail} from "../../../model/Cocktail";
 import {Observable, Subject} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Pagination} from "../../../model/pagination/Pagination";
 import {Recipe} from "../../../model/Recipe";
 
