@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, OnInit, ViewChild} from '@angular/core';
-import {TranslocoService} from "@ngneat/transloco";
+import {TranslocoService} from "@jsverse/transloco";
 import {
   EditCocktailDialogComponent
 } from "../dialog/edit-cocktail-dialog/edit-cocktail-dialog.component";
