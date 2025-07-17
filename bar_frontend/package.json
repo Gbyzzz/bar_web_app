@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve  --host 0.0.0.0 && gzipper c ./dist --include js,css,html --output-file-format [filename].[ext] ./dist/",
-    "build": "ng build --configuration production --aot --build-optimizer && gzipper compress ./dist",
+    "build": "ng build --configuration production --aot && gzipper compress ./dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
